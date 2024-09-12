@@ -55,7 +55,9 @@ export const Playground = () => {
     return (
         <div className="flex flex-col justify-center gap-5 items-center px-5 w-full h-full">
             <h1> PlayGround (Test) </h1>
-
+            <strong className="text-red-500">
+                Drag and drop does not work on mobile devices
+            </strong>
             <div className=" flex gap-5 w-full h-[70%]">
                 <div className="flex-[2]" id="cv-main" />
                 <div
