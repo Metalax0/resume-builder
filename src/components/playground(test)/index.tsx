@@ -37,11 +37,11 @@ export const Playground = () => {
         rowRef.current!.classList.add("active-col");
     };
 
-    const drag = (e) => {
+    const drag = (e: any) => {
         dragElemRef.current = e.target;
     };
 
-    const drop = (e) => {
+    const drop = (e: any) => {
         e.preventDefault();
         if (
             e.target.classList.contains("section-row") ||
