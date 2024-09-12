@@ -1,12 +1,12 @@
 import "./App.css";
+import { Landing } from "./components/pages/landing";
+import { Playground } from "./components/playground(test)";
 
 function App() {
     return (
-        <div className="flex flex-col gap-5">
-            <h1 className="text-orange-400">Resume Builder</h1>
-            <p className="text-gray-200">
-                A browser based tool that assists in building a resume.
-            </p>
+        <div className="w-full h-full">
+            <Landing />
+            <Playground />
         </div>
     );
 }
