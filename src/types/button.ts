@@ -6,5 +6,6 @@ export enum BttnTypeEnum {
 export interface ButtonPropsType {
     bttnName: string;
     bttnType: BttnTypeEnum;
+    isDisabled?: boolean;
     bttnAction: () => void;
 }
