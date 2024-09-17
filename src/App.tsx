@@ -1,12 +1,11 @@
-import "./App.css";
-import { Landing } from "./components/pages/landing";
-import { Playground } from "./components/playground(test)";
+import { Landing } from "./components/sections/hero";
+import { Builder } from "./components/sections/builder";
 
 function App() {
     return (
         <div className="w-full h-full">
             <Landing />
-            <Playground />
+            <Builder />
         </div>
     );
 }

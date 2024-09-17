@@ -31,7 +31,7 @@ body,
 
 /* Doing this so padding and margins don't mess up element's sizing */
 #root * {
-    box-sizing: border-box;
+    box-sizing: border-box !important;
 }
 
 h1 {
