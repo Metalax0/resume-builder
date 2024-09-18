@@ -18,26 +18,30 @@ export const Builder = () => {
     const rowRef = useRef<null | HTMLDivElement>();
     const dragElemRef = useRef<null | HTMLDivElement>();
 
-    const drag = (e: any) => {
-        dragElemRef.current = e.target;
+    const drag = (e: React.DragEvent<HTMLDivElement>) => {
+        dragElemRef.current = e.target as HTMLDivElement;
     };
 
-    const drop = (e: any) => {
+    const drop = (e: React.DragEvent<HTMLDivElement>) => {
         e.preventDefault();
+        const target = e.target as HTMLDivElement;
         if (
-            e.target.classList.contains("section-row") ||
-            e.target.classList.contains("section-column") ||
-            e.target.classList.contains("section-elements-collection")
+            target.classList.contains("section-row") ||
+            target.classList.contains("section-column") ||
+            target.classList.contains("section-elements-collection")
         ) {
-            e.target.appendChild(dragElemRef.current);
+            if (dragElemRef.current) target.appendChild(dragElemRef.current);
         }
     };
 
+    // adds row at bottom of stage
     const handleAddRow = () => {
         const div = document.createElement("div");
         div.classList.add("section-row");
         div.addEventListener("dragover", (e) => e.preventDefault());
-        div.addEventListener("drop", (e) => drop(e));
+        div.addEventListener("drop", (e) =>
+            drop(e as unknown as React.DragEvent<HTMLDivElement>)
+        );
         div.addEventListener("click", () => handleRowSelected(div));
         document.getElementById("cv-main")!.appendChild(div);
         rowArr.current.push(div);
@@ -47,11 +51,14 @@ export const Builder = () => {
         controlBttnDisable();
     };
 
+    // adds column to selected row
     const handleAddColumn = () => {
         const div = document.createElement("div");
         div.classList.add("section-column");
         div.addEventListener("dragover", (e) => e.preventDefault());
-        div.addEventListener("drop", (e) => drop(e));
+        div.addEventListener("drop", (e) =>
+            drop(e as unknown as React.DragEvent<HTMLDivElement>)
+        );
 
         // adds two columns if adding column for the first time
         if (rowRef.current?.hasChildNodes()) rowRef.current!.appendChild(div);
@@ -96,10 +103,12 @@ export const Builder = () => {
         rowArr.current.map((row) => row.classList.remove("active-row"));
         rowRef.current = row;
         rowRef.current!.classList.add("active-row");
+        controlBttnDisable();
     };
 
     // Control disabling and enabling of remove row/column button
     const controlBttnDisable = () => {
+        console.log(rowRef.current?.childNodes);
         if (rowArr.current.length >= 2)
             bttnDisableStateHelper("rowRemoveEnable");
         else bttnDisableStateHelper("rowRemoveDisable");
@@ -140,7 +149,7 @@ export const Builder = () => {
             {/* Title and sub text */}
             <Header />
 
-            {/* CV-Builder core */}
+            {/* Stage (core) */}
             <div className="flex gap-5 w-full h-[70%]">
                 <Main />
                 <ComponentPicker drag={drag} drop={drop} />

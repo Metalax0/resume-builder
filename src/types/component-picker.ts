@@ -1,4 +1,4 @@
 export interface ComponentPickerType {
-    drag: (e: any) => void;
-    drop: (e: any) => void;
+    drag: (e: React.DragEvent<HTMLDivElement>) => void;
+    drop: (e: React.DragEvent<HTMLDivElement>) => void;
 }
