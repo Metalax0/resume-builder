@@ -1,4 +1,3 @@
-import { ComponentPicker } from "./component-picker";
 import { Button } from "../../atoms/button";
 import { BttnTypeEnum } from "../../../types/button";
 import { Main } from "./main";
@@ -6,6 +5,7 @@ import { Header } from "./header";
 import "./style.css";
 import { useRowsAndColumns } from "../../../hooks/useRowsAndColumns";
 import { useEffect } from "react";
+import { Tabs } from "../tabs";
 
 export const Builder = () => {
     const {
@@ -14,8 +14,6 @@ export const Builder = () => {
         handleAddColumn,
         handleRemoveRow,
         handleRemoveColumn,
-        drag,
-        drop,
     } = useRowsAndColumns();
 
     useEffect(() => {
@@ -27,7 +25,7 @@ export const Builder = () => {
             <Header />
             <div className="flex gap-5 w-full h-[70%]">
                 <Main />
-                <ComponentPicker drag={drag} drop={drop} />
+                <Tabs />
             </div>
             <div className="flex items-start flex-col gap-2">
                 <div className="flex justify-center items-center gap-3">
