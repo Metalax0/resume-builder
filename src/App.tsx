@@ -1,13 +1,16 @@
 import { Landing } from "./components/sections/hero";
 import { Builder } from "./components/sections/builder";
-import { SettingsProvider } from "./state-management/settingsContext";
+import { DragDropProvider } from "./components/context/dragDropContext";
+import { SettingsProvider } from "./components/context/settingsContext";
 
 function App() {
     return (
         <div className="w-full h-full">
             <SettingsProvider>
-                <Landing />
-                <Builder />
+                <DragDropProvider>
+                    <Landing />
+                    <Builder />
+                </DragDropProvider>
             </SettingsProvider>
         </div>
     );

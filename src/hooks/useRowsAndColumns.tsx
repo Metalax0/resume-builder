@@ -1,10 +1,12 @@
 import { useRef, useState } from "react";
+import { useDragDrop } from "../components/context/dragDropContext";
+import { isTargetOccupied, isTargetValidDropZone } from "../util/dragAndDrop";
 
 // Custom hook for managing rows and columns
 export const useRowsAndColumns = () => {
     const rowArr = useRef<HTMLDivElement[]>([]);
     const rowRef = useRef<null | HTMLDivElement>();
-    const dragElemRef = useRef<null | HTMLDivElement>();
+    const { draggedElementRef, setDraggedElement } = useDragDrop();
     const [bttnDisabled, setBttnDisabled] = useState({
         rowRemove: true,
         colRemove: true,
@@ -35,19 +37,21 @@ export const useRowsAndColumns = () => {
     };
 
     const drag = (e: React.DragEvent<HTMLDivElement>) => {
-        dragElemRef.current = e.currentTarget;
+        setDraggedElement(e.currentTarget);
     };
 
     const drop = (e: React.DragEvent<HTMLDivElement>) => {
         e.preventDefault();
         const target = e.currentTarget;
-        if (
-            target.classList.contains("section-row") ||
-            target.classList.contains("section-column") ||
-            target.classList.contains("section-elements-collection")
-        ) {
-            if (dragElemRef.current) target.appendChild(dragElemRef.current);
-        }
+        if (isTargetValidDropZone(target))
+            if (
+                draggedElementRef.current &&
+                draggedElementRef.current != null &&
+                !isTargetOccupied(target)
+            ) {
+                target.appendChild(draggedElementRef.current);
+                setDraggedElement(null);
+            }
     };
 
     const handleAddRow = () => {
@@ -65,19 +69,25 @@ export const useRowsAndColumns = () => {
         controlBttnDisable();
     };
 
-    const handleAddColumn = () => {
+    const createColumn = () => {
         const div = document.createElement("div");
         div.classList.add("section-column");
         div.ondragover = (e) => e.preventDefault();
         div.ondrop = (e) =>
             drop(e as unknown as React.DragEvent<HTMLDivElement>);
+        return div;
+    };
 
-        if (rowRef.current?.hasChildNodes()) rowRef.current!.appendChild(div);
-        else {
-            const div2 = document.createElement("div");
-            div2.classList.add("section-column");
-            rowRef.current!.append(div, div2);
+    const handleAddColumn = () => {
+        const newColumn = createColumn();
+
+        if (rowRef.current?.hasChildNodes()) {
+            rowRef.current.appendChild(newColumn);
+        } else {
+            const secondColumn = createColumn();
+            rowRef.current!.append(newColumn, secondColumn);
         }
+
         controlBttnDisable();
     };
 

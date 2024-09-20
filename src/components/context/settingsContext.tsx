@@ -1,9 +1,12 @@
 import { createContext, useReducer, useContext } from "react";
-import { settingsInitialState, settingsReducer } from "./settingsReducer";
 import {
     SettingsContextType,
     SettingsProviderPropsType,
-} from "../types/settingsContext";
+} from "../../types/settingsContext";
+import {
+    settingsInitialState,
+    settingsReducer,
+} from "../../state-management/settingsReducer";
 
 const SettingsContext = createContext<SettingsContextType | null>(null);
 
