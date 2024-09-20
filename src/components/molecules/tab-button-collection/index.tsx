@@ -9,11 +9,6 @@ export const TabButtonCollection = ({
     return (
         <div className="flex bg-[#242424]">
             <TabButton
-                isActive={activeTab === TabsEnum.settings}
-                tabName={"Settings"}
-                onClick={() => setActiveTab(TabsEnum.settings)}
-            />
-            <TabButton
                 isActive={activeTab === TabsEnum.picker}
                 tabName={"Picker"}
                 onClick={() => setActiveTab(TabsEnum.picker)}
@@ -22,6 +17,11 @@ export const TabButtonCollection = ({
                 isActive={activeTab === TabsEnum.properties}
                 tabName={"Properties"}
                 onClick={() => setActiveTab(TabsEnum.properties)}
+            />
+            <TabButton
+                isActive={activeTab === TabsEnum.settings}
+                tabName={"Settings"}
+                onClick={() => setActiveTab(TabsEnum.settings)}
             />
         </div>
     );

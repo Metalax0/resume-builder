@@ -7,7 +7,10 @@ export const TabButton = ({
 }: TabButtonPropsType) => {
     const activeClass = isActive ? "bg-green-500" : "bg-red-800";
     return (
-        <button className={`p-3 ${activeClass}`} onClick={onClick}>
+        <button
+            className={`p-3 hover:bg-green-600 global-transition ${activeClass}`}
+            onClick={onClick}
+        >
             {tabName}
         </button>
     );

@@ -10,12 +10,11 @@ export const Button = ({
     switch (bttnType) {
         case BttnTypeEnum.primary:
             bttnClassName =
-                "bg-green-500 py-2 px-7 rounded-md hover:bg-green-600 disabled:bg-gray-500 disabled:cursor-not-allowed";
+                "bg-green-500 hover:bg-green-600 disabled:bg-gray-500 ";
             break;
 
         case BttnTypeEnum.secondary:
-            bttnClassName =
-                "bg-red-500 py-2 px-7 rounded-md hover:bg-red-600 disabled:bg-gray-500 disabled:cursor-not-allowed";
+            bttnClassName = "bg-red-500 hover:bg-red-600 disabled:bg-gray-500";
             break;
 
         default:
@@ -24,7 +23,7 @@ export const Button = ({
 
     return (
         <button
-            className={bttnClassName}
+            className={`py-2 px-7 rounded-md global-transition disabled:cursor-not-allowed ${bttnClassName}`}
             onClick={bttnAction}
             disabled={isDisabled}
         >
