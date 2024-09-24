@@ -4,9 +4,14 @@ export const Button = ({
     bttnName,
     bttnType,
     isDisabled = false,
+    isCircular = false,
     bttnAction,
 }: ButtonPropsType) => {
     let bttnClassName = "";
+    const bttnClassNameRounded = `${
+        isCircular ? "rounded-full px-6" : "rounded-md px-7"
+    }`;
+
     switch (bttnType) {
         case BttnTypeEnum.primary:
             bttnClassName =
@@ -14,7 +19,7 @@ export const Button = ({
             break;
 
         case BttnTypeEnum.secondary:
-            bttnClassName = "bg-red-500 hover:bg-red-600 disabled:bg-gray-500";
+            bttnClassName = "bg-red-800 hover:bg-red-600 disabled:bg-gray-500";
             break;
 
         default:
@@ -23,7 +28,7 @@ export const Button = ({
 
     return (
         <button
-            className={`py-2 px-7 rounded-md global-transition disabled:cursor-not-allowed ${bttnClassName}`}
+            className={`py-2 global-transition disabled:cursor-not-allowed ${bttnClassName} ${bttnClassNameRounded}`}
             onClick={bttnAction}
             disabled={isDisabled}
         >

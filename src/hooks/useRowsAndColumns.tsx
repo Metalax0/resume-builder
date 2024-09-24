@@ -42,6 +42,7 @@ export const useRowsAndColumns = () => {
 
     const drop = (e: React.DragEvent<HTMLDivElement>) => {
         e.preventDefault();
+        console.log("Drop detected");
         const target = e.currentTarget;
         if (isTargetValidDropZone(target))
             if (

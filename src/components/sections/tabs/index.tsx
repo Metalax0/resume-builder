@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { useRowsAndColumns } from "../../../hooks/useRowsAndColumns";
 import { TabsEnum } from "../../../types/tabs";
 import { PickerTab } from "./picker";
 import { SettingsTab } from "./settings";
@@ -8,7 +7,6 @@ import { TabButtonCollection } from "../../molecules/tab-button-collection";
 
 // display tabs selection (settings, properties and component picker)
 export const Tabs = () => {
-    const { drag, drop } = useRowsAndColumns();
     const [activeTab, setActiveTab] = useState<TabsEnum>(TabsEnum.picker);
 
     const renderTab = () => {
@@ -17,7 +15,7 @@ export const Tabs = () => {
                 return <SettingsTab />;
 
             case TabsEnum.picker:
-                return <PickerTab drag={drag} drop={drop} />;
+                return <PickerTab />;
 
             case TabsEnum.properties:
                 return <PropertiesTab />;
@@ -30,7 +28,10 @@ export const Tabs = () => {
     };
 
     return (
-        <div className="flex flex-col flex-1 bg-red-500">
+        <div
+            className="flex flex-col flex-1"
+            onDragOver={(e) => e.preventDefault()}
+        >
             <TabButtonCollection
                 activeTab={activeTab}
                 setActiveTab={setActiveTab}

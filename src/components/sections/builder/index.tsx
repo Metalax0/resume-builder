@@ -1,20 +1,12 @@
-import { Button } from "../../atoms/button";
-import { BttnTypeEnum } from "../../../types/button";
 import { Main } from "./main";
 import { Header } from "./header";
-import "./style.css";
 import { useRowsAndColumns } from "../../../hooks/useRowsAndColumns";
 import { useEffect } from "react";
 import { Tabs } from "../tabs";
+import "./style.css";
 
 export const Builder = () => {
-    const {
-        bttnDisabled,
-        handleAddRow,
-        handleAddColumn,
-        handleRemoveRow,
-        handleRemoveColumn,
-    } = useRowsAndColumns();
+    const { handleAddRow } = useRowsAndColumns();
 
     useEffect(() => {
         handleAddRow();
@@ -26,40 +18,6 @@ export const Builder = () => {
             <div className="flex gap-5 w-full h-[70%]">
                 <Main />
                 <Tabs />
-            </div>
-            <div className="flex items-start flex-col gap-2">
-                <div className="flex justify-center items-center gap-3">
-                    <label className="w-10">
-                        <b>Row</b>
-                    </label>
-                    <Button
-                        bttnName={"+"}
-                        bttnType={BttnTypeEnum.primary}
-                        bttnAction={handleAddRow}
-                    />
-                    <Button
-                        bttnName={"-"}
-                        bttnType={BttnTypeEnum.secondary}
-                        bttnAction={handleRemoveRow}
-                        isDisabled={bttnDisabled.rowRemove}
-                    />
-                </div>
-                <div className="flex justify-center items-center gap-3">
-                    <label className="w-10">
-                        <b>Col</b>
-                    </label>
-                    <Button
-                        bttnName={"+"}
-                        bttnType={BttnTypeEnum.primary}
-                        bttnAction={handleAddColumn}
-                    />
-                    <Button
-                        bttnName={"-"}
-                        bttnType={BttnTypeEnum.secondary}
-                        bttnAction={handleRemoveColumn}
-                        isDisabled={bttnDisabled.colRemove}
-                    />
-                </div>
             </div>
         </div>
     );

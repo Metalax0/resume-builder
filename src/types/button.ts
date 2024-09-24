@@ -7,5 +7,6 @@ export interface ButtonPropsType {
     bttnName: string;
     bttnType: BttnTypeEnum;
     isDisabled?: boolean;
+    isCircular?: boolean;
     bttnAction: () => void;
 }

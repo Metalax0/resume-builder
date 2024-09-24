@@ -1,6 +1,8 @@
-import { PickerTabType } from "../../../../types/tabs";
+import { useRowsAndColumns } from "../../../../hooks/useRowsAndColumns";
 
-export const PickerTab = ({ drag, drop }: PickerTabType) => {
+export const PickerTab = () => {
+    const { drag, drop } = useRowsAndColumns();
+
     return (
         <div
             className="section-elements-collection flex-1 flex flex-col gap-2"
