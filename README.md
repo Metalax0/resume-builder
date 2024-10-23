@@ -1,6 +1,6 @@
 ## Resume Builder
 
-**Project development, progress and updates are documented (dev vlog) on my socials https://linktr.ee/metalax.**
+**Project development, progress and updates are documented (dev vlog) on my socials https://linktr.ee/metalax.dev.**
 
 Resume builder is a browser based tool that assists in creating and styling your resume.
 
