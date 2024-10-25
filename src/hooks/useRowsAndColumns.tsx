@@ -17,11 +17,6 @@ export const useRowsAndColumns = () => {
     const { settingsState, settingsDispatch } = useSettings();
     const { isAddBttnDisabled } = settingsState;
 
-    // const [bttnDisabled, setBttnDisabled] = useState({
-    //     rowRemove: true,
-    //     colRemove: true,
-    // });
-
     // Helper function to update button states
     const bttnDisableStateHelper = (
         action:
@@ -59,28 +54,15 @@ export const useRowsAndColumns = () => {
                 });
                 break;
         }
-
-        // setBttnDisabled((prev) => ({
-        //     rowRemove:
-        //         action === "rowRemoveDisable"
-        //             ? true
-        //             : action === "rowRemoveEnable"
-        //             ? false
-        //             : prev.rowRemove,
-        //     colRemove:
-        //         action === "colRemoveDisable"
-        //             ? true
-        //             : action === "colRemoveEnable"
-        //             ? false
-        //             : prev.colRemove,
-        // }));
     };
 
     const drag = (e: React.DragEvent<HTMLDivElement>) => {
+        console.log("dragging", e.currentTarget);
         setDraggedElement(e.currentTarget);
     };
 
     const drop = (e: React.DragEvent<HTMLDivElement>) => {
+        console.log("dropping", e.currentTarget);
         e.preventDefault();
         const target = e.currentTarget;
         if (isTargetValidDropZone(target))
