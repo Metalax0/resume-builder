@@ -57,12 +57,10 @@ export const useRowsAndColumns = () => {
     };
 
     const drag = (e: React.DragEvent<HTMLDivElement>) => {
-        console.log("dragging", e.currentTarget);
         setDraggedElement(e.currentTarget);
     };
 
     const drop = (e: React.DragEvent<HTMLDivElement>) => {
-        console.log("dropping", e.currentTarget);
         e.preventDefault();
         const target = e.currentTarget;
         if (isTargetValidDropZone(target))
