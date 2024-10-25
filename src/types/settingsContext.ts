@@ -12,6 +12,10 @@ export interface SettingsState {
     selectionPriority: SelectionPriorityEnumType;
     showOutlines: boolean;
     showSelections: boolean;
+    isAddBttnDisabled: {
+        row: boolean;
+        col: boolean;
+    };
 }
 
 export type SettingsDispatch = React.Dispatch<SettingsActionType>;

@@ -8,6 +8,7 @@ import "./style.css";
 export const Builder = () => {
     const { handleAddRow } = useRowsAndColumns();
     useEffect(() => {
+        console.log("use-effect inside builder to add initial row");
         handleAddRow();
     }, []);
 

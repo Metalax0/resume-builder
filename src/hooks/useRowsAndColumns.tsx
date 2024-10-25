@@ -1,16 +1,26 @@
-import { useRef, useState } from "react";
 import { useDragDrop } from "../components/context/dragDropContext";
 import { isTargetOccupied, isTargetValidDropZone } from "../util/dragAndDrop";
+import { useSettings } from "../components/context/settingsContext";
+import { SettingsReducerActions } from "../types/settingsReducer";
 
 // Custom hook for managing rows and columns
 export const useRowsAndColumns = () => {
-    const rowArr = useRef<HTMLDivElement[]>([]);
-    // const rowRef = useRef<null | HTMLDivElement>();
-    const { rowRef, draggedElementRef, setDraggedElement } = useDragDrop();
-    const [bttnDisabled, setBttnDisabled] = useState({
-        rowRemove: true,
-        colRemove: true,
-    });
+    const {
+        rowRef,
+        rowArrRef,
+        draggedElementRef,
+        setRowRef,
+        setRowArrRef,
+        setDraggedElement,
+    } = useDragDrop();
+
+    const { settingsState, settingsDispatch } = useSettings();
+    const { isAddBttnDisabled } = settingsState;
+
+    // const [bttnDisabled, setBttnDisabled] = useState({
+    //     rowRemove: true,
+    //     colRemove: true,
+    // });
 
     // Helper function to update button states
     const bttnDisableStateHelper = (
@@ -20,20 +30,50 @@ export const useRowsAndColumns = () => {
             | "colRemoveDisable"
             | "colRemoveEnable"
     ) => {
-        setBttnDisabled((prev) => ({
-            rowRemove:
-                action === "rowRemoveDisable"
-                    ? true
-                    : action === "rowRemoveEnable"
-                    ? false
-                    : prev.rowRemove,
-            colRemove:
-                action === "colRemoveDisable"
-                    ? true
-                    : action === "colRemoveEnable"
-                    ? false
-                    : prev.colRemove,
-        }));
+        switch (action) {
+            case "rowRemoveDisable":
+                settingsDispatch({
+                    type: SettingsReducerActions.isRowRemoveBttnDisabled,
+                    value: true,
+                });
+                break;
+
+            case "rowRemoveEnable":
+                settingsDispatch({
+                    type: SettingsReducerActions.isRowRemoveBttnDisabled,
+                    value: false,
+                });
+                break;
+
+            case "colRemoveDisable":
+                settingsDispatch({
+                    type: SettingsReducerActions.isColRemoveBttnDisabled,
+                    value: true,
+                });
+                break;
+
+            case "colRemoveEnable":
+                settingsDispatch({
+                    type: SettingsReducerActions.isColRemoveBttnDisabled,
+                    value: false,
+                });
+                break;
+        }
+
+        // setBttnDisabled((prev) => ({
+        //     rowRemove:
+        //         action === "rowRemoveDisable"
+        //             ? true
+        //             : action === "rowRemoveEnable"
+        //             ? false
+        //             : prev.rowRemove,
+        //     colRemove:
+        //         action === "colRemoveDisable"
+        //             ? true
+        //             : action === "colRemoveEnable"
+        //             ? false
+        //             : prev.colRemove,
+        // }));
     };
 
     const drag = (e: React.DragEvent<HTMLDivElement>) => {
@@ -42,7 +82,6 @@ export const useRowsAndColumns = () => {
 
     const drop = (e: React.DragEvent<HTMLDivElement>) => {
         e.preventDefault();
-        console.log("Drop detected", draggedElementRef.current);
         const target = e.currentTarget;
         if (isTargetValidDropZone(target))
             if (
@@ -63,18 +102,16 @@ export const useRowsAndColumns = () => {
             drop(e as unknown as React.DragEvent<HTMLDivElement>);
         div.onclick = () => handleRowSelected(div);
         document.getElementById("cv-main")!.appendChild(div);
-        rowArr.current.push(div);
 
-        rowRef.current = div;
+        setRowRef(div);
+        setRowArrRef([...(rowArrRef.current || []), div]);
+
         handleRowSelected(div);
         controlBttnDisable();
     };
 
-    console.log("rowRef", rowRef.current);
-
     const handleAddColumn = () => {
         const newColumn = createColumn();
-        console.log(rowRef.current);
         if (rowRef.current?.hasChildNodes()) {
             rowRef.current.appendChild(newColumn);
         } else {
@@ -95,12 +132,16 @@ export const useRowsAndColumns = () => {
     };
 
     const handleRemoveRow = () => {
-        if (rowRef.current && rowArr.current.length !== 1) {
+        if (
+            rowRef.current &&
+            rowArrRef.current &&
+            rowArrRef.current.length !== 1
+        ) {
             document.getElementById("cv-main")?.removeChild(rowRef.current);
-            rowArr.current = rowArr.current.filter(
-                (row) => row !== rowRef.current
+            setRowArrRef(
+                rowArrRef.current.filter((row) => row !== rowRef.current)
             );
-            rowRef.current = rowArr.current[rowArr.current.length - 1];
+            setRowRef(rowArrRef.current[rowArrRef.current.length - 1]);
             handleRowSelected(rowRef.current);
         }
         controlBttnDisable();
@@ -120,14 +161,14 @@ export const useRowsAndColumns = () => {
     };
 
     const handleRowSelected = (row: HTMLDivElement) => {
-        rowArr.current.forEach((r) => r.classList.remove("active-row"));
-        rowRef.current = row;
+        rowArrRef.current!.forEach((r) => r.classList.remove("active-row"));
+        setRowRef(row);
         rowRef.current!.classList.add("active-row");
         controlBttnDisable();
     };
 
     const controlBttnDisable = () => {
-        if (rowArr.current.length >= 2)
+        if (rowArrRef.current!.length >= 2)
             bttnDisableStateHelper("rowRemoveEnable");
         else bttnDisableStateHelper("rowRemoveDisable");
 
@@ -139,7 +180,7 @@ export const useRowsAndColumns = () => {
     };
 
     return {
-        bttnDisabled,
+        isAddBttnDisabled,
         handleAddRow,
         handleAddColumn,
         handleRemoveRow,

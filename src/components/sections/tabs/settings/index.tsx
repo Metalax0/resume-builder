@@ -5,7 +5,7 @@ import { ToggleSwitch } from "../../../atoms/toggle-switch";
 
 export const SettingsTab = () => {
     const {
-        bttnDisabled,
+        isAddBttnDisabled,
         handleAddRow,
         handleAddColumn,
         handleRemoveRow,
@@ -55,7 +55,7 @@ export const SettingsTab = () => {
                         bttnName={"-"}
                         bttnType={BttnTypeEnum.secondary}
                         bttnAction={handleRemoveRow}
-                        isDisabled={bttnDisabled.rowRemove}
+                        isDisabled={isAddBttnDisabled.row}
                         isCircular
                     />
                 </div>
@@ -74,7 +74,7 @@ export const SettingsTab = () => {
                         bttnName={"-"}
                         bttnType={BttnTypeEnum.secondary}
                         bttnAction={handleRemoveColumn}
-                        isDisabled={bttnDisabled.colRemove}
+                        isDisabled={isAddBttnDisabled.col}
                         isCircular
                     />
                 </div>

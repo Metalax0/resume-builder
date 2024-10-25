@@ -9,6 +9,10 @@ export const settingsInitialState: SettingsStateType = {
     selectionPriority: SelectionPriorityEnumType.row,
     showOutlines: true,
     showSelections: true,
+    isAddBttnDisabled: {
+        row: true,
+        col: false,
+    },
 };
 
 export const settingsReducer = (
@@ -19,6 +23,8 @@ export const settingsReducer = (
         updateSelectionPriority,
         toggleShowOutlines,
         toggleShowSelections,
+        isRowRemoveBttnDisabled,
+        isColRemoveBttnDisabled,
     } = SettingsReducerActions;
 
     switch (action.type) {
@@ -38,6 +44,24 @@ export const settingsReducer = (
             return {
                 ...state,
                 showSelections: !state.showSelections,
+            };
+
+        case isRowRemoveBttnDisabled:
+            return {
+                ...state,
+                isAddBttnDisabled: {
+                    ...state.isAddBttnDisabled,
+                    row: action.value,
+                },
+            };
+
+        case isColRemoveBttnDisabled:
+            return {
+                ...state,
+                isAddBttnDisabled: {
+                    ...state.isAddBttnDisabled,
+                    col: action.value,
+                },
             };
     }
 };
