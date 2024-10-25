@@ -6,12 +6,12 @@ import { SettingsProvider } from "./components/context/settingsContext";
 function App() {
     return (
         <div className="w-full h-full">
-            <SettingsProvider>
-                <DragDropProvider>
+            <DragDropProvider>
+                <SettingsProvider>
                     <Landing />
                     <Builder />
-                </DragDropProvider>
-            </SettingsProvider>
+                </SettingsProvider>
+            </DragDropProvider>
         </div>
     );
 }

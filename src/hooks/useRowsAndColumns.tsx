@@ -5,8 +5,8 @@ import { isTargetOccupied, isTargetValidDropZone } from "../util/dragAndDrop";
 // Custom hook for managing rows and columns
 export const useRowsAndColumns = () => {
     const rowArr = useRef<HTMLDivElement[]>([]);
-    const rowRef = useRef<null | HTMLDivElement>();
-    const { draggedElementRef, setDraggedElement } = useDragDrop();
+    // const rowRef = useRef<null | HTMLDivElement>();
+    const { rowRef, draggedElementRef, setDraggedElement } = useDragDrop();
     const [bttnDisabled, setBttnDisabled] = useState({
         rowRemove: true,
         colRemove: true,
@@ -42,7 +42,7 @@ export const useRowsAndColumns = () => {
 
     const drop = (e: React.DragEvent<HTMLDivElement>) => {
         e.preventDefault();
-        console.log("Drop detected");
+        console.log("Drop detected", draggedElementRef.current);
         const target = e.currentTarget;
         if (isTargetValidDropZone(target))
             if (
@@ -70,18 +70,11 @@ export const useRowsAndColumns = () => {
         controlBttnDisable();
     };
 
-    const createColumn = () => {
-        const div = document.createElement("div");
-        div.classList.add("section-column");
-        div.ondragover = (e) => e.preventDefault();
-        div.ondrop = (e) =>
-            drop(e as unknown as React.DragEvent<HTMLDivElement>);
-        return div;
-    };
+    console.log("rowRef", rowRef.current);
 
     const handleAddColumn = () => {
         const newColumn = createColumn();
-
+        console.log(rowRef.current);
         if (rowRef.current?.hasChildNodes()) {
             rowRef.current.appendChild(newColumn);
         } else {
@@ -90,6 +83,15 @@ export const useRowsAndColumns = () => {
         }
 
         controlBttnDisable();
+    };
+
+    const createColumn = () => {
+        const div = document.createElement("div");
+        div.classList.add("section-column");
+        div.ondragover = (e) => e.preventDefault();
+        div.ondrop = (e) =>
+            drop(e as unknown as React.DragEvent<HTMLDivElement>);
+        return div;
     };
 
     const handleRemoveRow = () => {

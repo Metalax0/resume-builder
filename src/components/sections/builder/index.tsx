@@ -7,7 +7,6 @@ import "./style.css";
 
 export const Builder = () => {
     const { handleAddRow } = useRowsAndColumns();
-
     useEffect(() => {
         handleAddRow();
     }, []);
