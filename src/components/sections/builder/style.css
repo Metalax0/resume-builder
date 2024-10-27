@@ -10,8 +10,11 @@
     display: flex;
     justify-content: center;
     background-color: rgb(240, 198, 122);
-    border: 1px solid black;
     text-align: center;
+}
+
+.grid-visible {
+    border: 1px solid black;
 }
 
 .section-row:hover {
@@ -19,7 +22,6 @@
 }
 
 .section-column {
-    border: 1px solid black;
     border-top: none;
     border-bottom: none;
     flex: 1;

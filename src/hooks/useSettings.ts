@@ -14,5 +14,18 @@ export const useSettings = () => {
         }
     };
 
-    return { manageSelectionHighlight };
+    const manageGridsAndOutlines = () => {
+        const grids = document.querySelectorAll(".section-grid");
+
+        if (settingsState.showOutlines)
+            grids.forEach((elem) => {
+                elem.classList.add("grid-visible");
+            });
+        else
+            grids.forEach((elem) => {
+                elem.classList.remove("grid-visible");
+            });
+    };
+
+    return { manageSelectionHighlight, manageGridsAndOutlines };
 };

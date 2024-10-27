@@ -1,7 +1,6 @@
 export const isTargetValidDropZone = (target: EventTarget & HTMLDivElement) => {
     if (
-        target.classList.contains("section-row") ||
-        target.classList.contains("section-column") ||
+        target.classList.contains("section-grid") ||
         target.classList.contains("section-elements-collection")
     )
         return true;

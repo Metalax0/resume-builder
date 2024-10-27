@@ -8,7 +8,7 @@ export const Paragraph = ({ text, drag }: ParagraphPropsType) => {
         <p
             draggable
             onDragStart={(e) => drag(e)}
-            className="draggable-element flex justify-center items-center flex-[1] bg-green-400 text-center w-full h-full text-black border-black border-2"
+            className="draggable-element flex justify-center items-center flex-[1] bg-green-400 text-center w-full h-full text-black"
         >
             {text}
         </p>

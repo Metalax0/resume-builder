@@ -15,7 +15,7 @@ export const Tabs = () => {
     const { setDraggedElement } = useStageContext();
     const { settingsState } = useSettingsContext();
     const { drag } = useRowsAndColumns();
-    const { manageSelectionHighlight } = useSettings();
+    const { manageSelectionHighlight, manageGridsAndOutlines } = useSettings();
 
     // Use Effect to re-attach event listeners on draggable components
     useEffect(() => {
@@ -44,6 +44,10 @@ export const Tabs = () => {
     useEffect(() => {
         manageSelectionHighlight();
     }, [manageSelectionHighlight, settingsState.showSelections]);
+
+    useEffect(() => {
+        manageGridsAndOutlines();
+    }, [settingsState.showOutlines]);
 
     const renderTab = () => {
         switch (activeTab) {

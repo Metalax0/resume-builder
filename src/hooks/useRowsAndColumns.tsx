@@ -78,7 +78,7 @@ export const useRowsAndColumns = () => {
 
     const handleAddRow = () => {
         const div = document.createElement("div");
-        div.classList.add("section-row");
+        div.classList.add("section-row", "section-grid", "grid-visible");
         div.ondragover = (e) => e.preventDefault();
         div.ondrop = (e) =>
             drop(e as unknown as React.DragEvent<HTMLDivElement>);
@@ -105,7 +105,7 @@ export const useRowsAndColumns = () => {
 
     const createColumn = () => {
         const div = document.createElement("div");
-        div.classList.add("section-column");
+        div.classList.add("section-column", "section-grid", "grid-visible");
         div.ondragover = (e) => e.preventDefault();
         div.ondrop = (e) =>
             drop(e as unknown as React.DragEvent<HTMLDivElement>);
