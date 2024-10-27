@@ -5,13 +5,17 @@ import { SettingsTab } from "./settings";
 import { PropertiesTab } from "./properties";
 import { TabButtonCollection } from "../../molecules/tab-button-collection";
 import { useRowsAndColumns } from "../../../hooks/useRowsAndColumns";
-import { useDragDrop } from "../../context/dragDropContext";
+import { useStageContext } from "../../context/stageContext";
+import { useSettings } from "../../../hooks/useSettings";
+import { useSettingsContext } from "../../context/settingsContext";
 
 // display tabs selection (settings, properties and component picker)
 export const Tabs = () => {
     const [activeTab, setActiveTab] = useState<TabsEnum>(TabsEnum.picker);
+    const { setDraggedElement } = useStageContext();
+    const { settingsState } = useSettingsContext();
     const { drag } = useRowsAndColumns();
-    const { setDraggedElement } = useDragDrop();
+    const { manageSelectionHighlight } = useSettings();
 
     // Use Effect to re-attach event listeners on draggable components
     useEffect(() => {
@@ -36,6 +40,10 @@ export const Tabs = () => {
             });
         };
     }, [activeTab]);
+
+    useEffect(() => {
+        manageSelectionHighlight();
+    }, [manageSelectionHighlight, settingsState.showSelections]);
 
     const renderTab = () => {
         switch (activeTab) {

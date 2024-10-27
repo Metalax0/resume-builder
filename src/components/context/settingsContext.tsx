@@ -23,10 +23,12 @@ export const SettingsProvider = ({ children }: SettingsProviderPropsType) => {
     );
 };
 
-export const useSettings = () => {
+export const useSettingsContext = () => {
     const context = useContext(SettingsContext);
     if (!context) {
-        throw new Error("useDragDrop must be used within a DragDropProvider");
+        throw new Error(
+            "useSettingsContext must be used within a SettingsProvider"
+        );
     }
     return context;
 };

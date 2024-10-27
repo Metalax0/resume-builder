@@ -1,6 +1,6 @@
 // Settings
 export enum SettingsReducerActions {
-    updateSelectionPriority,
+    toggleSelectionPriority,
     toggleShowOutlines,
     toggleShowSelections,
     isRowRemoveBttnDisabled,
@@ -8,7 +8,7 @@ export enum SettingsReducerActions {
 }
 
 export type SettingsActionType =
-    | UpdateSelectionPriorityAction
+    | ToggleSelectionPriorityAction
     | ToggleShowOutlinesAction
     | ToggleShowSelectionsAction
     | IsRowRemoveBttnDisabled
@@ -27,12 +27,11 @@ export interface SettingsStateType {
 // Settings / Selection Priority
 export enum SelectionPriorityEnumType {
     row,
-    column,
+    col,
 }
 
-export interface UpdateSelectionPriorityAction {
-    type: SettingsReducerActions.updateSelectionPriority;
-    value: SelectionPriorityEnumType;
+export interface ToggleSelectionPriorityAction {
+    type: SettingsReducerActions.toggleSelectionPriority;
 }
 
 // Settings / Show Outlines

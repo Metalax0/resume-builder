@@ -1,10 +1,10 @@
 import { createContext, useContext, ReactNode, useRef } from "react";
 
-interface DragDropProviderPropsType {
+interface StageContextProviderPropsType {
     children: ReactNode;
 }
 
-const DragDropContext = createContext<{
+const StageContext = createContext<{
     rowRef: React.RefObject<HTMLDivElement | null>;
     rowArrRef: React.RefObject<HTMLDivElement[]>;
     draggedElementRef: React.RefObject<HTMLElement | null>;
@@ -13,7 +13,7 @@ const DragDropContext = createContext<{
     setDraggedElement: (element: HTMLElement | null) => void;
 } | null>(null);
 
-export const DragDropProvider = ({ children }: DragDropProviderPropsType) => {
+export const StageProvider = ({ children }: StageContextProviderPropsType) => {
     const rowRef = useRef<null | HTMLDivElement>(null);
     const rowArrRef = useRef<HTMLDivElement[]>([]);
     const draggedElementRef = useRef<HTMLElement | null>(null);
@@ -31,7 +31,7 @@ export const DragDropProvider = ({ children }: DragDropProviderPropsType) => {
     };
 
     return (
-        <DragDropContext.Provider
+        <StageContext.Provider
             value={{
                 rowRef,
                 rowArrRef,
@@ -42,14 +42,14 @@ export const DragDropProvider = ({ children }: DragDropProviderPropsType) => {
             }}
         >
             {children}
-        </DragDropContext.Provider>
+        </StageContext.Provider>
     );
 };
 
-export const useDragDrop = () => {
-    const context = useContext(DragDropContext);
+export const useStageContext = () => {
+    const context = useContext(StageContext);
     if (!context) {
-        throw new Error("useDragDrop must be used within a DragDropProvider");
+        throw new Error("StageContext must be used within a StageProvider");
     }
     return context;
 };

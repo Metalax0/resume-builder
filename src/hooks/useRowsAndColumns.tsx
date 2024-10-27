@@ -1,7 +1,8 @@
-import { useDragDrop } from "../components/context/dragDropContext";
+import { useStageContext } from "../components/context/stageContext";
 import { isTargetOccupied, isTargetValidDropZone } from "../util/dragAndDrop";
-import { useSettings } from "../components/context/settingsContext";
+import { useSettingsContext } from "../components/context/settingsContext";
 import { SettingsReducerActions } from "../types/settingsReducer";
+import { useSettings } from "./useSettings";
 
 // Custom hook for managing rows and columns
 export const useRowsAndColumns = () => {
@@ -12,9 +13,10 @@ export const useRowsAndColumns = () => {
         setRowRef,
         setRowArrRef,
         setDraggedElement,
-    } = useDragDrop();
+    } = useStageContext();
 
-    const { settingsState, settingsDispatch } = useSettings();
+    const { settingsState, settingsDispatch } = useSettingsContext();
+    const { manageSelectionHighlight } = useSettings();
     const { isAddBttnDisabled } = settingsState;
 
     // Helper function to update button states
@@ -85,7 +87,6 @@ export const useRowsAndColumns = () => {
 
         setRowRef(div);
         setRowArrRef([...(rowArrRef.current || []), div]);
-
         handleRowSelected(div);
         controlBttnDisable();
     };
@@ -119,7 +120,9 @@ export const useRowsAndColumns = () => {
         ) {
             document.getElementById("cv-main")?.removeChild(rowRef.current);
             setRowArrRef(
-                rowArrRef.current.filter((row) => row !== rowRef.current)
+                rowArrRef.current.filter(
+                    (row: HTMLDivElement) => row !== rowRef.current
+                )
             );
             setRowRef(rowArrRef.current[rowArrRef.current.length - 1]);
             handleRowSelected(rowRef.current);
@@ -141,9 +144,8 @@ export const useRowsAndColumns = () => {
     };
 
     const handleRowSelected = (row: HTMLDivElement) => {
-        rowArrRef.current!.forEach((r) => r.classList.remove("active-row"));
         setRowRef(row);
-        rowRef.current!.classList.add("active-row");
+        manageSelectionHighlight();
         controlBttnDisable();
     };
 

@@ -20,7 +20,7 @@ export const settingsReducer = (
     action: SettingsActionType
 ) => {
     const {
-        updateSelectionPriority,
+        toggleSelectionPriority,
         toggleShowOutlines,
         toggleShowSelections,
         isRowRemoveBttnDisabled,
@@ -28,10 +28,13 @@ export const settingsReducer = (
     } = SettingsReducerActions;
 
     switch (action.type) {
-        case updateSelectionPriority:
+        case toggleSelectionPriority:
             return {
                 ...state,
-                selectionPriority: action.value,
+                selectionPriority:
+                    state.selectionPriority === SelectionPriorityEnumType.row
+                        ? SelectionPriorityEnumType.col
+                        : SelectionPriorityEnumType.row,
             };
 
         case toggleShowOutlines:

@@ -1,7 +1,12 @@
 import { useRowsAndColumns } from "../../../../hooks/useRowsAndColumns";
 import { BttnTypeEnum } from "../../../../types/button";
+import {
+    SelectionPriorityEnumType,
+    SettingsReducerActions,
+} from "../../../../types/settingsReducer";
 import { Button } from "../../../atoms/button";
 import { ToggleSwitch } from "../../../atoms/toggle-switch";
+import { useSettingsContext } from "../../../context/settingsContext";
 
 export const SettingsTab = () => {
     const {
@@ -12,8 +17,24 @@ export const SettingsTab = () => {
         handleRemoveColumn,
     } = useRowsAndColumns();
 
+    const { settingsState, settingsDispatch } = useSettingsContext();
+
     const handleExportPDF = () => {
         alert("Comming Soon..");
+    };
+
+    const handleGridToggle = () => {
+        settingsDispatch({ type: SettingsReducerActions.toggleShowOutlines });
+    };
+
+    const handleSelectionHighlightToggle = () => {
+        settingsDispatch({ type: SettingsReducerActions.toggleShowSelections });
+    };
+
+    const handleSelectionPriority = () => {
+        settingsDispatch({
+            type: SettingsReducerActions.toggleSelectionPriority,
+        });
     };
 
     return (
@@ -23,7 +44,18 @@ export const SettingsTab = () => {
         >
             <div className="flex flex-col items-start gap-2">
                 <p className="text-gray-800 font-bold">Selection Priority</p>
-                <ToggleSwitch id="selection" labelOn={"Row"} labelOff={"Col"} />
+                <ToggleSwitch
+                    id="selection"
+                    labelOn={"Row"}
+                    labelOff={"Col"}
+                    isToggled={
+                        settingsState.selectionPriority ===
+                        SelectionPriorityEnumType.row
+                            ? true
+                            : false
+                    }
+                    action={handleSelectionPriority}
+                />
             </div>
 
             <div className="flex flex-col items-start gap-2">
@@ -32,12 +64,20 @@ export const SettingsTab = () => {
                     id="selection-highlight"
                     labelOn={"On"}
                     labelOff={"Off"}
+                    isToggled={settingsState.showSelections}
+                    action={handleSelectionHighlightToggle}
                 />
             </div>
 
             <div className="flex flex-col items-start gap-2">
                 <p className="text-gray-800 font-bold">Grids & Outlines</p>
-                <ToggleSwitch id="outlines" labelOn={"On"} labelOff={"Off"} />
+                <ToggleSwitch
+                    id="outlines"
+                    labelOn={"On"}
+                    labelOff={"Off"}
+                    isToggled={settingsState.showOutlines}
+                    action={handleGridToggle}
+                />
             </div>
 
             <hr className="w-full border-gray-800 border-px" />
