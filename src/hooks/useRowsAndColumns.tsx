@@ -8,9 +8,11 @@ import { useSettings } from "./useSettings";
 export const useRowsAndColumns = () => {
     const {
         rowRef,
+        colRef,
         rowArrRef,
         draggedElementRef,
         setRowRef,
+        setColRef,
         setRowArrRef,
         setDraggedElement,
     } = useStageContext();
@@ -88,24 +90,26 @@ export const useRowsAndColumns = () => {
         setRowRef(div);
         setRowArrRef([...(rowArrRef.current || []), div]);
         handleRowSelected(div);
-        controlBttnDisable();
     };
 
     const handleAddColumn = () => {
         const newColumn = createColumn();
         if (rowRef.current?.hasChildNodes()) {
             rowRef.current.appendChild(newColumn);
+            setColRef(newColumn);
+            handleColSelected(newColumn);
         } else {
             const secondColumn = createColumn();
             rowRef.current!.append(newColumn, secondColumn);
+            setColRef(secondColumn);
+            handleColSelected(secondColumn);
         }
-
-        controlBttnDisable();
     };
 
     const createColumn = () => {
         const div = document.createElement("div");
         div.classList.add("section-column", "section-grid", "grid-visible");
+        div.onclick = () => handleColSelected(div);
         div.ondragover = (e) => e.preventDefault();
         div.ondrop = (e) =>
             drop(e as unknown as React.DragEvent<HTMLDivElement>);
@@ -127,24 +131,33 @@ export const useRowsAndColumns = () => {
             setRowRef(rowArrRef.current[rowArrRef.current.length - 1]);
             handleRowSelected(rowRef.current);
         }
-        controlBttnDisable();
     };
 
     const handleRemoveColumn = () => {
         if (rowRef.current) {
-            const cols = rowRef.current.childNodes;
-            if (cols.length === 2) {
-                rowRef.current.removeChild(cols[cols.length - 1]);
-                rowRef.current.removeChild(cols[cols.length - 1]);
-            } else if (cols.length !== 0) {
-                rowRef.current.removeChild(cols[cols.length - 1]);
-            }
+            // const cols = rowRef.current.childNodes;
+            // if (cols.length === 2) {
+            //     rowRef.current.removeChild(cols[cols.length - 1]);
+            //     rowRef.current.removeChild(cols[cols.length - 1]);
+            // } else if (cols.length !== 0) {
+            //     rowRef.current.removeChild(cols[cols.length - 1]);
+            // }
         }
-        controlBttnDisable();
+
+        // Remove selected column (colRef) and set say selected is null
+        console.log(colRef.current);
+        // handleColSelected(null);
     };
 
     const handleRowSelected = (row: HTMLDivElement) => {
         setRowRef(row);
+        manageSelectionHighlight();
+        controlBttnDisable();
+    };
+
+    const handleColSelected = (col: HTMLDivElement | null) => {
+        console.log("col", col);
+        setColRef(col);
         manageSelectionHighlight();
         controlBttnDisable();
     };

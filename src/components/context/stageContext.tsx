@@ -6,9 +6,11 @@ interface StageContextProviderPropsType {
 
 const StageContext = createContext<{
     rowRef: React.RefObject<HTMLDivElement | null>;
+    colRef: React.RefObject<HTMLDivElement | null>;
     rowArrRef: React.RefObject<HTMLDivElement[]>;
     draggedElementRef: React.RefObject<HTMLElement | null>;
     setRowRef: (element: HTMLDivElement | null) => void;
+    setColRef: (element: HTMLDivElement | null) => void;
     setRowArrRef: (element: HTMLDivElement[]) => void;
     setDraggedElement: (element: HTMLElement | null) => void;
 } | null>(null);
@@ -16,10 +18,15 @@ const StageContext = createContext<{
 export const StageProvider = ({ children }: StageContextProviderPropsType) => {
     const rowRef = useRef<null | HTMLDivElement>(null);
     const rowArrRef = useRef<HTMLDivElement[]>([]);
+    const colRef = useRef<null | HTMLDivElement>(null);
     const draggedElementRef = useRef<HTMLElement | null>(null);
 
     const setRowRef = (element: HTMLDivElement | null) => {
         rowRef.current = element;
+    };
+
+    const setColRef = (element: HTMLDivElement | null) => {
+        colRef.current = element;
     };
 
     const setDraggedElement = (element: HTMLElement | null) => {
@@ -34,9 +41,11 @@ export const StageProvider = ({ children }: StageContextProviderPropsType) => {
         <StageContext.Provider
             value={{
                 rowRef,
+                colRef,
                 rowArrRef,
                 draggedElementRef,
                 setRowRef,
+                setColRef,
                 setRowArrRef,
                 setDraggedElement,
             }}
