@@ -13,21 +13,21 @@
     text-align: center;
 }
 
-.grid-visible {
-    border: 1px solid black;
-}
-
-.section-row:hover {
+.section-col {
     cursor: pointer;
-}
-
-.section-column {
-    border-top: none;
-    border-bottom: none;
     flex: 1;
     text-align: center;
+    padding: 3px;
 }
 
-.active-row {
-    border: 5px solid rgb(11, 204, 53);
+.grid-visible {
+    border: 1px solid black;
+    border-bottom: none;
+}
+
+.active-cell {
+    -webkit-box-shadow: inset 0px 0px 0px 3px rgb(55, 0, 255);
+    -moz-box-shadow: inset 0px 0px 0px 3px rgb(55, 0, 255);
+    box-shadow: inset 0px 0px 0px 3px rgb(55, 0, 255);
+    padding: 3px;
 }

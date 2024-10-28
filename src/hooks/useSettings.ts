@@ -1,16 +1,31 @@
 import { useSettingsContext } from "../components/context/settingsContext";
 import { useStageContext } from "../components/context/stageContext";
+import { SelectionPriorityEnumType } from "../types/settingsReducer";
 
 export const useSettings = () => {
-    const { rowRef, rowArrRef } = useStageContext();
+    const { rowRef, colRef, rowArrRef } = useStageContext();
     const { settingsState } = useSettingsContext();
 
+    const resetAllSelection = () => {
+        rowArrRef.current!.forEach((r) => {
+            r.childNodes.forEach((c) => {
+                if (c instanceof Element) {
+                    c.classList.remove("active-cell");
+                }
+            });
+            r.classList.remove("active-cell");
+        });
+    };
+
     const manageSelectionHighlight = () => {
-        if (rowArrRef.current && rowArrRef.current.length != 0) {
-            rowArrRef.current!.forEach((r) => r.classList.remove("active-row"));
-        }
-        if (rowRef.current && settingsState.showSelections) {
-            rowRef.current!.classList.add("active-row");
+        resetAllSelection();
+        if (settingsState.showSelections) {
+            if (
+                settingsState.selectionPriority ===
+                SelectionPriorityEnumType.row
+            )
+                rowRef.current?.classList.add("active-cell");
+            else colRef.current?.classList.add("active-cell");
         }
     };
 
@@ -27,5 +42,8 @@ export const useSettings = () => {
             });
     };
 
-    return { manageSelectionHighlight, manageGridsAndOutlines };
+    return {
+        manageSelectionHighlight,
+        manageGridsAndOutlines,
+    };
 };

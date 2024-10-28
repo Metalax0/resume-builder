@@ -8,7 +8,6 @@ import { useSettings } from "./useSettings";
 export const useRowsAndColumns = () => {
     const {
         rowRef,
-        colRef,
         rowArrRef,
         draggedElementRef,
         setRowRef,
@@ -79,41 +78,20 @@ export const useRowsAndColumns = () => {
     };
 
     const handleAddRow = () => {
-        const div = document.createElement("div");
-        div.classList.add("section-row", "section-grid", "grid-visible");
-        div.ondragover = (e) => e.preventDefault();
-        div.ondrop = (e) =>
-            drop(e as unknown as React.DragEvent<HTMLDivElement>);
-        div.onclick = () => handleRowSelected(div);
-        document.getElementById("cv-main")!.appendChild(div);
-
-        setRowRef(div);
-        setRowArrRef([...(rowArrRef.current || []), div]);
-        handleRowSelected(div);
+        const newRow = createRowNode();
+        document.getElementById("cv-main")!.appendChild(newRow);
+        setRowRef(newRow);
+        setRowArrRef([...(rowArrRef.current || []), newRow]);
+        handleAddColumn();
     };
 
     const handleAddColumn = () => {
-        const newColumn = createColumn();
-        if (rowRef.current?.hasChildNodes()) {
+        const newColumn = createColNode();
+        if (rowRef.current) {
             rowRef.current.appendChild(newColumn);
             setColRef(newColumn);
-            handleColSelected(newColumn);
-        } else {
-            const secondColumn = createColumn();
-            rowRef.current!.append(newColumn, secondColumn);
-            setColRef(secondColumn);
-            handleColSelected(secondColumn);
+            handleCellSelection(newColumn);
         }
-    };
-
-    const createColumn = () => {
-        const div = document.createElement("div");
-        div.classList.add("section-column", "section-grid", "grid-visible");
-        div.onclick = () => handleColSelected(div);
-        div.ondragover = (e) => e.preventDefault();
-        div.ondrop = (e) =>
-            drop(e as unknown as React.DragEvent<HTMLDivElement>);
-        return div;
     };
 
     const handleRemoveRow = () => {
@@ -129,35 +107,51 @@ export const useRowsAndColumns = () => {
                 )
             );
             setRowRef(rowArrRef.current[rowArrRef.current.length - 1]);
-            handleRowSelected(rowRef.current);
+            handleCellSelection(
+                rowRef.current.childNodes[
+                    rowRef.current.childNodes.length - 1
+                ] as HTMLDivElement
+            );
         }
     };
 
     const handleRemoveColumn = () => {
         if (rowRef.current) {
-            // const cols = rowRef.current.childNodes;
-            // if (cols.length === 2) {
-            //     rowRef.current.removeChild(cols[cols.length - 1]);
-            //     rowRef.current.removeChild(cols[cols.length - 1]);
-            // } else if (cols.length !== 0) {
-            //     rowRef.current.removeChild(cols[cols.length - 1]);
-            // }
+            const cols = rowRef.current.childNodes;
+            if (cols.length !== 0)
+                rowRef.current.removeChild(cols[cols.length - 1]);
+
+            handleCellSelection(
+                rowRef.current.childNodes[
+                    rowRef.current.childNodes.length - 1
+                ] as HTMLDivElement
+            );
         }
-
-        // Remove selected column (colRef) and set say selected is null
-        console.log(colRef.current);
-        // handleColSelected(null);
     };
 
-    const handleRowSelected = (row: HTMLDivElement) => {
-        setRowRef(row);
-        manageSelectionHighlight();
-        controlBttnDisable();
+    const createRowNode = () => {
+        const div = document.createElement("div");
+        div.classList.add("section-row", "section-grid", "grid-visible");
+        div.ondragover = (e) => e.preventDefault();
+        div.ondrop = (e) =>
+            drop(e as unknown as React.DragEvent<HTMLDivElement>);
+        return div;
     };
 
-    const handleColSelected = (col: HTMLDivElement | null) => {
-        console.log("col", col);
-        setColRef(col);
+    const createColNode = () => {
+        const div = document.createElement("div");
+        div.classList.add("section-col", "section-grid", "grid-visible");
+        div.onclick = () => handleCellSelection(div);
+        div.ondragover = (e) => e.preventDefault();
+        div.ondrop = (e) =>
+            drop(e as unknown as React.DragEvent<HTMLDivElement>);
+        return div;
+    };
+
+    const handleCellSelection = (elem: HTMLDivElement) => {
+        setColRef(elem);
+        const parent = elem.parentElement as HTMLDivElement;
+        setRowRef(parent);
         manageSelectionHighlight();
         controlBttnDisable();
     };
