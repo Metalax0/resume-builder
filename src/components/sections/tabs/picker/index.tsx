@@ -8,13 +8,13 @@ export const PickerTab = () => {
         <div
             className="section-elements-collection flex-1 flex flex-col gap-2"
             onDragOver={(e) => e.preventDefault()}
-            onDrop={(e) => drop(e)}
+            onDrop={drop}
         >
             <strong className="text-black">Drag & drop to place items</strong>
 
-            <Paragraph text={"About Me"} drag={drag} />
-            <Paragraph text={"Education"} drag={drag} />
-            <Paragraph text={"Experience"} drag={drag} />
+            <Paragraph key={1} drag={drag} />
+            <Paragraph key={2} drag={drag} />
+            <Paragraph key={3} drag={drag} />
         </div>
     );
 };

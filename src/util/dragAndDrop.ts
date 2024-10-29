@@ -1,4 +1,4 @@
-export const isTargetValidDropZone = (target: EventTarget & HTMLDivElement) => {
+export const isTargetValidDropZone = (target: EventTarget & HTMLElement) => {
     if (
         target.classList.contains("section-col") ||
         target.classList.contains("section-elements-collection")
@@ -7,7 +7,7 @@ export const isTargetValidDropZone = (target: EventTarget & HTMLDivElement) => {
     else return false;
 };
 
-export const isTargetOccupied = (target: EventTarget & HTMLDivElement) => {
+export const isTargetOccupied = (target: EventTarget & HTMLElement) => {
     const elem = target.childNodes[0] as HTMLElement;
     if (elem) {
         const draggable = elem.getAttribute("draggable");

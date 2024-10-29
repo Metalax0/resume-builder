@@ -22,7 +22,7 @@ export const Tabs = () => {
         const draggables = document.querySelectorAll(".draggable-element");
 
         draggables.forEach((draggable) => {
-            const element = draggable as HTMLElement;
+            const element = draggable;
             element.addEventListener(
                 "dragstart",
                 drag as unknown as EventListener
@@ -32,7 +32,7 @@ export const Tabs = () => {
 
         return () => {
             draggables.forEach((draggable) => {
-                const element = draggable as HTMLElement;
+                const element = draggable;
                 element.removeEventListener(
                     "dragstart",
                     drag as unknown as EventListener
@@ -73,7 +73,7 @@ export const Tabs = () => {
                 activeTab={activeTab}
                 setActiveTab={setActiveTab}
             />
-            <div className="flex flex-1 gap-5 p-5 bg-red-500">
+            <div className="flex flex-1 gap-5 p-4 bg-red-500">
                 {renderTab()}
             </div>
         </div>

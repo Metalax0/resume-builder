@@ -5,27 +5,27 @@ interface StageContextProviderPropsType {
 }
 
 const StageContext = createContext<{
-    rowRef: React.RefObject<HTMLDivElement | null>;
-    colRef: React.RefObject<HTMLDivElement | null>;
-    rowArrRef: React.RefObject<HTMLDivElement[]>;
+    rowRef: React.RefObject<HTMLElement | null>;
+    colRef: React.RefObject<HTMLElement | null>;
+    rowArrRef: React.RefObject<HTMLElement[]>;
     draggedElementRef: React.RefObject<HTMLElement | null>;
-    setRowRef: (element: HTMLDivElement | null) => void;
-    setColRef: (element: HTMLDivElement | null) => void;
-    setRowArrRef: (element: HTMLDivElement[]) => void;
+    setRowRef: (element: HTMLElement | null) => void;
+    setColRef: (element: HTMLElement | null) => void;
+    setRowArrRef: (element: HTMLElement[]) => void;
     setDraggedElement: (element: HTMLElement | null) => void;
 } | null>(null);
 
 export const StageProvider = ({ children }: StageContextProviderPropsType) => {
-    const rowRef = useRef<null | HTMLDivElement>(null);
-    const rowArrRef = useRef<HTMLDivElement[]>([]);
-    const colRef = useRef<null | HTMLDivElement>(null);
+    const rowRef = useRef<null | HTMLElement>(null);
+    const rowArrRef = useRef<HTMLElement[]>([]);
+    const colRef = useRef<null | HTMLElement>(null);
     const draggedElementRef = useRef<HTMLElement | null>(null);
 
-    const setRowRef = (element: HTMLDivElement | null) => {
+    const setRowRef = (element: HTMLElement | null) => {
         rowRef.current = element;
     };
 
-    const setColRef = (element: HTMLDivElement | null) => {
+    const setColRef = (element: HTMLElement | null) => {
         colRef.current = element;
     };
 
@@ -33,7 +33,7 @@ export const StageProvider = ({ children }: StageContextProviderPropsType) => {
         draggedElementRef.current = element;
     };
 
-    const setRowArrRef = (element: HTMLDivElement[]) => {
+    const setRowArrRef = (element: HTMLElement[]) => {
         rowArrRef.current = element;
     };
 

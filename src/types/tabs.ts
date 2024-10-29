@@ -5,6 +5,6 @@ export enum TabsEnum {
 }
 
 export interface PickerTabType {
-    drag: (e: React.DragEvent<HTMLDivElement>) => void;
-    drop: (e: React.DragEvent<HTMLDivElement>) => void;
+    drag: (e: React.DragEvent<HTMLElement>) => void;
+    drop: (e: React.DragEvent<HTMLElement>) => void;
 }

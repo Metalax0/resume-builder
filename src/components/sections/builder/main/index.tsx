@@ -1,3 +1,3 @@
 export const Main = () => {
-    return <div className="flex-[2]" id="cv-main" />;
+    return <div className="max-w-[800px] flex-[2]" id="cv-main" />;
 };
