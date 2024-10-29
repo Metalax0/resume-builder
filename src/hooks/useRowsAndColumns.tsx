@@ -8,6 +8,7 @@ import { useSettings } from "./useSettings";
 export const useRowsAndColumns = () => {
     const {
         rowRef,
+        colRef,
         rowArrRef,
         draggedElementRef,
         setRowRef,
@@ -79,16 +80,40 @@ export const useRowsAndColumns = () => {
 
     const handleAddRow = () => {
         const newRow = createRowNode();
-        document.getElementById("cv-main")!.appendChild(newRow);
+        const currentRow = rowRef.current;
+
+        if (currentRow) {
+            currentRow.parentNode?.insertBefore(newRow, currentRow.nextSibling);
+            const currentIndex = rowArrRef.current!.indexOf(currentRow);
+            const updatedRowArr = [
+                ...rowArrRef.current!.slice(0, currentIndex + 1),
+                newRow,
+                ...rowArrRef.current!.slice(currentIndex + 1),
+            ];
+
+            setRowArrRef(updatedRowArr);
+        } else {
+            document.getElementById("cv-main")!.appendChild(newRow);
+            setRowArrRef([...(rowArrRef.current || []), newRow]);
+        }
+
         setRowRef(newRow);
-        setRowArrRef([...(rowArrRef.current || []), newRow]);
         handleAddColumn();
     };
 
     const handleAddColumn = () => {
         const newColumn = createColNode();
-        if (rowRef.current) {
-            rowRef.current.appendChild(newColumn);
+        const currentRow = rowRef.current;
+
+        if (currentRow) {
+            const currentCol = colRef.current;
+
+            if (currentCol) {
+                currentRow.insertBefore(newColumn, currentCol.nextSibling);
+            } else {
+                currentRow.appendChild(newColumn);
+            }
+
             setColRef(newColumn);
             handleCellSelection(newColumn);
         }
@@ -114,10 +139,9 @@ export const useRowsAndColumns = () => {
     };
 
     const handleRemoveColumn = () => {
-        if (rowRef.current) {
+        if (rowRef.current && colRef.current) {
             const cols = rowRef.current.childNodes;
-            if (cols.length !== 0)
-                rowRef.current.removeChild(cols[cols.length - 1]);
+            if (cols.length !== 0) rowRef.current.removeChild(colRef.current);
 
             handleCellSelection(
                 rowRef.current.childNodes[
