@@ -1,4 +1,5 @@
 import { useRowsAndColumns } from "../../../../hooks/useRowsAndColumns";
+import { Heading } from "../../../draggable/heading";
 import { List } from "../../../draggable/list";
 import { Paragraph } from "../../../draggable/paragraph";
 
@@ -13,8 +14,11 @@ export const PickerTab = () => {
         >
             <strong className="text-black">Drag & drop to place items</strong>
 
-            <Paragraph key={1} drag={drag} />
-            <List key={2} drag={drag} />
+            <Paragraph drag={drag} />
+            <List drag={drag} />
+            <Heading type={1} drag={drag} />
+            <Heading type={2} drag={drag} />
+            <Heading type={3} drag={drag} />
         </div>
     );
 };

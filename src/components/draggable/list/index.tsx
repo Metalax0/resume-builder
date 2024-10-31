@@ -1,15 +1,30 @@
+import { ListItem } from "./listItem";
+
 interface ListPropsType {
     drag: (e: React.DragEvent<HTMLElement>) => void;
 }
 
 export const List = ({ drag }: ListPropsType) => {
+    const symbolList = [
+        <>&#10033;</>,
+        <>&#10032;</>,
+        <>&#10033;</>,
+        <>&#10004;</>,
+        <>&#9900;</>,
+        <>&diams;</>,
+    ];
+
+    const activeSymbol = symbolList[0];
+
     return (
         <div
             draggable
             onDragStart={(e) => drag(e)}
-            className="draggable-element w-full h-full max-w-full max-h-full block p-2.5 text-sm text-gray-900 bg-gray-50 rounded-lg border focus:outline-0 border-gray-300 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
+            className="draggable-element flex flex-col gap-2 w-full h-full max-w-full max-h-full p-2.5 text-sm text-gray-900 bg-gray-50 rounded-lg border focus:outline-0 border-gray-300 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
         >
-            List (Work in progress)
+            <ListItem symbol={activeSymbol} />
+            <ListItem symbol={activeSymbol} />
+            <ListItem symbol={activeSymbol} />
         </div>
     );
 };
