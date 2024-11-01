@@ -1,3 +1,4 @@
+import { useReactToPrint } from "react-to-print";
 import { useRowsAndColumns } from "../../../../hooks/useRowsAndColumns";
 import { BttnTypeEnum } from "../../../../types/button";
 import {
@@ -16,11 +17,15 @@ export const SettingsTab = () => {
         handleRemoveRow,
         handleRemoveColumn,
     } = useRowsAndColumns();
-
     const { settingsState, settingsDispatch } = useSettingsContext();
 
+    const reactToPrintFn = useReactToPrint({
+        contentRef: settingsState.pdfRef,
+    });
+
     const handleExportPDF = () => {
-        alert("Comming Soon..");
+        // turn grids and everything off
+        reactToPrintFn();
     };
 
     const handleGridToggle = () => {

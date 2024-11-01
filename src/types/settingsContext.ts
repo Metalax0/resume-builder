@@ -16,6 +16,7 @@ export interface SettingsState {
         row: boolean;
         col: boolean;
     };
+    pdfRef: React.RefObject<HTMLElement>;
 }
 
 export type SettingsDispatch = React.Dispatch<SettingsActionType>;

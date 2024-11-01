@@ -5,6 +5,7 @@ export enum SettingsReducerActions {
     toggleShowSelections,
     isRowRemoveBttnDisabled,
     isColRemoveBttnDisabled,
+    setPdfRef,
 }
 
 export type SettingsActionType =
@@ -12,7 +13,8 @@ export type SettingsActionType =
     | ToggleShowOutlinesAction
     | ToggleShowSelectionsAction
     | IsRowRemoveBttnDisabled
-    | IsColRemoveBttnDisabled;
+    | IsColRemoveBttnDisabled
+    | SetPdfRef;
 
 export interface SettingsStateType {
     selectionPriority: SelectionPriorityEnumType;
@@ -22,6 +24,7 @@ export interface SettingsStateType {
         row: boolean;
         col: boolean;
     };
+    pdfRef: React.RefObject<HTMLElement>;
 }
 
 // Settings / Selection Priority
@@ -54,4 +57,9 @@ export interface IsRowRemoveBttnDisabled {
 export interface IsColRemoveBttnDisabled {
     type: SettingsReducerActions.isColRemoveBttnDisabled;
     value: boolean;
+}
+
+export interface SetPdfRef {
+    type: SettingsReducerActions.setPdfRef;
+    value: React.RefObject<HTMLElement>;
 }

@@ -1,3 +1,4 @@
+import { createRef } from "react";
 import {
     SelectionPriorityEnumType,
     SettingsActionType,
@@ -13,6 +14,7 @@ export const settingsInitialState: SettingsStateType = {
         row: true,
         col: false,
     },
+    pdfRef: createRef<HTMLElement>(),
 };
 
 export const settingsReducer = (
@@ -25,6 +27,7 @@ export const settingsReducer = (
         toggleShowSelections,
         isRowRemoveBttnDisabled,
         isColRemoveBttnDisabled,
+        setPdfRef,
     } = SettingsReducerActions;
 
     switch (action.type) {
@@ -66,5 +69,12 @@ export const settingsReducer = (
                     col: action.value,
                 },
             };
+
+        case setPdfRef: {
+            return {
+                ...state,
+                pdfRef: action.value,
+            };
+        }
     }
 };
