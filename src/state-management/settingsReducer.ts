@@ -4,7 +4,7 @@ import {
     SettingsActionType,
     SettingsReducerActions,
     SettingsStateType,
-} from "../types/settingsReducer";
+} from "../types/settings";
 
 export const settingsInitialState: SettingsStateType = {
     selectionPriority: SelectionPriorityEnumType.row,

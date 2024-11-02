@@ -1,17 +1,14 @@
 import { Landing } from "./components/sections/hero";
 import { Builder } from "./components/sections/builder";
-import { StageProvider } from "./components/context/stageContext";
-import { SettingsProvider } from "./components/context/settingsContext";
+import { AppProviders } from "./components/context/appProviders";
 
 function App() {
     return (
         <div className="w-full h-full">
-            <StageProvider>
-                <SettingsProvider>
-                    <Landing />
-                    <Builder />
-                </SettingsProvider>
-            </StageProvider>
+            <AppProviders>
+                <Landing />
+                <Builder />
+            </AppProviders>
         </div>
     );
 }

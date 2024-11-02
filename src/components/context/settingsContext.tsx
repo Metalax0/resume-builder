@@ -1,12 +1,13 @@
 import { createContext, useReducer, useContext } from "react";
-import {
-    SettingsContextType,
-    SettingsProviderPropsType,
-} from "../../types/settingsContext";
+
 import {
     settingsInitialState,
     settingsReducer,
 } from "../../state-management/settingsReducer";
+import {
+    SettingsContextType,
+    SettingsProviderPropsType,
+} from "../../types/settings";
 
 const SettingsContext = createContext<SettingsContextType | null>(null);
 

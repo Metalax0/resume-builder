@@ -1,6 +1,6 @@
 import { useSettingsContext } from "../components/context/settingsContext";
 import { useStageContext } from "../components/context/stageContext";
-import { SelectionPriorityEnumType } from "../types/settingsReducer";
+import { SelectionPriorityEnumType } from "../types/settings";
 
 export const useSettings = () => {
     const { rowRef, colRef, rowArrRef } = useStageContext();

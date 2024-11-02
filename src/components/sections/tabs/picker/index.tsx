@@ -12,7 +12,9 @@ export const PickerTab = () => {
             onDragOver={(e) => e.preventDefault()}
             onDrop={drop}
         >
-            <strong className="text-black">Drag & drop to place items</strong>
+            <strong className="text-black text-left">
+                Drag & drop to place items
+            </strong>
 
             <Paragraph drag={drag} />
             <List drag={drag} />

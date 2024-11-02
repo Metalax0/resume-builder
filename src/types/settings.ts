@@ -1,3 +1,16 @@
+import { ReactNode } from "react";
+
+export interface SettingsProviderPropsType {
+    children: ReactNode;
+}
+
+export type SettingsDispatch = React.Dispatch<SettingsActionType>;
+
+export interface SettingsContextType {
+    settingsState: SettingsStateType;
+    settingsDispatch: SettingsDispatch;
+}
+
 // Settings
 export enum SettingsReducerActions {
     toggleSelectionPriority,

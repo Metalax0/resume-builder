@@ -1,8 +1,8 @@
 import { useStageContext } from "../components/context/stageContext";
 import { isTargetOccupied, isTargetValidDropZone } from "../util/dragAndDrop";
 import { useSettingsContext } from "../components/context/settingsContext";
-import { SettingsReducerActions } from "../types/settingsReducer";
 import { useSettings } from "./useSettings";
+import { SettingsReducerActions } from "../types/settings";
 
 // Custom hook for managing rows and columns
 export const useRowsAndColumns = () => {

@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 import { useSettingsContext } from "../../../context/settingsContext";
-import { SettingsReducerActions } from "../../../../types/settingsReducer";
+import { SettingsReducerActions } from "../../../../types/settings";
 
 export const Main = () => {
     const contentRef = useRef<HTMLDivElement>(null);

@@ -1,13 +1,14 @@
 import { useReactToPrint } from "react-to-print";
 import { useRowsAndColumns } from "../../../../hooks/useRowsAndColumns";
 import { BttnTypeEnum } from "../../../../types/button";
-import {
-    SelectionPriorityEnumType,
-    SettingsReducerActions,
-} from "../../../../types/settingsReducer";
+
 import { Button } from "../../../atoms/button";
 import { ToggleSwitch } from "../../../atoms/toggle-switch";
 import { useSettingsContext } from "../../../context/settingsContext";
+import {
+    SelectionPriorityEnumType,
+    SettingsReducerActions,
+} from "../../../../types/settings";
 
 export const SettingsTab = () => {
     const {
