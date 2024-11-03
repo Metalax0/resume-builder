@@ -13,7 +13,5 @@ export const Main = () => {
         });
     }, [settingsDispatch, settingsState.pdfRef]);
 
-    return (
-        <div ref={contentRef} className="max-w-[800px] flex-[2]" id="cv-main" />
-    );
+    return <div ref={contentRef} className="" id="cv-main" />;
 };
