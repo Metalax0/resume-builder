@@ -13,5 +13,11 @@ export const Main = () => {
         });
     }, [settingsDispatch, settingsState.pdfRef]);
 
+    useEffect(() => {
+        const zoomValue = settingsState.builderZoom / 100;
+        contentRef.current!.style.transform = `scale(${zoomValue})`;
+        contentRef.current!.style.transformOrigin = "top center";
+    }, [settingsState.builderZoom]);
+
     return <div ref={contentRef} className="" id="cv-main" />;
 };

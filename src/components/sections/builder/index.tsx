@@ -4,6 +4,7 @@ import { useRowsAndColumns } from "../../../hooks/useRowsAndColumns";
 import { useEffect } from "react";
 import { Tabs } from "../tabs";
 import "./style.css";
+import { ZoomSlider } from "../../molecules/zoomSlider";
 
 export const Builder = () => {
     const { handleAddRow } = useRowsAndColumns();
@@ -11,16 +12,12 @@ export const Builder = () => {
         handleAddRow();
     }, []);
 
-    const handleZoomChange = (e) => {
-        console.log(e);
-    };
-
     return (
-        <div className="flex flex-col  justify-center items-center gap-10 px-5 w-full h-full">
+        <div className="flex flex-col justify-center items-center gap-10 px-5 w-full h-full">
             <Header />
-            <div className="vertical flex relative gap-2 w-full h-[70%] vertical ">
+            <div className="flex relative gap-2 w-full h-[70%] ">
                 <Main />
-                <input type="range" onChange={handleZoomChange} />
+                <ZoomSlider />
                 <Tabs />
             </div>
         </div>

@@ -19,6 +19,7 @@ export enum SettingsReducerActions {
     isRowRemoveBttnDisabled,
     isColRemoveBttnDisabled,
     setPdfRef,
+    setBuilderZoom,
 }
 
 export type SettingsActionType =
@@ -27,7 +28,8 @@ export type SettingsActionType =
     | ToggleShowSelectionsAction
     | IsRowRemoveBttnDisabled
     | IsColRemoveBttnDisabled
-    | SetPdfRef;
+    | SetPdfRef
+    | SetBuilderZoom;
 
 export interface SettingsStateType {
     selectionPriority: SelectionPriorityEnumType;
@@ -38,6 +40,7 @@ export interface SettingsStateType {
         col: boolean;
     };
     pdfRef: React.RefObject<HTMLElement>;
+    builderZoom: number;
 }
 
 // Settings / Selection Priority
@@ -75,4 +78,9 @@ export interface IsColRemoveBttnDisabled {
 export interface SetPdfRef {
     type: SettingsReducerActions.setPdfRef;
     value: React.RefObject<HTMLElement>;
+}
+
+export interface SetBuilderZoom {
+    type: SettingsReducerActions.setBuilderZoom;
+    value: number;
 }

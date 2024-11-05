@@ -15,6 +15,7 @@ export const settingsInitialState: SettingsStateType = {
         col: false,
     },
     pdfRef: createRef<HTMLElement>(),
+    builderZoom: 70,
 };
 
 export const settingsReducer = (
@@ -27,6 +28,7 @@ export const settingsReducer = (
         toggleShowSelections,
         isRowRemoveBttnDisabled,
         isColRemoveBttnDisabled,
+        setBuilderZoom,
         setPdfRef,
     } = SettingsReducerActions;
 
@@ -74,6 +76,13 @@ export const settingsReducer = (
             return {
                 ...state,
                 pdfRef: action.value,
+            };
+        }
+
+        case setBuilderZoom: {
+            return {
+                ...state,
+                builderZoom: action.value,
             };
         }
     }

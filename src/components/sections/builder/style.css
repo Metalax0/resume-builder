@@ -6,9 +6,6 @@
     gap: 5px;
     flex-direction: column;
     background-color: rgb(243, 208, 142);
-
-    transform: scale(0.6);
-    transform-origin: top center;
 }
 
 #cv-main * {
@@ -57,7 +54,7 @@
 @media print {
     #cv-main {
         background-color: rgb(249, 250, 251);
-        transform: scale(1);
+        transform: scale(1) !important;
     }
 
     * {
