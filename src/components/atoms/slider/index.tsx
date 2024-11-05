@@ -2,9 +2,17 @@ interface SliderPropsType {
     title: string;
     value: number;
     handleChange: (value: number) => void;
+    min?: number;
+    max?: number;
 }
 
-export const Slider = ({ title, value, handleChange }: SliderPropsType) => {
+export const Slider = ({
+    title,
+    value,
+    handleChange,
+    min = 100,
+    max = 1000,
+}: SliderPropsType) => {
     return (
         <div className="my-5">
             <p className="text-gray-800 font-bold">{title}</p>
@@ -12,8 +20,8 @@ export const Slider = ({ title, value, handleChange }: SliderPropsType) => {
                 <input
                     id={"range-" + title}
                     type="range"
-                    min={100}
-                    max={1000}
+                    min={min}
+                    max={max}
                     step={1}
                     value={value}
                     onChange={(e) => handleChange(Number(e.target.value))}

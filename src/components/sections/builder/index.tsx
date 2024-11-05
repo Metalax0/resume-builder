@@ -11,11 +11,16 @@ export const Builder = () => {
         handleAddRow();
     }, []);
 
+    const handleZoomChange = (e) => {
+        console.log(e);
+    };
+
     return (
-        <div className="flex flex-col justify-center gap-5 items-center px-5 w-full h-full">
+        <div className="flex flex-col  justify-center items-center gap-10 px-5 w-full h-full">
             <Header />
-            <div className="flex gap-5 w-full h-[70%]">
+            <div className="vertical flex relative gap-2 w-full h-[70%] vertical ">
                 <Main />
+                <input type="range" onChange={handleZoomChange} />
                 <Tabs />
             </div>
         </div>
