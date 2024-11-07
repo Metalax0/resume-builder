@@ -4,9 +4,10 @@ export const HeadingPrimary = ({ drag }: HeadingPropsType) => {
     return (
         <input
             draggable
+            data-category="heading"
             onDragStart={(e) => drag(e)}
             className="draggable-element text-center w-full h-full max-w-full max-h-full resize-none text-3xl text-gray-900 bg-gray-50  focus:outline-0"
-            placeholder="Primary Heading"
+            placeholder="Heading 1"
         ></input>
     );
 };

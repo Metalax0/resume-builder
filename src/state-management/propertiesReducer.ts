@@ -12,6 +12,8 @@ export const propertiesInitialState: PropertiesStateType = {
         bgColor: "transparent",
     },
     element: {
+        fontFamily: "Arial, sans-serif",
+        fontSize: 14,
         width: 0,
         height: 0,
     },
@@ -22,8 +24,14 @@ export const propertiesReducer = (
     action: PropertiesActionType
 ) => {
     const { type, value, category } = action;
-    const { setWidth, setHeight, setWidthHeight, setBgColor } =
-        PropertiesReducerActions;
+    const {
+        setWidth,
+        setHeight,
+        setWidthHeight,
+        setBgColor,
+        setFontFamily,
+        setFontSize,
+    } = PropertiesReducerActions;
 
     if (category === PropertiesStateCategoryEnum.cell)
         // State.Cell
@@ -75,7 +83,7 @@ export const propertiesReducer = (
                 return {
                     ...state,
                     element: {
-                        ...state.cell,
+                        ...state.element,
                         width: value.width,
                         height: value.height,
                     },
@@ -85,7 +93,7 @@ export const propertiesReducer = (
                 return {
                     ...state,
                     element: {
-                        ...state.cell,
+                        ...state.element,
                         width: value,
                     },
                 };
@@ -94,8 +102,26 @@ export const propertiesReducer = (
                 return {
                     ...state,
                     element: {
-                        ...state.cell,
+                        ...state.element,
                         height: value,
+                    },
+                };
+
+            case setFontFamily:
+                return {
+                    ...state,
+                    element: {
+                        ...state.element,
+                        fontFamily: value,
+                    },
+                };
+
+            case setFontSize:
+                return {
+                    ...state,
+                    element: {
+                        ...state.element,
+                        fontSize: value,
                     },
                 };
 

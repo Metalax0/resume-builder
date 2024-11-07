@@ -6,6 +6,7 @@
     gap: 5px;
     flex-direction: column;
     background-color: rgb(243, 208, 142);
+    font-family: "Arial, sans-serif";
 }
 
 #cv-main * {
@@ -49,6 +50,10 @@
 
 .active-cell {
     border: 5px solid blue;
+}
+
+.draggable-element {
+    font-family: Arial, sans-serif;
 }
 
 @media print {

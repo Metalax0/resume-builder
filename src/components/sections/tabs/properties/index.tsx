@@ -3,6 +3,7 @@ import { useSettingsContext } from "../../../context/settingsContext";
 import { SelectionPriorityEnumType } from "../../../../types/settings";
 import { usePropertiesContext } from "../../../context/propertiesContext";
 import { CommonProperties } from "./common";
+import { FontsProperties } from "./fonts";
 
 export const PropertiesTab = () => {
     const { rowRef, colRef } = useStageContext();
@@ -18,6 +19,11 @@ export const PropertiesTab = () => {
     // tracks child element of colRef.current (currently active col)
     const selectedElement = colRef.current!.firstChild as HTMLElement | null;
 
+    const getElementCategory = () => {
+        if (selectedElement) return selectedElement.dataset.category;
+        else return "none selected";
+    };
+
     return (
         <div className="flex flex-col flex-1 bg-red-500">
             {/* Cell Control */}
@@ -32,12 +38,12 @@ export const PropertiesTab = () => {
             <hr className="h-px my-2 bg-gray-200 border-0 dark:bg-gray-700" />
             {/* Elements Control */}
             <div className="text-left mt-3">
-                {/* 
-                    - Display like this : Element (paragraph)  or Element (list)
-                    - Need to get info on what type of element is being selected
-                    - This info can be used to render element specific proeprties
-                */}
-                <strong className="text-black"> Element</strong>
+                <strong className="text-black">
+                    Element
+                    <span className="font-normal italic">
+                        {" - "}[ {getElementCategory()} ]
+                    </span>
+                </strong>
                 {!selectedElement && (
                     <p className="text-black mt-3 italic font-semibold">
                         No element selected, click on an element
@@ -50,9 +56,22 @@ export const PropertiesTab = () => {
                             dispatch={propertiesDispatch}
                             selected={selectedElement}
                         />
+                        <FontsProperties
+                            state={propertiesState}
+                            dispatch={propertiesDispatch}
+                            selected={selectedElement}
+                        />
                     </>
                 )}
             </div>
         </div>
     );
 };
+
+/*
+    data-category: 
+
+    heading
+    list
+    paragraph
+*/

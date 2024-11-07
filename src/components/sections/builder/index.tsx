@@ -1,9 +1,9 @@
+import "./style.css";
 import { Main } from "./main";
 import { Header } from "./header";
 import { useRowsAndColumns } from "../../../hooks/useRowsAndColumns";
 import { useEffect } from "react";
 import { Tabs } from "../tabs";
-import "./style.css";
 import { ZoomSlider } from "../../molecules/zoomSlider";
 
 export const Builder = () => {
