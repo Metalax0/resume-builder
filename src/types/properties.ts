@@ -20,6 +20,7 @@ export interface PropertiesStateType {
     element: {
         fontFamily: string;
         fontSize: number;
+        fontColor: string;
         width: number;
         height: number;
     };
@@ -33,6 +34,7 @@ export enum PropertiesReducerActions {
     setBgColor,
     setFontFamily,
     setFontSize,
+    setFontColor,
 }
 
 export type PropertiesActionType =
@@ -41,7 +43,8 @@ export type PropertiesActionType =
     | SetWidthHeightAction
     | SetBgColorAction
     | SetFontFamily
-    | SetFontSize;
+    | SetFontSize
+    | SetFontColor;
 
 export enum PropertiesStateCategoryEnum {
     cell,
@@ -81,5 +84,11 @@ export interface SetFontFamily {
 export interface SetFontSize {
     type: PropertiesReducerActions.setFontSize;
     value: number;
+    category: PropertiesStateCategoryEnum;
+}
+
+export interface SetFontColor {
+    type: PropertiesReducerActions.setFontColor;
+    value: string;
     category: PropertiesStateCategoryEnum;
 }

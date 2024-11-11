@@ -21,14 +21,28 @@ export const FontsProperties = ({
 }: FontsPropertiesPropsType) => {
     const { fontFamily, fontSize, fontColor } = useMemo(() => {
         return {
-            fontFamily: selected?.style.fontFamily || "Arial, sans-serif",
-            fontSize: selected?.style.fontSize || 15,
-            fontColor: selected?.style.color || "#000000",
+            fontFamily: selected
+                ? getComputedStyle(selected).fontFamily
+                : "Arial, sans-serif",
+            fontSize: selected
+                ? parseFloat(getComputedStyle(selected).fontSize)
+                : 50,
+            fontColor: selected ? getComputedStyle(selected).color : "#000000",
         };
     }, [selected]);
 
+    if (selected) {
+        console.log(
+            selected.style.fontFamily,
+            selected.style.fontSize,
+            selected.style.color
+        );
+    }
+
     useEffect(() => {
         dispatchFontFamily(fontFamily);
+        dispatchFontSize(fontSize);
+        dispatchFontColor(fontColor);
     }, [fontFamily, fontSize, fontColor]);
 
     const dispatchFontFamily = (value: string) => {
@@ -47,6 +61,15 @@ export const FontsProperties = ({
             value,
         });
         selected!.style.fontSize = value + "px";
+    };
+
+    const dispatchFontColor = (value: string) => {
+        dispatch({
+            category: PropertiesStateCategoryEnum.element,
+            type: PropertiesReducerActions.setFontColor,
+            value,
+        });
+        selected!.style.color = value;
     };
 
     const handleFontFamilyChange = (newFont: string) => {

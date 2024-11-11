@@ -16,6 +16,7 @@ export const propertiesInitialState: PropertiesStateType = {
         fontSize: 14,
         width: 0,
         height: 0,
+        fontColor: "#000000",
     },
 };
 
