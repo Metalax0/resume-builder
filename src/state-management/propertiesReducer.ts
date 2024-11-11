@@ -32,6 +32,7 @@ export const propertiesReducer = (
         setBgColor,
         setFontFamily,
         setFontSize,
+        setFontColor,
     } = PropertiesReducerActions;
 
     if (category === PropertiesStateCategoryEnum.cell)
@@ -123,6 +124,15 @@ export const propertiesReducer = (
                     element: {
                         ...state.element,
                         fontSize: value,
+                    },
+                };
+
+            case setFontColor:
+                return {
+                    ...state,
+                    element: {
+                        ...state.element,
+                        fontColor: value,
                     },
                 };
 

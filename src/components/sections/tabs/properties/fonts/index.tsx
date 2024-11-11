@@ -7,6 +7,8 @@ import {
 } from "../../../../../types/properties";
 import { InputNumber } from "../../../../atoms/input-number";
 import { FontsDropDown } from "../../../../molecules/fontsDropdown";
+import { ColorPicker } from "../../../../atoms/color-picker";
+import { rgbToHex } from "../../../../../util/rgbToHex";
 
 export interface FontsPropertiesPropsType {
     selected: HTMLElement | null;
@@ -27,17 +29,11 @@ export const FontsProperties = ({
             fontSize: selected
                 ? parseFloat(getComputedStyle(selected).fontSize)
                 : 50,
-            fontColor: selected ? getComputedStyle(selected).color : "#000000",
+            fontColor: selected
+                ? rgbToHex(getComputedStyle(selected).color)
+                : "#FF0000",
         };
     }, [selected]);
-
-    if (selected) {
-        console.log(
-            selected.style.fontFamily,
-            selected.style.fontSize,
-            selected.style.color
-        );
-    }
 
     useEffect(() => {
         dispatchFontFamily(fontFamily);
@@ -80,6 +76,10 @@ export const FontsProperties = ({
         dispatchFontSize(newSize);
     };
 
+    const handleFontColorChange = (newColor: string) => {
+        dispatchFontColor(newColor);
+    };
+
     return (
         <>
             {/* Font Family */}
@@ -92,6 +92,12 @@ export const FontsProperties = ({
                 title={"Font Size"}
                 value={state.element.fontSize}
                 onChange={handleFontSizeChange}
+            />
+            {/* Foreground Color */}
+            <ColorPicker
+                title="Text Color"
+                color={state.element.fontColor}
+                handleChange={handleFontColorChange}
             />
         </>
     );

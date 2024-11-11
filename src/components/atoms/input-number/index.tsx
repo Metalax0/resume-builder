@@ -13,7 +13,7 @@ export const InputNumber = ({ title, value, onChange }: InputNumber) => {
     };
 
     return (
-        <form className="max-w-xs  py-3 mx-auto">
+        <form className="my-5">
             <label
                 htmlFor="quantity-input"
                 className="block my-2  text-gray-800 font-bold"
