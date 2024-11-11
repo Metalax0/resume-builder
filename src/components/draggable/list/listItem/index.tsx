@@ -8,7 +8,7 @@ export const ListItem = ({ symbol }: ListItemPropsType) => {
             <span className="list-symbol"> {symbol} </span>
             <textarea
                 rows={1}
-                className="w-full max-w-full max-h-full p-2.5 text-gray-900 bg-gray-50 focus:outline-0"
+                className="w-full max-w-full max-h-full p-2.5 text-inherit bg-gray-50 focus:outline-0"
                 placeholder="Item 1"
             ></textarea>
         </div>
