@@ -21,7 +21,7 @@ export const Slider = ({
             : "h-full";
 
     return (
-        <div className={`${orientation} my-5`}>
+        <div className={`${orientation} mb-3`}>
             <p className="text-gray-800 font-bold">{title}</p>
             <div className="flex gap-3 items-center justify-center h-full">
                 <input

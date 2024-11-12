@@ -10,7 +10,7 @@ export const ColorPicker = ({
     handleChange,
 }: ColorPickerPropsType) => {
     return (
-        <div className="my-5 flex flex-col gap-1">
+        <div className="mb-3 flex flex-col gap-1">
             <p className="text-gray-800 font-bold">{title}</p>
             <input
                 type="color"

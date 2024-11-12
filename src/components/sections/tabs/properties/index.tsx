@@ -5,6 +5,7 @@ import { usePropertiesContext } from "../../../context/propertiesContext";
 import { CommonProperties } from "./common";
 import { FontsProperties } from "./fonts";
 import { PropertiesStateCategoryEnum } from "../../../../types/properties";
+import { Accordion } from "../../../atoms/accordian";
 
 export const PropertiesTab = () => {
     const { rowRef, colRef } = useStageContext();
@@ -26,47 +27,44 @@ export const PropertiesTab = () => {
     };
 
     return (
-        <div className="flex flex-col flex-1 bg-red-500">
+        <div className="flex flex-col gap-3 flex-1 bg-red-500 text-left">
             {/* Cell Control */}
-            <div className="text-left">
-                <strong className="text-black">Row & Column</strong>
+            <Accordion title={"Row & Column"}>
                 <CommonProperties
                     category={PropertiesStateCategoryEnum.cell}
                     target={propertiesState.cell}
                     dispatch={propertiesDispatch}
                     selected={selectedCell}
                 />
-            </div>
-            <hr className="h-px my-2 bg-gray-200 border-0 dark:bg-gray-700" />
+            </Accordion>
             {/* Elements Control */}
-            <div className="text-left mt-3">
-                <strong className="text-black">
-                    Element
-                    <span className="font-normal italic">
-                        {" - "}[ {getElementCategory()} ]
-                    </span>
-                </strong>
+            <Accordion title={`Element - [ ${getElementCategory()} ]`}>
                 {!selectedElement && (
                     <p className="text-black mt-3 italic font-semibold">
                         No element selected, click on an element
                     </p>
                 )}
                 {selectedElement && (
-                    <>
-                        <CommonProperties
-                            category={PropertiesStateCategoryEnum.element}
-                            target={propertiesState.element}
-                            dispatch={propertiesDispatch}
-                            selected={selectedElement}
-                        />
-                        <FontsProperties
-                            state={propertiesState}
-                            dispatch={propertiesDispatch}
-                            selected={selectedElement}
-                        />
-                    </>
+                    <div className="flex flex-col gap-2">
+                        <Accordion title={"Basic"}>
+                            <CommonProperties
+                                category={PropertiesStateCategoryEnum.element}
+                                target={propertiesState.element}
+                                dispatch={propertiesDispatch}
+                                selected={selectedElement}
+                            />
+                        </Accordion>
+
+                        <Accordion title={"Fonts"}>
+                            <FontsProperties
+                                state={propertiesState}
+                                dispatch={propertiesDispatch}
+                                selected={selectedElement}
+                            />
+                        </Accordion>
+                    </div>
                 )}
-            </div>
+            </Accordion>
         </div>
     );
 };

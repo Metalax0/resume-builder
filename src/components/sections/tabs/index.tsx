@@ -73,7 +73,7 @@ export const Tabs = () => {
                 activeTab={activeTab}
                 setActiveTab={setActiveTab}
             />
-            <div className="flex flex-1 gap-5 p-4 bg-red-500">
+            <div className="flex flex-1 gap-5 p-2 bg-red-500 overflow-auto">
                 {renderTab()}
             </div>
         </div>
