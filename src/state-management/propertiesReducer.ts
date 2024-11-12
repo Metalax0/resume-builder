@@ -9,13 +9,14 @@ export const propertiesInitialState: PropertiesStateType = {
     cell: {
         width: 0,
         height: 0,
-        bgColor: "transparent",
+        bgColor: "#FFFFFF",
     },
     element: {
-        fontFamily: "Arial, sans-serif",
-        fontSize: 14,
         width: 0,
         height: 0,
+        bgColor: "#FFFFFF",
+        fontFamily: "Arial, sans-serif",
+        fontSize: 14,
         fontColor: "#000000",
     },
 };

@@ -11,19 +11,24 @@ export interface PropertiesContextType {
     propertiesDispatch: PropertiesDispatch;
 }
 
+export interface PropertiesStateCellType {
+    width: number;
+    height: number;
+    bgColor: string;
+}
+
+export interface PropertiesStateElementType {
+    width: number;
+    height: number;
+    bgColor: string;
+    fontFamily: string;
+    fontSize: number;
+    fontColor: string;
+}
+
 export interface PropertiesStateType {
-    cell: {
-        width: number;
-        height: number;
-        bgColor: string;
-    };
-    element: {
-        fontFamily: string;
-        fontSize: number;
-        fontColor: string;
-        width: number;
-        height: number;
-    };
+    cell: PropertiesStateCellType;
+    element: PropertiesStateElementType;
 }
 
 // Properties

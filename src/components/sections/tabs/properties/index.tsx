@@ -4,6 +4,7 @@ import { SelectionPriorityEnumType } from "../../../../types/settings";
 import { usePropertiesContext } from "../../../context/propertiesContext";
 import { CommonProperties } from "./common";
 import { FontsProperties } from "./fonts";
+import { PropertiesStateCategoryEnum } from "../../../../types/properties";
 
 export const PropertiesTab = () => {
     const { rowRef, colRef } = useStageContext();
@@ -30,7 +31,8 @@ export const PropertiesTab = () => {
             <div className="text-left">
                 <strong className="text-black">Row & Column</strong>
                 <CommonProperties
-                    state={propertiesState}
+                    category={PropertiesStateCategoryEnum.cell}
+                    target={propertiesState.cell}
                     dispatch={propertiesDispatch}
                     selected={selectedCell}
                 />
@@ -52,7 +54,8 @@ export const PropertiesTab = () => {
                 {selectedElement && (
                     <>
                         <CommonProperties
-                            state={propertiesState}
+                            category={PropertiesStateCategoryEnum.element}
+                            target={propertiesState.element}
                             dispatch={propertiesDispatch}
                             selected={selectedElement}
                         />
@@ -67,11 +70,3 @@ export const PropertiesTab = () => {
         </div>
     );
 };
-
-/*
-    data-category: 
-
-    heading
-    list
-    paragraph
-*/

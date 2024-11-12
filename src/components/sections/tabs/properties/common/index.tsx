@@ -4,21 +4,24 @@ import {
     PropertiesDispatch,
     PropertiesReducerActions,
     PropertiesStateCategoryEnum,
-    PropertiesStateType,
+    PropertiesStateCellType,
+    PropertiesStateElementType,
 } from "../../../../../types/properties";
 import { ColorPicker } from "../../../../atoms/color-picker";
 import { Slider } from "../../../../atoms/slider";
 import { rgbToHex } from "../../../../../util/rgbToHex";
 
 export interface CommonPropertiesPropsType {
+    category: PropertiesStateCategoryEnum;
+    target: PropertiesStateCellType | PropertiesStateElementType;
     selected: HTMLElement | null;
-    state: PropertiesStateType;
     dispatch: PropertiesDispatch;
 }
 
 export const CommonProperties = ({
+    category,
+    target,
     selected,
-    state,
     dispatch,
 }: CommonPropertiesPropsType) => {
     const { width, height, bgColor } = useMemo(() => {
@@ -72,7 +75,7 @@ export const CommonProperties = ({
         }
 
         dispatch({
-            category: PropertiesStateCategoryEnum.cell,
+            category,
             type: dispatchType,
             value: dispatchValue,
         } as PropertiesActionType);
@@ -80,7 +83,7 @@ export const CommonProperties = ({
 
     const dispatchBgColor = (value: string) => {
         dispatch({
-            category: PropertiesStateCategoryEnum.cell,
+            category,
             type: PropertiesReducerActions.setBgColor,
             value,
         });
@@ -90,17 +93,17 @@ export const CommonProperties = ({
         <>
             <ColorPicker
                 title="Background Color"
-                color={state.cell.bgColor}
+                color={target.bgColor}
                 handleChange={handleColorChange}
             />
             <Slider
                 title="Width"
-                value={state.cell.width}
+                value={target.width}
                 handleChange={(value) => handleSliderChange("w", value)}
             />
             <Slider
                 title="Height"
-                value={state.cell.height}
+                value={target.height}
                 handleChange={(value) => handleSliderChange("h", value)}
             />
         </>
