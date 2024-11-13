@@ -1,14 +1,10 @@
 import { useReactToPrint } from "react-to-print";
 import { useRowsAndColumns } from "../../../../hooks/useRowsAndColumns";
 import { BttnTypeEnum } from "../../../../types/button";
-
 import { Button } from "../../../atoms/button";
 import { ToggleSwitch } from "../../../atoms/toggle-switch";
 import { useSettingsContext } from "../../../context/settingsContext";
-import {
-    SelectionPriorityEnumType,
-    SettingsReducerActions,
-} from "../../../../types/settings";
+import { SelectionPriorityEnumType } from "../../../../types/settings";
 
 export const SettingsTab = () => {
     const {
@@ -30,16 +26,24 @@ export const SettingsTab = () => {
     };
 
     const handleGridToggle = () => {
-        settingsDispatch({ type: SettingsReducerActions.toggleShowOutlines });
+        settingsDispatch({
+            value: { showOutlines: !settingsState.showOutlines },
+        });
     };
 
     const handleSelectionHighlightToggle = () => {
-        settingsDispatch({ type: SettingsReducerActions.toggleShowSelections });
+        settingsDispatch({
+            value: { showSelections: !settingsState.showSelections },
+        });
     };
 
     const handleSelectionPriority = () => {
+        const newPriority =
+            settingsState.selectionPriority === SelectionPriorityEnumType.row
+                ? SelectionPriorityEnumType.col
+                : SelectionPriorityEnumType.row;
         settingsDispatch({
-            type: SettingsReducerActions.toggleSelectionPriority,
+            value: { selectionPriority: newPriority },
         });
     };
 

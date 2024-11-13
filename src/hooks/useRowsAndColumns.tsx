@@ -2,7 +2,6 @@ import { useStageContext } from "../components/context/stageContext";
 import { isTargetOccupied, isTargetValidDropZone } from "../util/dragAndDrop";
 import { useSettingsContext } from "../components/context/settingsContext";
 import { useSettings } from "./useSettings";
-import { SettingsReducerActions } from "../types/settings";
 
 // Custom hook for managing rows and columns
 export const useRowsAndColumns = () => {
@@ -32,29 +31,45 @@ export const useRowsAndColumns = () => {
         switch (action) {
             case "rowRemoveDisable":
                 settingsDispatch({
-                    type: SettingsReducerActions.isRowRemoveBttnDisabled,
-                    value: true,
+                    value: {
+                        isAddBttnDisabled: {
+                            ...settingsState.isAddBttnDisabled,
+                            row: true,
+                        },
+                    },
                 });
                 break;
 
             case "rowRemoveEnable":
                 settingsDispatch({
-                    type: SettingsReducerActions.isRowRemoveBttnDisabled,
-                    value: false,
+                    value: {
+                        isAddBttnDisabled: {
+                            ...settingsState.isAddBttnDisabled,
+                            row: false,
+                        },
+                    },
                 });
                 break;
 
             case "colRemoveDisable":
                 settingsDispatch({
-                    type: SettingsReducerActions.isColRemoveBttnDisabled,
-                    value: true,
+                    value: {
+                        isAddBttnDisabled: {
+                            ...settingsState.isAddBttnDisabled,
+                            col: true,
+                        },
+                    },
                 });
                 break;
 
             case "colRemoveEnable":
                 settingsDispatch({
-                    type: SettingsReducerActions.isColRemoveBttnDisabled,
-                    value: false,
+                    value: {
+                        isAddBttnDisabled: {
+                            ...settingsState.isAddBttnDisabled,
+                            col: false,
+                        },
+                    },
                 });
                 break;
         }

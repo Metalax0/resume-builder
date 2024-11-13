@@ -1,6 +1,5 @@
 import { useEffect, useRef } from "react";
 import { useSettingsContext } from "../../../context/settingsContext";
-import { SettingsReducerActions } from "../../../../types/settings";
 
 export const Main = () => {
     const contentRef = useRef<HTMLDivElement>(null);
@@ -8,8 +7,7 @@ export const Main = () => {
 
     useEffect(() => {
         settingsDispatch({
-            type: SettingsReducerActions.setPdfRef,
-            value: contentRef,
+            value: { pdfRef: contentRef },
         });
     }, [settingsDispatch, settingsState.pdfRef]);
 

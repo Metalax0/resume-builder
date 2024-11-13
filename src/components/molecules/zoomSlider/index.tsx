@@ -1,4 +1,3 @@
-import { SettingsReducerActions } from "../../../types/settings";
 import { Slider } from "../../atoms/slider";
 import { useSettingsContext } from "../../context/settingsContext";
 
@@ -7,8 +6,7 @@ export const ZoomSlider = () => {
 
     const handleZoomChange = (value: number) => {
         settingsDispatch({
-            type: SettingsReducerActions.setBuilderZoom,
-            value: value,
+            value: { builderZoom: value },
         });
     };
 
