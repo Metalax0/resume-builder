@@ -24,6 +24,7 @@ export interface PropertiesStateElementType {
     fontFamily: string;
     fontSize: number;
     fontColor: string;
+    bulletPointsVariation: string;
 }
 
 export interface PropertiesStateType {
@@ -39,6 +40,7 @@ export enum PropertiesReducerActions {
     setBgColor,
     setFontFamily,
     setFontSize,
+    setBulletPointsVariation,
     setFontColor,
 }
 
@@ -94,6 +96,12 @@ export interface SetFontSize {
 
 export interface SetFontColor {
     type: PropertiesReducerActions.setFontColor;
+    value: string;
+    category: PropertiesStateCategoryEnum;
+}
+
+export interface SetBulletPointsVariation {
+    type: PropertiesReducerActions.setBulletPointsVariation;
     value: string;
     category: PropertiesStateCategoryEnum;
 }

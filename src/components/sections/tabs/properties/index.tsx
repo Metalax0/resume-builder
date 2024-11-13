@@ -44,7 +44,7 @@ export const PropertiesTab = () => {
 
             {/* Elements Control */}
             <strong className="text-gray-800">
-                {"Element" + " - " + [getElementCategory()]}
+                {`Element - [ ${getElementCategory()} ]`}
             </strong>
             {!selectedElement && (
                 <p className="text-black mt-3 italic font-semibold">

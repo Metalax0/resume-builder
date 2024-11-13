@@ -2,6 +2,8 @@ import {
     PropertiesActionType,
     PropertiesReducerActions,
     PropertiesStateCategoryEnum,
+    PropertiesStateCellType,
+    PropertiesStateElementType,
     PropertiesStateType,
 } from "../types/properties";
 
@@ -18,126 +20,74 @@ export const propertiesInitialState: PropertiesStateType = {
         fontFamily: "Arial, sans-serif",
         fontSize: 14,
         fontColor: "#000000",
+        bulletPointsVariation: "*",
     },
+};
+
+const updateCategory = (
+    state: PropertiesStateType,
+    category: PropertiesStateCategoryEnum,
+    updates: Partial<PropertiesStateCellType | PropertiesStateElementType>
+) => {
+    if (category === PropertiesStateCategoryEnum.cell) {
+        return {
+            ...state,
+            cell: {
+                ...state.cell,
+                ...updates,
+            },
+        };
+    } else {
+        return {
+            ...state,
+            element: {
+                ...state.element,
+                ...updates,
+            },
+        };
+    }
 };
 
 export const propertiesReducer = (
     state: PropertiesStateType,
     action: PropertiesActionType
-) => {
+): PropertiesStateType => {
     const { type, value, category } = action;
-    const {
-        setWidth,
-        setHeight,
-        setWidthHeight,
-        setBgColor,
-        setFontFamily,
-        setFontSize,
-        setFontColor,
-    } = PropertiesReducerActions;
 
-    if (category === PropertiesStateCategoryEnum.cell)
-        // State.Cell
-        switch (type) {
-            case setWidthHeight:
-                return {
-                    ...state,
-                    cell: {
-                        ...state.cell,
-                        width: value.width,
-                        height: value.height,
-                    },
-                };
+    switch (type) {
+        case PropertiesReducerActions.setWidthHeight:
+            return updateCategory(state, category, {
+                width: (value as { width: number }).width,
+                height: (value as { height: number }).height,
+            });
 
-            case setWidth:
-                return {
-                    ...state,
-                    cell: {
-                        ...state.cell,
-                        width: value,
-                    },
-                };
+        case PropertiesReducerActions.setWidth:
+            return updateCategory(state, category, { width: value as number });
 
-            case setHeight:
-                return {
-                    ...state,
-                    cell: {
-                        ...state.cell,
-                        height: value,
-                    },
-                };
+        case PropertiesReducerActions.setHeight:
+            return updateCategory(state, category, { height: value as number });
 
-            case setBgColor:
-                return {
-                    ...state,
-                    cell: {
-                        ...state.cell,
-                        bgColor: value,
-                    },
-                };
+        case PropertiesReducerActions.setBgColor:
+            return updateCategory(state, category, {
+                bgColor: value as string,
+            });
 
-            default:
-                return state;
-        }
-    // State.Element
-    else
-        switch (type) {
-            case setWidthHeight:
-                return {
-                    ...state,
-                    element: {
-                        ...state.element,
-                        width: value.width,
-                        height: value.height,
-                    },
-                };
+        case PropertiesReducerActions.setFontFamily:
+            return updateCategory(state, category, {
+                fontFamily: value as string,
+            });
 
-            case setWidth:
-                return {
-                    ...state,
-                    element: {
-                        ...state.element,
-                        width: value,
-                    },
-                };
+        case PropertiesReducerActions.setFontSize:
+            return updateCategory(state, category, {
+                fontSize: value as number,
+            });
 
-            case setHeight:
-                return {
-                    ...state,
-                    element: {
-                        ...state.element,
-                        height: value,
-                    },
-                };
+        case PropertiesReducerActions.setFontColor:
+            return updateCategory(state, category, {
+                fontColor: value as string,
+            });
 
-            case setFontFamily:
-                return {
-                    ...state,
-                    element: {
-                        ...state.element,
-                        fontFamily: value,
-                    },
-                };
-
-            case setFontSize:
-                return {
-                    ...state,
-                    element: {
-                        ...state.element,
-                        fontSize: value,
-                    },
-                };
-
-            case setFontColor:
-                return {
-                    ...state,
-                    element: {
-                        ...state.element,
-                        fontColor: value,
-                    },
-                };
-
-            default:
-                return state;
-        }
+        default:
+            return state;
+    }
 };
