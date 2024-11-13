@@ -16,9 +16,8 @@ export const useRowsAndColumns = () => {
         setDraggedElement,
     } = useStageContext();
 
-    const { settingsState, settingsDispatch } = useSettingsContext();
+    const { settingsDispatch } = useSettingsContext();
     const { manageSelectionHighlight } = useSettings();
-    const { isAddBttnDisabled } = settingsState;
 
     // Helper function to update button states
     const bttnDisableStateHelper = (
@@ -32,10 +31,7 @@ export const useRowsAndColumns = () => {
             case "rowRemoveDisable":
                 settingsDispatch({
                     value: {
-                        isAddBttnDisabled: {
-                            ...settingsState.isAddBttnDisabled,
-                            row: true,
-                        },
+                        isRemoveRowBttnDisabled: true,
                     },
                 });
                 break;
@@ -43,10 +39,7 @@ export const useRowsAndColumns = () => {
             case "rowRemoveEnable":
                 settingsDispatch({
                     value: {
-                        isAddBttnDisabled: {
-                            ...settingsState.isAddBttnDisabled,
-                            row: false,
-                        },
+                        isRemoveRowBttnDisabled: false,
                     },
                 });
                 break;
@@ -54,21 +47,16 @@ export const useRowsAndColumns = () => {
             case "colRemoveDisable":
                 settingsDispatch({
                     value: {
-                        isAddBttnDisabled: {
-                            ...settingsState.isAddBttnDisabled,
-                            col: true,
-                        },
+                        isRemoveColBttnDisabled: true,
                     },
                 });
+
                 break;
 
             case "colRemoveEnable":
                 settingsDispatch({
                     value: {
-                        isAddBttnDisabled: {
-                            ...settingsState.isAddBttnDisabled,
-                            col: false,
-                        },
+                        isRemoveColBttnDisabled: false,
                     },
                 });
                 break;
@@ -92,8 +80,6 @@ export const useRowsAndColumns = () => {
                 setDraggedElement(null);
             }
     };
-
-    // selected col ek thau ma cha, selected row chai new row ma change bhayesyako ??
 
     const handleAddRow = () => {
         const newRow = createRowNode();
@@ -194,19 +180,25 @@ export const useRowsAndColumns = () => {
     };
 
     const controlBttnDisable = () => {
-        if (rowArrRef.current!.length >= 2)
+        // Enable or disable row removal based on row count
+        if (rowArrRef.current && rowArrRef.current.length >= 2) {
             bttnDisableStateHelper("rowRemoveEnable");
-        else bttnDisableStateHelper("rowRemoveDisable");
+        } else {
+            bttnDisableStateHelper("rowRemoveDisable");
+        }
 
+        // Enable or disable column removal based on column count in the selected row
         if (rowRef.current) {
             const cols = rowRef.current.childNodes;
-            if (cols.length <= 1) bttnDisableStateHelper("colRemoveDisable");
-            else bttnDisableStateHelper("colRemoveEnable");
+            if (cols.length <= 1) {
+                bttnDisableStateHelper("colRemoveDisable");
+            } else {
+                bttnDisableStateHelper("colRemoveEnable");
+            }
         }
     };
 
     return {
-        isAddBttnDisabled,
         handleAddRow,
         handleAddColumn,
         handleRemoveRow,

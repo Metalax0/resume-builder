@@ -10,10 +10,8 @@ export interface SettingsStateType {
     selectionPriority: SelectionPriorityEnumType;
     showOutlines: boolean;
     showSelections: boolean;
-    isAddBttnDisabled: {
-        row: boolean;
-        col: boolean;
-    };
+    isRemoveRowBttnDisabled: boolean;
+    isRemoveColBttnDisabled: boolean;
     pdfRef: React.RefObject<HTMLElement>;
     builderZoom: number;
 }

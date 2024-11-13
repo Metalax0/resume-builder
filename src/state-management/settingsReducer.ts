@@ -10,10 +10,8 @@ export const settingsInitialState: SettingsStateType = {
     selectionPriority: SelectionPriorityEnumType.row,
     showOutlines: true,
     showSelections: true,
-    isAddBttnDisabled: {
-        row: true,
-        col: false,
-    },
+    isRemoveRowBttnDisabled: true,
+    isRemoveColBttnDisabled: true,
     pdfRef: createRef<HTMLElement>(),
     builderZoom: 70,
 };

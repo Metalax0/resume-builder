@@ -8,7 +8,6 @@ import { SelectionPriorityEnumType } from "../../../../types/settings";
 
 export const SettingsTab = () => {
     const {
-        isAddBttnDisabled,
         handleAddRow,
         handleAddColumn,
         handleRemoveRow,
@@ -105,7 +104,7 @@ export const SettingsTab = () => {
                         bttnName={"-"}
                         bttnType={BttnTypeEnum.secondary}
                         bttnAction={handleRemoveRow}
-                        isDisabled={isAddBttnDisabled.row}
+                        isDisabled={settingsState.isRemoveRowBttnDisabled}
                         isCircular
                     />
                 </div>
@@ -124,7 +123,7 @@ export const SettingsTab = () => {
                         bttnName={"-"}
                         bttnType={BttnTypeEnum.secondary}
                         bttnAction={handleRemoveColumn}
-                        isDisabled={isAddBttnDisabled.col}
+                        isDisabled={settingsState.isRemoveColBttnDisabled}
                         isCircular
                     />
                 </div>
