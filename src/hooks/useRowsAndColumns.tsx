@@ -93,11 +93,13 @@ export const useRowsAndColumns = () => {
             }
     };
 
+    // selected col ek thau ma cha, selected row chai new row ma change bhayesyako ??
+
     const handleAddRow = () => {
         const newRow = createRowNode();
         const currentRow = rowRef.current;
 
-        if (currentRow) {
+        if (currentRow && currentRow.parentNode) {
             currentRow.parentNode?.insertBefore(newRow, currentRow.nextSibling);
             const currentIndex = rowArrRef.current!.indexOf(currentRow);
             const updatedRowArr = [
@@ -123,7 +125,7 @@ export const useRowsAndColumns = () => {
         if (currentRow) {
             const currentCol = colRef.current;
 
-            if (currentCol) {
+            if (currentCol && currentRow.contains(currentCol)) {
                 currentRow.insertBefore(newColumn, currentCol.nextSibling);
             } else {
                 currentRow.appendChild(newColumn);
