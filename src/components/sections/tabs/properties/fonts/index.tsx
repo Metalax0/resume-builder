@@ -1,7 +1,6 @@
 import { useEffect, useMemo } from "react";
 import {
-    PropertiesDispatch,
-    PropertiesReducerActions,
+    PropertiesActionType,
     PropertiesStateCategoryEnum,
     PropertiesStateType,
 } from "../../../../../types/properties";
@@ -13,7 +12,7 @@ import { rgbToHex } from "../../../../../util/rgbToHex";
 export interface FontsPropertiesPropsType {
     selected: HTMLElement | null;
     state: PropertiesStateType;
-    dispatch: PropertiesDispatch;
+    dispatch: React.Dispatch<PropertiesActionType>;
 }
 
 export const FontsProperties = ({
@@ -44,8 +43,7 @@ export const FontsProperties = ({
     const dispatchFontFamily = (value: string) => {
         dispatch({
             category: PropertiesStateCategoryEnum.element,
-            type: PropertiesReducerActions.setFontFamily,
-            value,
+            value: { fontFamily: value },
         });
         selected!.style.fontFamily = value;
     };
@@ -53,8 +51,7 @@ export const FontsProperties = ({
     const dispatchFontSize = (value: number) => {
         dispatch({
             category: PropertiesStateCategoryEnum.element,
-            type: PropertiesReducerActions.setFontSize,
-            value,
+            value: { fontSize: value },
         });
         selected!.style.fontSize = value + "px";
     };
@@ -62,8 +59,7 @@ export const FontsProperties = ({
     const dispatchFontColor = (value: string) => {
         dispatch({
             category: PropertiesStateCategoryEnum.element,
-            type: PropertiesReducerActions.setFontColor,
-            value,
+            value: { fontColor: value },
         });
         selected!.style.color = value;
     };

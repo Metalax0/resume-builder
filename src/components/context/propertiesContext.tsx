@@ -1,5 +1,4 @@
 import { createContext, useReducer, useContext } from "react";
-
 import {
     propertiesInitialState,
     propertiesReducer,
@@ -9,8 +8,10 @@ import {
     PropertiesProviderPropsType,
 } from "../../types/properties";
 
+// Create a context with the PropertiesContextType or null
 const PropertiesContext = createContext<PropertiesContextType | null>(null);
 
+// PropertiesProvider component
 export const PropertiesProvider = ({
     children,
 }: PropertiesProviderPropsType) => {
@@ -28,6 +29,7 @@ export const PropertiesProvider = ({
     );
 };
 
+// Custom hook to use the properties context
 export const usePropertiesContext = () => {
     const context = useContext(PropertiesContext);
     if (!context) {

@@ -1,8 +1,6 @@
 import { useEffect, useMemo } from "react";
 import {
     PropertiesActionType,
-    PropertiesDispatch,
-    PropertiesReducerActions,
     PropertiesStateCategoryEnum,
     PropertiesStateCellType,
     PropertiesStateElementType,
@@ -15,7 +13,7 @@ export interface CommonPropertiesPropsType {
     category: PropertiesStateCategoryEnum;
     target: PropertiesStateCellType | PropertiesStateElementType;
     selected: HTMLElement | null;
-    dispatch: PropertiesDispatch;
+    dispatch: React.Dispatch<PropertiesActionType>;
 }
 
 export const CommonProperties = ({
@@ -54,19 +52,14 @@ export const CommonProperties = ({
         type: "w" | "h" | "wh",
         value: number | { width: number; height: number }
     ) => {
-        let dispatchType: PropertiesReducerActions;
-        let dispatchValue: number | { width: number; height: number };
-
+        let newValue = {};
         if (type === "w") {
-            dispatchType = PropertiesReducerActions.setWidth;
-            dispatchValue = value;
+            newValue = { width: value };
         } else if (type === "h") {
-            dispatchType = PropertiesReducerActions.setHeight;
-            dispatchValue = value;
+            newValue = { height: value };
         } else {
-            dispatchType = PropertiesReducerActions.setWidthHeight;
             if (typeof value === "object" && value !== null) {
-                dispatchValue = { width: value.width, height: value.height };
+                newValue = { width: value.width, height: value.height };
             } else {
                 throw new Error(
                     "Invalid value type for width and height dispatch"
@@ -76,16 +69,14 @@ export const CommonProperties = ({
 
         dispatch({
             category,
-            type: dispatchType,
-            value: dispatchValue,
+            value: newValue,
         } as PropertiesActionType);
     };
 
     const dispatchBgColor = (value: string) => {
         dispatch({
             category,
-            type: PropertiesReducerActions.setBgColor,
-            value,
+            value: { bgColor: value },
         });
     };
 
