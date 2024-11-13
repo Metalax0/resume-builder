@@ -29,7 +29,9 @@ export const PropertiesTab = () => {
     return (
         <div className="flex flex-col gap-3 flex-1 bg-red-500 text-left">
             {/* Cell Control */}
-            <Accordion title={"Row & Column"}>
+
+            <strong className="text-gray-800">Row & Column</strong>
+            <Accordion title={"Basic"}>
                 <CommonProperties
                     category={PropertiesStateCategoryEnum.cell}
                     target={propertiesState.cell}
@@ -37,34 +39,38 @@ export const PropertiesTab = () => {
                     selected={selectedCell}
                 />
             </Accordion>
-            {/* Elements Control */}
-            <Accordion title={`Element - [ ${getElementCategory()} ]`}>
-                {!selectedElement && (
-                    <p className="text-black mt-3 italic font-semibold">
-                        No element selected, click on an element
-                    </p>
-                )}
-                {selectedElement && (
-                    <div className="flex flex-col gap-2">
-                        <Accordion title={"Basic"}>
-                            <CommonProperties
-                                category={PropertiesStateCategoryEnum.element}
-                                target={propertiesState.element}
-                                dispatch={propertiesDispatch}
-                                selected={selectedElement}
-                            />
-                        </Accordion>
 
-                        <Accordion title={"Fonts"}>
-                            <FontsProperties
-                                state={propertiesState}
-                                dispatch={propertiesDispatch}
-                                selected={selectedElement}
-                            />
-                        </Accordion>
-                    </div>
-                )}
-            </Accordion>
+            <hr className="h-px my-3 bg-gray-200 border-0 dark:bg-gray-700" />
+
+            {/* Elements Control */}
+            <strong className="text-gray-800">
+                {"Element" + " - " + [getElementCategory()]}
+            </strong>
+            {!selectedElement && (
+                <p className="text-black mt-3 italic font-semibold">
+                    No element selected, click on an element
+                </p>
+            )}
+            {selectedElement && (
+                <div className="flex flex-col gap-2">
+                    <Accordion title={"Basic"}>
+                        <CommonProperties
+                            category={PropertiesStateCategoryEnum.element}
+                            target={propertiesState.element}
+                            dispatch={propertiesDispatch}
+                            selected={selectedElement}
+                        />
+                    </Accordion>
+
+                    <Accordion title={"Fonts"}>
+                        <FontsProperties
+                            state={propertiesState}
+                            dispatch={propertiesDispatch}
+                            selected={selectedElement}
+                        />
+                    </Accordion>
+                </div>
+            )}
         </div>
     );
 };
