@@ -72,6 +72,7 @@ export const ListExclusive = ({
     return (
         <>
             <InputText
+                title={"List Symbol"}
                 maxLength={3}
                 text={listBulletVariation}
                 onChange={handleBulletVariationChange}

@@ -66,7 +66,7 @@ export const Tabs = () => {
 
     return (
         <div
-            className="flex flex-col flex-1"
+            className="flex flex-col flex-1 h-[650px]"
             onDragOver={(e) => e.preventDefault()}
         >
             <TabButtonCollection
