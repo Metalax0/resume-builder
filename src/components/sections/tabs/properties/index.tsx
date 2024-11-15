@@ -71,13 +71,15 @@ export const PropertiesTab = () => {
                     </Accordion>
 
                     {/* List Exclusive Properties */}
-                    <Accordion title={"Structure"}>
-                        <ListExclusive
-                            stateData={propertiesState.element}
-                            dispatch={propertiesDispatch}
-                            selected={selectedElement}
-                        />
-                    </Accordion>
+                    {getElementCategory() === "list" && (
+                        <Accordion title={"Structure"}>
+                            <ListExclusive
+                                stateData={propertiesState.element}
+                                dispatch={propertiesDispatch}
+                                selected={selectedElement}
+                            />
+                        </Accordion>
+                    )}
                 </div>
             )}
         </div>
