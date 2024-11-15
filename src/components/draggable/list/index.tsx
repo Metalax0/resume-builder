@@ -1,5 +1,3 @@
-import "./style.css";
-
 interface ListPropsType {
     drag: (e: React.DragEvent<HTMLElement>) => void;
 }
@@ -10,7 +8,7 @@ export const List = ({ drag }: ListPropsType) => {
             draggable
             data-category="list"
             onDragStart={(e) => drag(e)}
-            className="draggable-element w-full px-3 space-y-1 bg-white list-inside list-disc text-black"
+            className="draggable-element w-full px-3 space-y-1 bg-gray-50 list-inside list-disc text-gray-900"
         >
             <li className="flex w-full items-center">
                 <span className="mr-2">•</span>
