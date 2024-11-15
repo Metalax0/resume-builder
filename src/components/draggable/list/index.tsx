@@ -12,7 +12,7 @@ export const List = ({ drag }: ListPropsType) => {
             onDragStart={(e) => drag(e)}
             className="draggable-element w-full px-3 space-y-1 bg-white list-inside list-disc text-black"
         >
-            <li className="flex w-full items-center list-disc">
+            <li className="flex w-full items-center">
                 <span className="mr-2">•</span>
                 <textarea
                     rows={1}
@@ -20,7 +20,7 @@ export const List = ({ drag }: ListPropsType) => {
                     placeholder="Item 1"
                 ></textarea>
             </li>
-            <li className="flex w-full items-center list-disc">
+            <li className="flex w-full items-center">
                 <span className="mr-2">•</span>
                 <textarea
                     rows={1}
@@ -28,7 +28,7 @@ export const List = ({ drag }: ListPropsType) => {
                     placeholder="Item 2"
                 ></textarea>
             </li>
-            <li className="flex w-full items-center list-disc">
+            <li className="flex w-full items-center">
                 <span className="mr-2">•</span>
                 <textarea
                     rows={1}

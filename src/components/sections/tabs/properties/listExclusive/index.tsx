@@ -5,6 +5,10 @@ import {
     PropertiesStateElementType,
 } from "../../../../../types/properties";
 import { InputNumber } from "../../../../atoms/input-number";
+import {
+    addListItem,
+    removeListItem,
+} from "../../../../../util/addRemoveListItem";
 
 export interface ListExclusivePropsType {
     selected: HTMLElement | null;
@@ -17,9 +21,9 @@ export const ListExclusive = ({
     stateData,
     dispatch,
 }: ListExclusivePropsType) => {
-    const { listBulletVariation, listCount } = stateData;
+    const { listCount } = stateData;
 
-    const { newBulletVariation, newCount } = useMemo(() => {
+    const { newCount } = useMemo(() => {
         return {
             newBulletVariation: selected
                 ? Array.from(selected!.children).findIndex((child) => {
@@ -31,16 +35,8 @@ export const ListExclusive = ({
     }, [selected]);
 
     useEffect(() => {
-        // dispatchBulletVariation(newBulletVariation);
         dispatchListCount(newCount);
-    }, [newBulletVariation, newCount]);
-
-    // const dispatchBulletVariation = (value: number) => {
-    //     dispatch({
-    //         category: PropertiesStateCategoryEnum.element,
-    //         value: { listBulletVariation: value },
-    //     });
-    // };
+    }, [newCount]);
 
     const dispatchListCount = (value: number) => {
         dispatch({
@@ -49,21 +45,18 @@ export const ListExclusive = ({
         });
     };
 
-    // const handleListBulletVariationChange = (variation: number) => {
-    //     dispatchBulletVariation(variation);
-    // };
-
     const handleListCountChange = (count: number) => {
-        dispatchListCount(count);
+        if (selected) {
+            if (stateData.listCount < count) addListItem(selected);
+            else if (stateData.listCount > count && count > 0)
+                removeListItem(selected);
+            else return;
+            dispatchListCount(count);
+        }
     };
 
     return (
         <>
-            {/* <ListsDropDown
-                value={listBulletVariation}
-                onCHange={handleListBulletVariationChange}
-            /> */}
-
             <InputNumber
                 title={"Item Count"}
                 value={listCount}
