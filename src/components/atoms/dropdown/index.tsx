@@ -3,7 +3,7 @@ import { ChangeEvent } from "react";
 export interface DropDownPropsType {
     data: {
         title: string;
-        options: string[];
+        options: { value: string[]; label: string[] };
         styles?: any;
     };
     value: string;
@@ -28,13 +28,13 @@ export const Dropdown = ({ data, value, handleChange }: DropDownPropsType) => {
                     onChange={(e) => handleDropDownChange(e)}
                     value={value}
                 >
-                    {options.map((option: string, index: number) => (
+                    {options.value.map((value: string, index: number) => (
                         <option
-                            key={option}
-                            value={option}
+                            key={value}
+                            value={value}
                             style={styles ? styles[index] : {}}
                         >
-                            {option}
+                            {options.label[index]}
                         </option>
                     ))}
                 </select>

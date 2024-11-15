@@ -6,6 +6,7 @@ import { CommonProperties } from "./common";
 import { FontsProperties } from "./fonts";
 import { PropertiesStateCategoryEnum } from "../../../../types/properties";
 import { Accordion } from "../../../atoms/accordian";
+import { ListExclusive } from "./listExclusive";
 
 export const PropertiesTab = () => {
     const { rowRef, colRef } = useStageContext();
@@ -29,7 +30,6 @@ export const PropertiesTab = () => {
     return (
         <div className="flex flex-col gap-3 flex-1 bg-red-500 text-left">
             {/* Cell Control */}
-
             <strong className="text-gray-800">Row & Column</strong>
             <Accordion title={"Basic"}>
                 <CommonProperties
@@ -64,7 +64,16 @@ export const PropertiesTab = () => {
 
                     <Accordion title={"Fonts"}>
                         <FontsProperties
-                            state={propertiesState}
+                            stateData={propertiesState.element}
+                            dispatch={propertiesDispatch}
+                            selected={selectedElement}
+                        />
+                    </Accordion>
+
+                    {/* List Exclusive Properties */}
+                    <Accordion title={"Structure"}>
+                        <ListExclusive
+                            stateData={propertiesState.element}
                             dispatch={propertiesDispatch}
                             selected={selectedElement}
                         />

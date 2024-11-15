@@ -20,7 +20,9 @@ export const propertiesInitialState: PropertiesStateType = {
         fontFamily: "Arial, sans-serif",
         fontSize: 14,
         fontColor: "#000000",
-        bulletPointsVariation: "*",
+        // List
+        listBulletVariation: 0,
+        listCount: 3,
     },
 };
 

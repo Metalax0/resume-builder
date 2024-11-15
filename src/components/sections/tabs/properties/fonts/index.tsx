@@ -2,7 +2,7 @@ import { useEffect, useMemo } from "react";
 import {
     PropertiesActionType,
     PropertiesStateCategoryEnum,
-    PropertiesStateType,
+    PropertiesStateElementType,
 } from "../../../../../types/properties";
 import { InputNumber } from "../../../../atoms/input-number";
 import { FontsDropDown } from "../../../../molecules/fontsDropdown";
@@ -11,34 +11,36 @@ import { rgbToHex } from "../../../../../util/rgbToHex";
 
 export interface FontsPropertiesPropsType {
     selected: HTMLElement | null;
-    state: PropertiesStateType;
+    stateData: PropertiesStateElementType;
     dispatch: React.Dispatch<PropertiesActionType>;
 }
 
 export const FontsProperties = ({
-    state,
+    stateData,
     selected,
     dispatch,
 }: FontsPropertiesPropsType) => {
-    const { fontFamily, fontSize, fontColor } = useMemo(() => {
+    const { fontFamily, fontSize, fontColor } = stateData;
+
+    const { newFontFamily, newFontSize, newFontColor } = useMemo(() => {
         return {
-            fontFamily: selected
+            newFontFamily: selected
                 ? getComputedStyle(selected).fontFamily
                 : "Arial, sans-serif",
-            fontSize: selected
+            newFontSize: selected
                 ? parseFloat(getComputedStyle(selected).fontSize)
                 : 50,
-            fontColor: selected
+            newFontColor: selected
                 ? rgbToHex(getComputedStyle(selected).color)
                 : "#FF0000",
         };
     }, [selected]);
 
     useEffect(() => {
-        dispatchFontFamily(fontFamily);
-        dispatchFontSize(fontSize);
-        dispatchFontColor(fontColor);
-    }, [fontFamily, fontSize, fontColor]);
+        dispatchFontFamily(newFontFamily);
+        dispatchFontSize(newFontSize);
+        dispatchFontColor(newFontColor);
+    }, [newFontFamily, newFontSize, newFontColor]);
 
     const dispatchFontFamily = (value: string) => {
         dispatch({
@@ -64,35 +66,37 @@ export const FontsProperties = ({
         selected!.style.color = value;
     };
 
-    const handleFontFamilyChange = (newFont: string) => {
-        dispatchFontFamily(newFont);
+    const handleFontFamilyChange = (font: string) => {
+        dispatchFontFamily(font);
     };
 
-    const handleFontSizeChange = (newSize: number) => {
-        dispatchFontSize(newSize);
+    const handleFontSizeChange = (size: number) => {
+        dispatchFontSize(size);
     };
 
-    const handleFontColorChange = (newColor: string) => {
-        dispatchFontColor(newColor);
+    const handleFontColorChange = (color: string) => {
+        dispatchFontColor(color);
     };
 
     return (
         <>
             {/* Font Family */}
             <FontsDropDown
-                value={state.element.fontFamily}
+                value={fontFamily}
                 onChange={handleFontFamilyChange}
             />
+
             {/* Font Size */}
             <InputNumber
                 title={"Font Size"}
-                value={state.element.fontSize}
+                value={fontSize}
                 onChange={handleFontSizeChange}
             />
+
             {/* Foreground Color */}
             <ColorPicker
                 title="Text Color"
-                color={state.element.fontColor}
+                color={fontColor}
                 handleChange={handleFontColorChange}
             />
         </>

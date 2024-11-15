@@ -1,4 +1,3 @@
-import { ListItem } from "./listItem";
 import "./style.css";
 
 interface ListPropsType {
@@ -6,27 +5,32 @@ interface ListPropsType {
 }
 
 export const List = ({ drag }: ListPropsType) => {
-    const symbolList = [
-        <>&#10033;</>,
-        <>&#10032;</>,
-        <>&#10033;</>,
-        <>&#10004;</>,
-        <>&#9900;</>,
-        <>&diams;</>,
-    ];
+    // const { propertiesState } = usePropertiesContext();
+    // const { listBulletVariation, listCount } = propertiesState.element;
 
-    const activeSymbol = symbolList[0];
+    // const renderLists = () => {
+    //     const elemArr = Array.from({ length: listCount }, (_, index) => (
+    //         <ListItem key={index} symbol={activeSymbol} />
+    //     ));
+    //     return elemArr;
+    // };
+
+    // style="list-style-type:disc;"
 
     return (
-        <div
+        <ul
             draggable
             data-category="list"
             onDragStart={(e) => drag(e)}
-            className="draggable-element flex flex-col gap-2 w-full h-full max-w-full max-h-full p-2.5 text-sm text-gray-900 bg-gray-50"
+            className="draggable-element w-full max-w-md space-y-1 text-gray-500 bg-white list-inside list-disc dark:text-gray-400"
         >
-            <ListItem symbol={activeSymbol} />
-            <ListItem symbol={activeSymbol} />
-            <ListItem symbol={activeSymbol} />
-        </div>
+            <li className="flex w-full items-center">
+                <textarea
+                    rows={1}
+                    className="w-full max-w-full max-h-full p-2.5 text-inherit bg-gray-50 focus:outline-0"
+                    placeholder="Item 1"
+                ></textarea>
+            </li>
+        </ul>
     );
 };

@@ -14,7 +14,8 @@ export interface PropertiesStateElementType {
     fontFamily: string;
     fontSize: number;
     fontColor: string;
-    bulletPointsVariation: string;
+    listBulletVariation: number;
+    listCount: number;
 }
 
 // Complete State Type for both cell and element
