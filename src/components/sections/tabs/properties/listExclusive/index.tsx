@@ -28,7 +28,7 @@ export const ListExclusive = ({
     const { newBulletVariation, newCount } = useMemo(() => {
         return {
             newBulletVariation: selected
-                ? selected?.firstChild?.firstChild?.textContent || "a"
+                ? selected?.firstChild?.firstChild?.textContent || "*"
                 : "*",
             newCount: selected ? selected.children.length : 0,
         };

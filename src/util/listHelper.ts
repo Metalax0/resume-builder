@@ -6,7 +6,8 @@ export const addListItem = (selected: HTMLElement) => {
     // Add the bullet point span
     const bullet = document.createElement("span");
     bullet.className = "mr-2";
-    bullet.textContent = "•";
+    //
+    bullet.textContent = selected?.firstChild?.firstChild?.textContent || "*";
     newItem.appendChild(bullet);
 
     // Create the textarea
