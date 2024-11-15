@@ -1,7 +1,3 @@
-interface ListItemPropsType {
-    symbol: JSX.Element;
-}
-
 export const ListItem = () => {
     return (
         <ol className="list-decimal pl-5">
