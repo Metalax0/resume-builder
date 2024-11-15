@@ -21,7 +21,7 @@ export const propertiesInitialState: PropertiesStateType = {
         fontSize: 14,
         fontColor: "#000000",
         // List
-        listBulletVariation: 0,
+        listBulletVariation: "*",
         listCount: 3,
     },
 };
