@@ -40,7 +40,7 @@ export const FontsProperties = ({
         dispatchFontFamily(newFontFamily);
         dispatchFontSize(newFontSize);
         dispatchFontColor(newFontColor);
-    }, [newFontFamily, newFontSize, newFontColor]);
+    }, [newFontFamily, newFontSize, newFontColor, selected]);
 
     const dispatchFontFamily = (value: string) => {
         dispatch({

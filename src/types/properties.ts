@@ -14,7 +14,7 @@ export interface PropertiesStateElementType {
     fontFamily: string;
     fontSize: number;
     fontColor: string;
-    listBulletVariation: number;
+    listBulletVariation: string;
     listCount: number;
 }
 

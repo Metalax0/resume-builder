@@ -27,3 +27,13 @@ export const removeListItem = (selected: HTMLElement) => {
         selected.removeChild(selected.lastElementChild);
     }
 };
+
+export const updateListSymbol = (selected: HTMLElement, newSymbol: string) => {
+    const listItems = selected.querySelectorAll("li");
+    listItems.forEach((item) => {
+        const span = item.querySelector("span");
+        if (span) {
+            span.textContent = newSymbol;
+        }
+    });
+};

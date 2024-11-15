@@ -8,7 +8,9 @@ import { InputNumber } from "../../../../atoms/input-number";
 import {
     addListItem,
     removeListItem,
-} from "../../../../../util/addRemoveListItem";
+    updateListSymbol,
+} from "../../../../../util/listHelper";
+import { InputText } from "../../../../atoms/input-text";
 
 export interface ListExclusivePropsType {
     selected: HTMLElement | null;
@@ -21,22 +23,21 @@ export const ListExclusive = ({
     stateData,
     dispatch,
 }: ListExclusivePropsType) => {
-    const { listCount } = stateData;
+    const { listBulletVariation, listCount } = stateData;
 
-    const { newCount } = useMemo(() => {
+    const { newBulletVariation, newCount } = useMemo(() => {
         return {
             newBulletVariation: selected
-                ? Array.from(selected!.children).findIndex((child) => {
-                      return child === document.activeElement;
-                  })
-                : 3,
+                ? selected?.firstChild?.firstChild?.textContent || "a"
+                : "*",
             newCount: selected ? selected.children.length : 0,
         };
     }, [selected]);
 
     useEffect(() => {
         dispatchListCount(newCount);
-    }, [newCount]);
+        dispatchBulletVariation(newBulletVariation);
+    }, [newBulletVariation, newCount, selected]);
 
     const dispatchListCount = (value: number) => {
         dispatch({
@@ -45,11 +46,24 @@ export const ListExclusive = ({
         });
     };
 
+    const dispatchBulletVariation = (value: string) => {
+        dispatch({
+            category: PropertiesStateCategoryEnum.element,
+            value: { listBulletVariation: value },
+        });
+    };
+
+    const handleBulletVariationChange = (value: string) => {
+        if (selected) {
+            updateListSymbol(selected, value);
+            dispatchBulletVariation(value);
+        }
+    };
+
     const handleListCountChange = (count: number) => {
         if (selected) {
-            if (stateData.listCount < count) addListItem(selected);
-            else if (stateData.listCount > count && count > 0)
-                removeListItem(selected);
+            if (listCount < count) addListItem(selected);
+            else if (listCount > count && count > 0) removeListItem(selected);
             else return;
             dispatchListCount(count);
         }
@@ -57,6 +71,11 @@ export const ListExclusive = ({
 
     return (
         <>
+            <InputText
+                maxLength={3}
+                text={listBulletVariation}
+                onChange={handleBulletVariationChange}
+            />
             <InputNumber
                 title={"Item Count"}
                 value={listCount}

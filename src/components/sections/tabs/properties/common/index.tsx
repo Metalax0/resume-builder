@@ -35,7 +35,7 @@ export const CommonProperties = ({
     useEffect(() => {
         dispatchWidthHeight("wh", { width, height });
         dispatchBgColor(bgColor);
-    }, [width, height, bgColor]);
+    }, [width, height, bgColor, selected]);
 
     const handleColorChange = (value: string) => {
         dispatchBgColor(value);
