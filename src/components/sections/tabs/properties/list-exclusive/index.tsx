@@ -10,7 +10,7 @@ import {
     removeListItem,
     updateListSymbol,
 } from "../../../../../util/listHelper";
-import { InputText } from "../../../../atoms/input-text";
+import { InputText, InputTextVarient } from "../../../../atoms/input-text";
 
 export interface ListExclusivePropsType {
     selected: HTMLElement | null;
@@ -72,7 +72,9 @@ export const ListExclusive = ({
     return (
         <>
             <InputText
+                varient={InputTextVarient.nonDraggable}
                 title={"List Symbol"}
+                placeholder="*"
                 maxLength={3}
                 text={listBulletVariation}
                 onChange={handleBulletVariationChange}

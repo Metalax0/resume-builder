@@ -14,8 +14,11 @@ export interface PropertiesStateElementType {
     fontFamily: string;
     fontSize: number;
     fontColor: string;
+    //
     listBulletVariation: string;
     listCount: number;
+    //
+    redirectURL: string;
 }
 
 // Complete State Type for both cell and element

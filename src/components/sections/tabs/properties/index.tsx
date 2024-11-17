@@ -6,7 +6,8 @@ import { CommonProperties } from "./common";
 import { FontsProperties } from "./fonts";
 import { PropertiesStateCategoryEnum } from "../../../../types/properties";
 import { Accordion } from "../../../atoms/accordian";
-import { ListExclusive } from "./listExclusive";
+import { ListExclusive } from "./list-exclusive";
+import { LinkExclusive } from "./link-exclusive";
 
 export const PropertiesTab = () => {
     const { rowRef, colRef } = useStageContext();
@@ -74,6 +75,17 @@ export const PropertiesTab = () => {
                     {getElementCategory() === "list" && (
                         <Accordion title={"Structure"}>
                             <ListExclusive
+                                stateData={propertiesState.element}
+                                dispatch={propertiesDispatch}
+                                selected={selectedElement}
+                            />
+                        </Accordion>
+                    )}
+
+                    {/* Link Exclusive */}
+                    {getElementCategory() === "link" && (
+                        <Accordion title={"Redirect"}>
+                            <LinkExclusive
                                 stateData={propertiesState.element}
                                 dispatch={propertiesDispatch}
                                 selected={selectedElement}

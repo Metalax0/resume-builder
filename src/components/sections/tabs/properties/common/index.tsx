@@ -93,6 +93,7 @@ export const CommonProperties = ({
                 handleChange={(value) => handleSliderChange("w", value)}
             />
             <Slider
+                min={20}
                 title="Height"
                 value={target.height}
                 handleChange={(value) => handleSliderChange("h", value)}

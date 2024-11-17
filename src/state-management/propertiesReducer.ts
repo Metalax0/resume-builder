@@ -23,6 +23,8 @@ export const propertiesInitialState: PropertiesStateType = {
         // List
         listBulletVariation: "*",
         listCount: 3,
+        // Link
+        redirectURL: "#",
     },
 };
 
