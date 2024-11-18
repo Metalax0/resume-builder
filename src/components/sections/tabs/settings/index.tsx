@@ -8,7 +8,7 @@ import { SelectionPriorityEnumType } from "../../../../types/settings";
 import {
     handleTasksAfterExport,
     handleTasksBeforeExport,
-} from "../../../../util/exportPDFhelper";
+} from "../../../../util/PDFExportHelper";
 
 export const SettingsTab = () => {
     const {
