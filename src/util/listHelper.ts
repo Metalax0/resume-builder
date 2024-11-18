@@ -1,7 +1,7 @@
 export const addListItem = (selected: HTMLElement) => {
     // Create a new list item element
     const newItem = document.createElement("li");
-    newItem.className = "flex w-full items-center list-disc";
+    newItem.className = "flex flex-1 w-full items-center list-disc";
 
     // Add the bullet point span
     const bullet = document.createElement("span");
@@ -14,7 +14,7 @@ export const addListItem = (selected: HTMLElement) => {
     const textarea = document.createElement("textarea");
     textarea.rows = 1;
     textarea.className =
-        "w-full max-w-full max-h-full p-2.5 text-inherit bg-gray-50 focus:outline-0";
+        "w-full max-w-full max-h-full p-1 text-inherit bg-gray-50 focus:outline-0";
     textarea.placeholder = `Item ${selected.children.length + 1}`;
     newItem.appendChild(textarea);
 

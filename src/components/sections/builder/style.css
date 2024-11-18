@@ -26,6 +26,7 @@
     display: flex;
     gap: 5px;
     max-width: 100%;
+    min-width: 100px;
     min-height: max-content;
     text-align: center;
     overflow: hidden;
