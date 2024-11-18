@@ -16,6 +16,7 @@ export const addListItem = (selected: HTMLElement) => {
     textarea.className =
         "w-full max-w-full max-h-full p-1 text-inherit bg-gray-50 focus:outline-0";
     textarea.placeholder = `Item ${selected.children.length + 1}`;
+    textarea.style.textAlign = "inherit";
     newItem.appendChild(textarea);
 
     // Append the new list item to the selected list

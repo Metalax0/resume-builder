@@ -1,6 +1,6 @@
 import { Dropdown } from "../../atoms/dropdown";
 
-export interface FontsDropDownPropsType {
+export interface FontFamilyDropDownPropsType {
     value: string;
     onChange: (newFont: string) => void;
 }
@@ -44,7 +44,10 @@ const fontFamilyOptions = {
     ],
 };
 
-export const FontsDropDown = ({ value, onChange }: FontsDropDownPropsType) => {
+export const FontFamilyDropDown = ({
+    value,
+    onChange,
+}: FontFamilyDropDownPropsType) => {
     return (
         <Dropdown
             data={fontFamilyOptions}

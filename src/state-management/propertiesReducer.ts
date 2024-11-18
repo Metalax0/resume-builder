@@ -1,4 +1,5 @@
 import {
+    FontAlignmentEnum,
     PropertiesActionType,
     PropertiesStateCategoryEnum,
     PropertiesStateCellType,
@@ -18,6 +19,7 @@ export const propertiesInitialState: PropertiesStateType = {
         height: 0,
         bgColor: "#FFFFFF",
         fontFamily: "Arial, sans-serif",
+        fontAlignment: FontAlignmentEnum.left,
         fontSize: 14,
         fontColor: "#000000",
         // List

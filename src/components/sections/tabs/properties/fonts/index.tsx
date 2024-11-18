@@ -1,13 +1,15 @@
 import { useEffect, useMemo } from "react";
 import {
+    FontAlignmentEnum,
     PropertiesActionType,
     PropertiesStateCategoryEnum,
     PropertiesStateElementType,
 } from "../../../../../types/properties";
 import { InputNumber } from "../../../../atoms/input-number";
-import { FontsDropDown } from "../../../../molecules/fontsDropdown";
+import { FontFamilyDropDown } from "../../../../molecules/fontFamilyDropdown";
 import { ColorPicker } from "../../../../atoms/color-picker";
 import { rgbToHex } from "../../../../../util/rgbToHex";
+import { FontAlignmentDropDown } from "../../../../molecules/fontAlignmentDropdown";
 
 export interface FontsPropertiesPropsType {
     selected: HTMLElement | null;
@@ -20,24 +22,30 @@ export const FontsProperties = ({
     selected,
     dispatch,
 }: FontsPropertiesPropsType) => {
-    const { fontFamily, fontSize, fontColor } = stateData;
+    const { fontFamily, fontAlignment, fontSize, fontColor } = stateData;
 
-    const { newFontFamily, newFontSize, newFontColor } = useMemo(() => {
-        return {
-            newFontFamily: selected
-                ? getComputedStyle(selected).fontFamily
-                : "Arial, sans-serif",
-            newFontSize: selected
-                ? parseFloat(getComputedStyle(selected).fontSize)
-                : 50,
-            newFontColor: selected
-                ? rgbToHex(getComputedStyle(selected).color)
-                : "#FF0000",
-        };
-    }, [selected]);
+    const { newFontFamily, newFontAlignment, newFontSize, newFontColor } =
+        useMemo(() => {
+            return {
+                newFontFamily: selected
+                    ? getComputedStyle(selected).fontFamily
+                    : "Arial, sans-serif",
+                newFontAlignment: selected
+                    ? (getComputedStyle(selected)
+                          .textAlign as FontAlignmentEnum)
+                    : FontAlignmentEnum.left,
+                newFontSize: selected
+                    ? parseFloat(getComputedStyle(selected).fontSize)
+                    : 50,
+                newFontColor: selected
+                    ? rgbToHex(getComputedStyle(selected).color)
+                    : "#FF0000",
+            };
+        }, [selected]);
 
     useEffect(() => {
         dispatchFontFamily(newFontFamily);
+        dispatchFontAlignment(newFontAlignment);
         dispatchFontSize(newFontSize);
         dispatchFontColor(newFontColor);
     }, [newFontFamily, newFontSize, newFontColor, selected]);
@@ -48,6 +56,14 @@ export const FontsProperties = ({
             value: { fontFamily: value },
         });
         selected!.style.fontFamily = value;
+    };
+
+    const dispatchFontAlignment = (value: FontAlignmentEnum) => {
+        dispatch({
+            category: PropertiesStateCategoryEnum.element,
+            value: { fontAlignment: value },
+        });
+        selected!.style.textAlign = value;
     };
 
     const dispatchFontSize = (value: number) => {
@@ -70,6 +86,10 @@ export const FontsProperties = ({
         dispatchFontFamily(font);
     };
 
+    const handleFontAlignmentChange = (font: string) => {
+        dispatchFontAlignment(font as FontAlignmentEnum);
+    };
+
     const handleFontSizeChange = (size: number) => {
         dispatchFontSize(size);
     };
@@ -81,9 +101,15 @@ export const FontsProperties = ({
     return (
         <>
             {/* Font Family */}
-            <FontsDropDown
+            <FontFamilyDropDown
                 value={fontFamily}
                 onChange={handleFontFamilyChange}
+            />
+
+            {/* Text Alignment */}
+            <FontAlignmentDropDown
+                value={fontAlignment}
+                onChange={handleFontAlignmentChange}
             />
 
             {/* Font Size */}

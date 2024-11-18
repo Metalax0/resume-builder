@@ -7,11 +7,19 @@ export interface PropertiesStateCellType {
     bgColor: string;
 }
 
+export enum FontAlignmentEnum {
+    center = "center",
+    left = "left",
+    right = "right",
+    justify = "justify",
+}
+
 export interface PropertiesStateElementType {
     width: number;
     height: number;
     bgColor: string;
     fontFamily: string;
+    fontAlignment: FontAlignmentEnum;
     fontSize: number;
     fontColor: string;
     //
