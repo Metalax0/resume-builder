@@ -44,7 +44,7 @@ export const InputText = ({
             return (
                 <input
                     type="text"
-                    className="w-full h-full max-w-full max-h-full resize block text-inherit bg-inherit focus:outline-0"
+                    className="w-full h-full text-center max-w-full max-h-full resize block text-inherit bg-inherit focus:outline-0"
                     placeholder={placeholder}
                     required
                 />

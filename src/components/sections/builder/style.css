@@ -36,8 +36,10 @@
     cursor: pointer;
     text-align: center;
     width: 100%;
+    height: auto;
+
     min-width: 50px;
-    min-height: 30px;
+    min-height: 100px;
     max-width: 100%;
     max-height: 100%;
     box-sizing: border-box;
