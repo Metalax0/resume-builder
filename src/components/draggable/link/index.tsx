@@ -12,6 +12,7 @@ export const Link = ({ drag }: LinkPropsType) => {
             data-category="link"
             data-link={"#"}
             className="draggable-element w-full h-full max-w-full resize block p-2 text-[14px] text-gray-900 bg-gray-50 focus:outline-0"
+            style={{ textAlign: "center" }}
             onDragStart={(e) => drag(e)}
         >
             <InputText

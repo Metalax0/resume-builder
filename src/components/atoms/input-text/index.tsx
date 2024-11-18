@@ -45,6 +45,7 @@ export const InputText = ({
                 <input
                     type="text"
                     className="w-full h-full text-center max-w-full max-h-full resize block text-inherit bg-inherit focus:outline-0"
+                    style={{ textAlign: "inherit" }}
                     placeholder={placeholder}
                     required
                 />
