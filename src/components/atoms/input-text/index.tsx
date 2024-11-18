@@ -20,7 +20,6 @@ export const InputText = ({
     onChange = () => {},
     placeholder,
 }: InputTextPropsType) => {
-    //
     const handleRenderLogic = () => {
         if (varient === InputTextVarient.nonDraggable)
             return (
@@ -44,9 +43,8 @@ export const InputText = ({
         else
             return (
                 <input
-                    // onClick={(e) => e.preventDefault()}
                     type="text"
-                    className="draggable-element w-full h-full max-w-full max-h-full resize block p-2 text-[14px] text-gray-900 bg-gray-50 focus:outline-0"
+                    className="w-full h-full max-w-full max-h-full resize block text-inherit bg-inherit focus:outline-0"
                     placeholder={placeholder}
                     required
                 />

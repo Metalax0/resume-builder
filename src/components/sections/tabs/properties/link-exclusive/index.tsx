@@ -39,7 +39,7 @@ export const LinkExclusive = ({
 
     const handleRedirectURLChange = (url: string) => {
         if (selected) {
-            selected.setAttribute("href", adjustURL(url));
+            selected.setAttribute("data-link", adjustURL(url));
             dispatchRedirectURL(url);
         }
     };

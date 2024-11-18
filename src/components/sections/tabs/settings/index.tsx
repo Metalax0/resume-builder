@@ -5,6 +5,10 @@ import { Button } from "../../../atoms/button";
 import { ToggleSwitch } from "../../../atoms/toggle-switch";
 import { useSettingsContext } from "../../../context/settingsContext";
 import { SelectionPriorityEnumType } from "../../../../types/settings";
+import {
+    handleTasksAfterExport,
+    handleTasksBeforeExport,
+} from "../../../../util/exportPDFhelper";
 
 export const SettingsTab = () => {
     const {
@@ -14,14 +18,14 @@ export const SettingsTab = () => {
         handleRemoveColumn,
     } = useRowsAndColumns();
     const { settingsState, settingsDispatch } = useSettingsContext();
-
     const reactToPrintFn = useReactToPrint({
         contentRef: settingsState.pdfRef,
     });
 
     const handleExportPDF = () => {
-        // turn grids and everything off
+        handleTasksBeforeExport();
         reactToPrintFn();
+        handleTasksAfterExport();
     };
 
     const handleGridToggle = () => {

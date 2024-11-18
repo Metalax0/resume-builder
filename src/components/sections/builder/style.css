@@ -13,6 +13,11 @@
     overflow: hidden;
 }
 
+#cv-main div {
+    resize: both;
+    overflow: auto !important;
+}
+
 .vertical input[type="range"] {
     writing-mode: vertical-lr;
 }
