@@ -27,6 +27,8 @@ export const propertiesInitialState: PropertiesStateType = {
         listCount: 3,
         // Link
         redirectURL: "#",
+        // Img
+        imgData: "",
     },
 };
 

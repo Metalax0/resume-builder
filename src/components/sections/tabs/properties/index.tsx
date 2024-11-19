@@ -8,6 +8,7 @@ import { PropertiesStateCategoryEnum } from "../../../../types/properties";
 import { Accordion } from "../../../atoms/accordian";
 import { ListExclusive } from "./list-exclusive";
 import { LinkExclusive } from "./link-exclusive";
+import { ImgExclusive } from "./img-exclusive";
 
 export const PropertiesTab = () => {
     const { rowRef, colRef } = useStageContext();
@@ -28,6 +29,8 @@ export const PropertiesTab = () => {
         else return "none selected";
     };
 
+    const elementCategory = getElementCategory();
+
     return (
         <div className="flex flex-col gap-3 flex-1 bg-red-500 text-left">
             {/* Cell Control */}
@@ -45,7 +48,7 @@ export const PropertiesTab = () => {
 
             {/* Elements Control */}
             <strong className="text-gray-800">
-                {`Element - [ ${getElementCategory()} ]`}
+                {`Element - [ ${elementCategory} ]`}
             </strong>
             {!selectedElement && (
                 <p className="text-black mt-3 italic font-semibold">
@@ -63,16 +66,19 @@ export const PropertiesTab = () => {
                         />
                     </Accordion>
 
-                    <Accordion title={"Fonts"}>
-                        <FontsProperties
-                            stateData={propertiesState.element}
-                            dispatch={propertiesDispatch}
-                            selected={selectedElement}
-                        />
-                    </Accordion>
+                    {/* Excluding Images */}
+                    {elementCategory != "img" && (
+                        <Accordion title={"Fonts"}>
+                            <FontsProperties
+                                stateData={propertiesState.element}
+                                dispatch={propertiesDispatch}
+                                selected={selectedElement}
+                            />
+                        </Accordion>
+                    )}
 
                     {/* List Exclusive Properties */}
-                    {getElementCategory() === "list" && (
+                    {elementCategory === "list" && (
                         <Accordion title={"Structure"}>
                             <ListExclusive
                                 stateData={propertiesState.element}
@@ -83,9 +89,20 @@ export const PropertiesTab = () => {
                     )}
 
                     {/* Link Exclusive */}
-                    {getElementCategory() === "link" && (
+                    {elementCategory === "link" && (
                         <Accordion title={"Redirect"}>
                             <LinkExclusive
+                                stateData={propertiesState.element}
+                                dispatch={propertiesDispatch}
+                                selected={selectedElement}
+                            />
+                        </Accordion>
+                    )}
+
+                    {/* Link Exclusive */}
+                    {elementCategory === "img" && (
+                        <Accordion title={"File"}>
+                            <ImgExclusive
                                 stateData={propertiesState.element}
                                 dispatch={propertiesDispatch}
                                 selected={selectedElement}

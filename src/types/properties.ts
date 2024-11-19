@@ -22,11 +22,13 @@ export interface PropertiesStateElementType {
     fontAlignment: FontAlignmentEnum;
     fontSize: number;
     fontColor: string;
-    //
+    // List
     listBulletVariation: string;
     listCount: number;
-    //
+    // Link
     redirectURL: string;
+    // Img
+    imgData: string;
 }
 
 // Complete State Type for both cell and element
