@@ -80,6 +80,11 @@ export const CommonProperties = ({
         });
     };
 
+    const handleDimensionReset = () => {
+        selected!.style.width = "initial";
+        selected!.style.height = "initial";
+    };
+
     return (
         <>
             <ColorPicker
@@ -89,15 +94,22 @@ export const CommonProperties = ({
             />
             <Slider
                 title="Width"
-                value={target.width}
+                value={Number(target.width)}
                 handleChange={(value) => handleSliderChange("w", value)}
             />
             <Slider
                 min={20}
                 title="Height"
-                value={target.height}
+                value={Number(target.height)}
                 handleChange={(value) => handleSliderChange("h", value)}
             />
+            <button
+                onClick={handleDimensionReset}
+                type="button"
+                className="text-gray-300 focus:outline-none focus:ring-4 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 bg-gray-800 hover:bg-gray-700 focus:ring-gray-700 border-gray-700"
+            >
+                Reset Dimensions
+            </button>
         </>
     );
 };

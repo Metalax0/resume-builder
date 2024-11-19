@@ -2,8 +2,8 @@ import { ReactNode } from "react";
 
 // State Types for Cell and Element
 export interface PropertiesStateCellType {
-    width: number;
-    height: number;
+    width: number | string;
+    height: number | string;
     bgColor: string;
 }
 
@@ -15,8 +15,8 @@ export enum FontAlignmentEnum {
 }
 
 export interface PropertiesStateElementType {
-    width: number;
-    height: number;
+    width: number | string;
+    height: number | string;
     bgColor: string;
     fontFamily: string;
     fontAlignment: FontAlignmentEnum;
