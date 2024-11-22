@@ -2,6 +2,7 @@ import { useStageContext } from "../components/context/stageContext";
 import { isTargetOccupied, isTargetValidDropZone } from "../util/dragAndDrop";
 import { useSettingsContext } from "../components/context/settingsContext";
 import { useSettings } from "./useSettings";
+import { useCallback, useEffect } from "react";
 
 // Custom hook for managing rows and columns
 export const useRowsAndColumns = () => {
@@ -18,6 +19,49 @@ export const useRowsAndColumns = () => {
 
     const { settingsDispatch } = useSettingsContext();
     const { manageSelectionHighlight } = useSettings();
+
+    const drag = (e: React.DragEvent<HTMLElement>) => {
+        setDraggedElement(e.currentTarget);
+    };
+
+    const drop = useCallback(
+        (e: React.DragEvent<HTMLElement>) => {
+            e.preventDefault();
+            e.stopPropagation();
+
+            const target = e.target as HTMLElement;
+
+            // Check if the target is a valid drop zone
+            if (isTargetValidDropZone(target) && !isTargetOccupied(target)) {
+                if (draggedElementRef.current) {
+                    target.appendChild(draggedElementRef.current);
+                    setDraggedElement(null);
+                }
+            }
+        },
+        [draggedElementRef, setDraggedElement]
+    );
+
+    useEffect(() => {
+        const container = document.getElementById("cv-main");
+        if (!container) return;
+
+        const handleDrop = (e: Event) => {
+            drop(e as unknown as React.DragEvent<HTMLElement>);
+        };
+
+        const handleDragOver = (e: Event) => {
+            e.preventDefault();
+        };
+
+        container.addEventListener("drop", handleDrop);
+        container.addEventListener("dragover", handleDragOver);
+
+        return () => {
+            container.removeEventListener("drop", handleDrop);
+            container.removeEventListener("dragover", handleDragOver);
+        };
+    }, [drop]);
 
     // Helper function to update button states
     const bttnDisableStateHelper = (
@@ -61,24 +105,6 @@ export const useRowsAndColumns = () => {
                 });
                 break;
         }
-    };
-
-    const drag = (e: React.DragEvent<HTMLElement>) => {
-        setDraggedElement(e.currentTarget);
-    };
-
-    const drop = (e: React.DragEvent<HTMLElement>) => {
-        e.preventDefault();
-        const target = e.currentTarget;
-        if (isTargetValidDropZone(target))
-            if (
-                draggedElementRef.current &&
-                draggedElementRef.current != null &&
-                !isTargetOccupied(target)
-            ) {
-                target.appendChild(draggedElementRef.current);
-                setDraggedElement(null);
-            }
     };
 
     const handleAddRow = () => {

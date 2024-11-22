@@ -4,42 +4,48 @@ import { PickerTab } from "./picker";
 import { SettingsTab } from "./settings";
 import { PropertiesTab } from "./properties";
 import { TabButtonCollection } from "../../molecules/tab-button-collection";
-import { useRowsAndColumns } from "../../../hooks/useRowsAndColumns";
-import { useStageContext } from "../../context/stageContext";
 import { useSettings } from "../../../hooks/useSettings";
 import { useSettingsContext } from "../../context/settingsContext";
+import { useRowsAndColumns } from "../../../hooks/useRowsAndColumns";
+import { useStageContext } from "../../context/stageContext";
 
 // display tabs selection (settings, properties and component picker)
 export const Tabs = () => {
     const [activeTab, setActiveTab] = useState<TabsEnum>(TabsEnum.picker);
-    const { setDraggedElement } = useStageContext();
     const { settingsState } = useSettingsContext();
-    const { drag } = useRowsAndColumns();
     const { manageSelectionHighlight, manageGridsAndOutlines } = useSettings();
+    const { drag } = useRowsAndColumns();
+    const { setDraggedElement } = useStageContext();
 
-    // Use Effect to re-attach event listeners on draggable components
     useEffect(() => {
         const draggables = document.querySelectorAll(".draggable-element");
 
+        const handleDragStart = (e: Event) => {
+            e.stopPropagation();
+
+            const dragEvent = e as unknown as React.DragEvent<HTMLElement>;
+            drag(dragEvent);
+            setDraggedElement(dragEvent.currentTarget as HTMLElement);
+        };
+
+        const handleDragEnd = () => {
+            setDraggedElement(null);
+        };
+
         draggables.forEach((draggable) => {
-            const element = draggable;
-            element.addEventListener(
-                "dragstart",
-                drag as unknown as EventListener
-            );
-            element.addEventListener("dragend", () => setDraggedElement(null));
+            const element = draggable as HTMLElement;
+            element.addEventListener("dragstart", handleDragStart);
+            element.addEventListener("dragend", handleDragEnd);
         });
 
         return () => {
             draggables.forEach((draggable) => {
-                const element = draggable;
-                element.removeEventListener(
-                    "dragstart",
-                    drag as unknown as EventListener
-                );
+                const element = draggable as HTMLElement;
+                element.removeEventListener("dragstart", handleDragStart);
+                element.removeEventListener("dragend", handleDragEnd);
             });
         };
-    }, [activeTab]);
+    }, [activeTab, drag, setDraggedElement]);
 
     useEffect(() => {
         manageSelectionHighlight();

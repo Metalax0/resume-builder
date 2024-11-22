@@ -1,4 +1,5 @@
 import { useRowsAndColumns } from "../../../../hooks/useRowsAndColumns";
+import { Blocks } from "../../../draggable/blocks";
 import { Heading } from "../../../draggable/heading";
 import { Img } from "../../../draggable/img";
 import { Link } from "../../../draggable/link";
@@ -22,6 +23,8 @@ export const PickerTab = () => {
             <Link drag={drag} />
             <List drag={drag} />
             <Img drag={drag} />
+            <Blocks drag={drag} drop={drop} orientation="horizontal" />
+            <Blocks drag={drag} drop={drop} orientation="vertical" />
             <Heading type={1} drag={drag} />
             <Heading type={2} drag={drag} />
             <Heading type={3} drag={drag} />

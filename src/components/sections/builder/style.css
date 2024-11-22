@@ -74,5 +74,6 @@
         outline: 0 !important;
         border: 0 !important;
         resize: none !important;
+        overflow: hidden !important;
     }
 }
