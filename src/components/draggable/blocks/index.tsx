@@ -18,12 +18,12 @@ export const Blocks = ({ drop, orientation }: BlocksPropsType) => {
             className={`draggable-element flex flex-1 gap-1 justify-center items-center ${getBlocksClassName()} w-full h-full text-gray-900`}
         >
             <div
-                className="flex-1 w-full h-full section-col flex justify-center items-center border-[1px] border-gray-500"
+                className="section-grid flex-1 w-full h-full section-col flex justify-center items-center"
                 onDragOver={(e) => e.preventDefault()}
                 onDrop={(e) => drop(e)}
             ></div>
             <div
-                className="flex-1 w-full h-full section-col flex justify-center items-center border-[1px] border-gray-500"
+                className="section-grid flex-1 w-full h-full section-col flex justify-center items-center"
                 onDragOver={(e) => e.preventDefault()}
                 onDrop={(e) => {
                     drop(e);

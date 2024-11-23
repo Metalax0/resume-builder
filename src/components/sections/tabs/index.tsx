@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { TabsEnum } from "../../../types/tabs";
 import { PickerTab } from "./picker";
 import { SettingsTab } from "./settings";
@@ -8,8 +8,10 @@ import { useSettings } from "../../../hooks/useSettings";
 import { useSettingsContext } from "../../context/settingsContext";
 import { useRowsAndColumns } from "../../../hooks/useRowsAndColumns";
 import { useStageContext } from "../../context/stageContext";
+import { useDraggableElements } from "../../../hooks/useDraggableElements";
+import { useSelectionHighlight } from "../../../hooks/useSelectionHighlight";
+import { useGridsAndOutlines } from "../../../hooks/useGridsAndOutlines";
 
-// display tabs selection (settings, properties and component picker)
 export const Tabs = () => {
     const [activeTab, setActiveTab] = useState<TabsEnum>(TabsEnum.picker);
     const { settingsState } = useSettingsContext();
@@ -17,54 +19,13 @@ export const Tabs = () => {
     const { drag } = useRowsAndColumns();
     const { setDraggedElement, setSelectedRef } = useStageContext();
 
-    useEffect(() => {
-        const draggables = document.querySelectorAll(".draggable-element");
-
-        const handleDragStart = (e: Event) => {
-            e.stopPropagation();
-
-            const dragEvent = e as unknown as React.DragEvent<HTMLElement>;
-            drag(dragEvent);
-            setDraggedElement(dragEvent.currentTarget as HTMLElement);
-        };
-
-        const handleDragEnd = () => {
-            setDraggedElement(null);
-        };
-
-        const handleElementClick = (e: MouseEvent) => {
-            let target = e.currentTarget as HTMLElement;
-            const category = target.getAttribute("data-category");
-            console.log(category, category === "blocks");
-            // target = category === "blocks" ? (e.target as HTMLElement) : target;
-            console.log("target is ", target);
-            setSelectedRef(target);
-        };
-
-        draggables.forEach((draggable) => {
-            const element = draggable as HTMLElement;
-            element.addEventListener("dragstart", handleDragStart);
-            element.addEventListener("dragend", handleDragEnd);
-            element.addEventListener("click", handleElementClick);
-        });
-
-        return () => {
-            draggables.forEach((draggable) => {
-                const element = draggable as HTMLElement;
-                element.removeEventListener("dragstart", handleDragStart);
-                element.removeEventListener("dragend", handleDragEnd);
-                element.removeEventListener("click", handleElementClick);
-            });
-        };
-    }, [activeTab, drag, setDraggedElement, setSelectedRef]);
-
-    useEffect(() => {
-        manageSelectionHighlight();
-    }, [manageSelectionHighlight, settingsState.showSelections]);
-
-    useEffect(() => {
-        manageGridsAndOutlines();
-    }, [settingsState.showOutlines]);
+    // Hooks for managing behavior
+    useDraggableElements(drag, setDraggedElement, setSelectedRef);
+    useSelectionHighlight(
+        manageSelectionHighlight,
+        settingsState.showSelections
+    );
+    useGridsAndOutlines(manageGridsAndOutlines, settingsState.showOutlines);
 
     const renderTab = () => {
         switch (activeTab) {
