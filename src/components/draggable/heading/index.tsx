@@ -4,20 +4,19 @@ import { HeadingTertiary } from "./tertiary";
 
 interface HeadingPropsType {
     type: 1 | 2 | 3;
-    drag: (e: React.DragEvent<HTMLElement>) => void;
 }
 
-export const Heading = ({ type, drag }: HeadingPropsType) => {
+export const Heading = ({ type }: HeadingPropsType) => {
     const renderHeading = () => {
         switch (type) {
             case 1:
-                return <HeadingPrimary drag={drag} />;
+                return <HeadingPrimary />;
 
             case 2:
-                return <HeadingSecondary drag={drag} />;
+                return <HeadingSecondary />;
 
             case 3:
-                return <HeadingTertiary drag={drag} />;
+                return <HeadingTertiary />;
 
             default:
                 <h3 className="text-red-500"> Invalid Heading Type </h3>;

@@ -1,13 +1,8 @@
-interface ListPropsType {
-    drag: (e: React.DragEvent<HTMLElement>) => void;
-}
-
-export const List = ({ drag }: ListPropsType) => {
+export const List = () => {
     return (
         <ul
             draggable
             data-category="list"
-            onDragStart={(e) => drag(e)}
             className="draggable-element text-left flex flex-col w-full h-full px-3 space-y-1 bg-gray-50 list-inside list-disc text-gray-900"
         >
             <li className="flex flex-1 w-full items-center">

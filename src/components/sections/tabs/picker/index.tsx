@@ -7,7 +7,7 @@ import { List } from "../../../draggable/list";
 import { Paragraph } from "../../../draggable/paragraph";
 
 export const PickerTab = () => {
-    const { drag, drop } = useRowsAndColumns();
+    const { drop } = useRowsAndColumns();
 
     return (
         <div
@@ -19,15 +19,15 @@ export const PickerTab = () => {
                 Drag & drop to place items
             </strong>
 
-            <Paragraph drag={drag} />
-            <Link drag={drag} />
-            <List drag={drag} />
-            <Img drag={drag} />
-            <Blocks drag={drag} drop={drop} orientation="horizontal" />
-            <Blocks drag={drag} drop={drop} orientation="vertical" />
-            <Heading type={1} drag={drag} />
-            <Heading type={2} drag={drag} />
-            <Heading type={3} drag={drag} />
+            <Paragraph />
+            <Link />
+            <List />
+            <Img />
+            <Blocks drop={drop} orientation="horizontal" />
+            <Blocks drop={drop} orientation="vertical" />
+            <Heading type={1} />
+            <Heading type={2} />
+            <Heading type={3} />
         </div>
     );
 };

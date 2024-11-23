@@ -11,7 +11,7 @@ import { LinkExclusive } from "./link-exclusive";
 import { ImgExclusive } from "./img-exclusive";
 
 export const PropertiesTab = () => {
-    const { rowRef, colRef } = useStageContext();
+    const { rowRef, colRef, selectedRef } = useStageContext();
     const { settingsState } = useSettingsContext();
     const { propertiesState, propertiesDispatch } = usePropertiesContext();
 
@@ -21,8 +21,7 @@ export const PropertiesTab = () => {
             ? (rowRef.current as HTMLElement)
             : (colRef.current as HTMLElement);
 
-    // tracks child element of colRef.current (currently active col)
-    const selectedElement = colRef.current!.firstChild as HTMLElement | null;
+    const selectedElement = selectedRef.current;
 
     const getElementCategory = () => {
         if (selectedElement) return selectedElement.dataset.category;

@@ -11,6 +11,7 @@ export const useRowsAndColumns = () => {
         colRef,
         rowArrRef,
         draggedElementRef,
+        setSelectedRef,
         setRowRef,
         setColRef,
         setRowArrRef,
@@ -18,7 +19,7 @@ export const useRowsAndColumns = () => {
     } = useStageContext();
 
     const { settingsDispatch } = useSettingsContext();
-    const { manageSelectionHighlight } = useSettings();
+    const { manageSelectionHighlight, manageGridsAndOutlines } = useSettings();
 
     const drag = (e: React.DragEvent<HTMLElement>) => {
         setDraggedElement(e.currentTarget);
@@ -145,6 +146,7 @@ export const useRowsAndColumns = () => {
 
             setColRef(newColumn);
             handleCellSelection(newColumn);
+            manageGridsAndOutlines();
         }
     };
 
@@ -205,6 +207,10 @@ export const useRowsAndColumns = () => {
         controlBttnDisable();
     };
 
+    const handleElementSelection = (elem: HTMLElement) => {
+        setSelectedRef(elem);
+    };
+
     const controlBttnDisable = () => {
         // Enable or disable row removal based on row count
         if (rowArrRef.current && rowArrRef.current.length >= 2) {
@@ -225,6 +231,7 @@ export const useRowsAndColumns = () => {
     };
 
     return {
+        handleElementSelection,
         handleAddRow,
         handleAddColumn,
         handleRemoveRow,

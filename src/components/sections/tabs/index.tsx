@@ -15,7 +15,7 @@ export const Tabs = () => {
     const { settingsState } = useSettingsContext();
     const { manageSelectionHighlight, manageGridsAndOutlines } = useSettings();
     const { drag } = useRowsAndColumns();
-    const { setDraggedElement } = useStageContext();
+    const { setDraggedElement, setSelectedRef } = useStageContext();
 
     useEffect(() => {
         const draggables = document.querySelectorAll(".draggable-element");
@@ -32,10 +32,20 @@ export const Tabs = () => {
             setDraggedElement(null);
         };
 
+        const handleElementClick = (e: MouseEvent) => {
+            let target = e.currentTarget as HTMLElement;
+            const category = target.getAttribute("data-category");
+            console.log(category, category === "blocks");
+            // target = category === "blocks" ? (e.target as HTMLElement) : target;
+            console.log("target is ", target);
+            setSelectedRef(target);
+        };
+
         draggables.forEach((draggable) => {
             const element = draggable as HTMLElement;
             element.addEventListener("dragstart", handleDragStart);
             element.addEventListener("dragend", handleDragEnd);
+            element.addEventListener("click", handleElementClick);
         });
 
         return () => {
@@ -43,9 +53,10 @@ export const Tabs = () => {
                 const element = draggable as HTMLElement;
                 element.removeEventListener("dragstart", handleDragStart);
                 element.removeEventListener("dragend", handleDragEnd);
+                element.removeEventListener("click", handleElementClick);
             });
         };
-    }, [activeTab, drag, setDraggedElement]);
+    }, [activeTab, drag, setDraggedElement, setSelectedRef]);
 
     useEffect(() => {
         manageSelectionHighlight();
