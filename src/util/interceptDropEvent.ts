@@ -1,5 +1,5 @@
 export const updateMinHeightOnDrop = () => {
-    // Get the parent container of all rows
+    // Get the parent container of all rows\
     const cvMain = document.getElementById("cv-main");
 
     if (!cvMain) return;
@@ -15,7 +15,7 @@ export const updateMinHeightOnDrop = () => {
 
         columns.forEach((col) => {
             if (anyColumnHasChildren || col.children.length > 0) {
-                col.style.minHeight = "20px";
+                col.style.minHeight = "30px";
             } else {
                 col.style.minHeight = "100px";
             }

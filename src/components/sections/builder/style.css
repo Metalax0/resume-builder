@@ -64,6 +64,16 @@
     font-family: Arial, sans-serif;
 }
 
+.section-elements-collection .draggable-element:hover,
+.section-elements-collection .draggable-element:hover * {
+    cursor: grab;
+    background-color: rgb(190, 255, 184);
+}
+
+.section-elements-collection .draggable-element:hover {
+    outline: 2px dashed #4caf50;
+}
+
 @media print {
     #cv-main {
         background-color: rgb(249, 250, 251);

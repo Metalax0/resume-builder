@@ -3,6 +3,7 @@ import { isTargetOccupied, isTargetValidDropZone } from "../util/dragAndDrop";
 import { useSettingsContext } from "../components/context/settingsContext";
 import { useSettings } from "./useSettings";
 import { useCallback, useEffect } from "react";
+import { updateMinHeightOnDrop } from "../util/interceptDropEvent";
 
 // Custom hook for managing rows and columns
 export const useRowsAndColumns = () => {
@@ -186,7 +187,6 @@ export const useRowsAndColumns = () => {
         const div = document.createElement("div");
         div.classList.add("section-row", "section-grid", "grid-visible");
         div.ondragover = (e) => e.preventDefault();
-        div.ondrop = (e) => drop(e as unknown as React.DragEvent<HTMLElement>);
         return div;
     };
 
@@ -195,7 +195,10 @@ export const useRowsAndColumns = () => {
         div.classList.add("section-col", "section-grid", "grid-visible");
         div.onclick = () => handleCellSelection(div);
         div.ondragover = (e) => e.preventDefault();
-        div.ondrop = (e) => drop(e as unknown as React.DragEvent<HTMLElement>);
+        div.ondrop = (e) => {
+            drop(e as unknown as React.DragEvent<HTMLElement>);
+            updateMinHeightOnDrop();
+        };
         return div;
     };
 

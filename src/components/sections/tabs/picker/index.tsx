@@ -1,4 +1,5 @@
 import { useRowsAndColumns } from "../../../../hooks/useRowsAndColumns";
+import { Accordion } from "../../../atoms/accordian";
 import { Blocks } from "../../../draggable/blocks";
 import { Heading } from "../../../draggable/heading";
 import { Img } from "../../../draggable/img";
@@ -19,15 +20,26 @@ export const PickerTab = () => {
                 Drag & drop to place items
             </strong>
 
-            <Paragraph />
-            <Link />
-            <List />
-            <Img />
-            <Blocks drop={drop} orientation="horizontal" />
-            <Blocks drop={drop} orientation="vertical" />
-            <Heading type={1} />
-            <Heading type={2} />
-            <Heading type={3} />
+            <Accordion title={"Basic"}>
+                <Paragraph />
+                <Link />
+                <List />
+            </Accordion>
+
+            <Accordion title={"Media"}>
+                <Img />
+            </Accordion>
+
+            <Accordion title={"Blocks"}>
+                <Blocks drop={drop} orientation="horizontal" />
+                <Blocks drop={drop} orientation="vertical" />
+            </Accordion>
+
+            <Accordion title={"Heading"}>
+                <Heading type={1} />
+                <Heading type={2} />
+                <Heading type={3} />
+            </Accordion>
         </div>
     );
 };

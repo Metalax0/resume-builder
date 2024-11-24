@@ -20,7 +20,7 @@ export const Dropdown = ({ data, value, handleChange }: DropDownPropsType) => {
     return (
         <div>
             <form className="max-w-sm mx-auto">
-                <p className="my-2  text-gray-800 font-bold">{title}</p>
+                <p className="text-gray-800 font-bold">{title}</p>
 
                 <select
                     id="countries"

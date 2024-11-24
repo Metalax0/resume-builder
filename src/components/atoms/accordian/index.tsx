@@ -40,8 +40,14 @@ export const Accordion = ({ title, children }: AccordionProps) => {
                     </svg>
                 </button>
             </h2>
-            {isOpen && (
-                <div className="p-3 bg-transparent text-gray-300 transition-colors">
+            {children && (
+                <div
+                    className={`flex flex-col gap-3 p-3 bg-transparent text-gray-300 transition-all duration-300 ${
+                        isOpen
+                            ? "max-h-screen opacity-100"
+                            : "max-h-0 opacity-0 py-0"
+                    } overflow-hidden`}
+                >
                     {children}
                 </div>
             )}
