@@ -9,11 +9,17 @@ import { Accordion } from "../../../atoms/accordian";
 import { ListExclusive } from "./list-exclusive";
 import { LinkExclusive } from "./link-exclusive";
 import { ImgExclusive } from "./img-exclusive";
+import { useAccordion } from "../../../context/accordianContext";
 
 export const PropertiesTab = () => {
     const { rowRef, colRef, selectedRef } = useStageContext();
     const { settingsState } = useSettingsContext();
     const { propertiesState, propertiesDispatch } = usePropertiesContext();
+    const { accordionStates, setAccordionState } = useAccordion();
+
+    const handleAccordionToggle = (title: string) => {
+        setAccordionState(title, !accordionStates[title]);
+    };
 
     // tracks row/col selection
     const selectedCell =
@@ -34,7 +40,11 @@ export const PropertiesTab = () => {
         <div className="flex flex-col gap-3 flex-1 bg-red-500 text-left">
             {/* Cell Control */}
             <strong className="text-gray-800">Row & Column</strong>
-            <Accordion title={"Basic"}>
+            <Accordion
+                title={"Basic"}
+                isOpen={accordionStates["properties/cell/basic"]}
+                onToggle={() => handleAccordionToggle("properties/cell/basic")}
+            >
                 <CommonProperties
                     category={PropertiesStateCategoryEnum.cell}
                     target={propertiesState.cell}
@@ -56,7 +66,13 @@ export const PropertiesTab = () => {
             )}
             {selectedElement && (
                 <div className="flex flex-col gap-2">
-                    <Accordion title={"Basic"}>
+                    <Accordion
+                        title={"Basic"}
+                        isOpen={accordionStates["properties/element/basic"]}
+                        onToggle={() =>
+                            handleAccordionToggle("properties/element/basic")
+                        }
+                    >
                         <CommonProperties
                             category={PropertiesStateCategoryEnum.element}
                             target={propertiesState.element}
@@ -67,7 +83,15 @@ export const PropertiesTab = () => {
 
                     {/* Excluding Images */}
                     {elementCategory != "img" && (
-                        <Accordion title={"Fonts"}>
+                        <Accordion
+                            title={"Fonts"}
+                            isOpen={accordionStates["properties/element/fonts"]}
+                            onToggle={() =>
+                                handleAccordionToggle(
+                                    "properties/element/fonts"
+                                )
+                            }
+                        >
                             <FontsProperties
                                 stateData={propertiesState.element}
                                 dispatch={propertiesDispatch}
@@ -78,7 +102,17 @@ export const PropertiesTab = () => {
 
                     {/* List Exclusive Properties */}
                     {elementCategory === "list" && (
-                        <Accordion title={"Structure"}>
+                        <Accordion
+                            title={"Structure"}
+                            isOpen={
+                                accordionStates["properties/element/structure"]
+                            }
+                            onToggle={() =>
+                                handleAccordionToggle(
+                                    "properties/element/structure"
+                                )
+                            }
+                        >
                             <ListExclusive
                                 stateData={propertiesState.element}
                                 dispatch={propertiesDispatch}
@@ -89,7 +123,17 @@ export const PropertiesTab = () => {
 
                     {/* Link Exclusive */}
                     {elementCategory === "link" && (
-                        <Accordion title={"Redirect"}>
+                        <Accordion
+                            title={"Redirect"}
+                            isOpen={
+                                accordionStates["properties/element/redirect"]
+                            }
+                            onToggle={() =>
+                                handleAccordionToggle(
+                                    "properties/element/redirect"
+                                )
+                            }
+                        >
                             <LinkExclusive
                                 stateData={propertiesState.element}
                                 dispatch={propertiesDispatch}
@@ -100,7 +144,13 @@ export const PropertiesTab = () => {
 
                     {/* Link Exclusive */}
                     {elementCategory === "img" && (
-                        <Accordion title={"File"}>
+                        <Accordion
+                            title={"File"}
+                            isOpen={accordionStates["properties/element/file"]}
+                            onToggle={() =>
+                                handleAccordionToggle("properties/element/file")
+                            }
+                        >
                             <ImgExclusive
                                 stateData={propertiesState.element}
                                 dispatch={propertiesDispatch}

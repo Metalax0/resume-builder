@@ -5,6 +5,7 @@ import { useRowsAndColumns } from "../../../hooks/useRowsAndColumns";
 import { useEffect } from "react";
 import { Tabs } from "../tabs";
 import { ZoomSlider } from "../../molecules/zoomSlider";
+import { AccordionProvider } from "../../context/accordianContext";
 
 export const Builder = () => {
     const { handleAddRow } = useRowsAndColumns();
@@ -18,7 +19,9 @@ export const Builder = () => {
             <div className="flex relative gap-2 w-full h-[70%] ">
                 <Main />
                 <ZoomSlider />
-                <Tabs />
+                <AccordionProvider>
+                    <Tabs />
+                </AccordionProvider>
             </div>
         </div>
     );

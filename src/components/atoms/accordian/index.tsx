@@ -1,24 +1,25 @@
-import { useState, ReactNode } from "react";
+import { ReactNode } from "react";
 
 export interface AccordionProps {
     title: string;
     children: ReactNode;
+    isOpen: boolean;
+    onToggle: () => void;
 }
 
-export const Accordion = ({ title, children }: AccordionProps) => {
-    const [isOpen, setIsOpen] = useState(false);
-
-    const toggleAccordion = () => {
-        setIsOpen(!isOpen);
-    };
-
+export const Accordion = ({
+    title,
+    children,
+    isOpen,
+    onToggle,
+}: AccordionProps) => {
     return (
         <div className="border-2 border-gray-600 bg-orange-300 rounded-sm shadow-xl">
             <h2>
                 <button
                     type="button"
                     className="flex items-center justify-between w-full px-3 py-2 font-semibold bg-gray-800 text-gray-300 hover:bg-gray-700 transition-colors gap-3"
-                    onClick={toggleAccordion}
+                    onClick={onToggle}
                     aria-expanded={isOpen}
                 >
                     <span>{title}</span>
