@@ -1,11 +1,21 @@
+import { useEffect, useRef } from "react";
+
 export const Paragraph = () => {
+    const editableRef = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+        if (editableRef.current) {
+            editableRef.current.innerHTML = "Paragraph";
+        }
+    }, []);
+
     return (
-        <textarea
+        <div
             draggable
+            contentEditable
+            ref={editableRef}
             data-category="paragraph"
-            rows={5}
             className="draggable-element w-full h-full max-w-full max-h-full min-h-[37px] resize block p-2 text-[14px] text-gray-900 bg-gray-50 focus:outline-0"
-            placeholder="Write a paragraph text here..."
-        ></textarea>
+        ></div>
     );
 };

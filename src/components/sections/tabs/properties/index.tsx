@@ -36,6 +36,12 @@ export const PropertiesTab = () => {
 
     const elementCategory = getElementCategory();
 
+    // const selectedText = window.document.getSelection()?.toString();
+
+    // console.log("hmm", selectedText);
+
+    // styleSelectedText("#FF0000");
+
     return (
         <div className="flex flex-col gap-3 flex-1 bg-red-500 text-left">
             {/* Cell Control */}
@@ -158,6 +164,24 @@ export const PropertiesTab = () => {
                             />
                         </Accordion>
                     )}
+
+                    {/*  */}
+
+                    {/* {selectedText && (
+                        <Accordion
+                            title="Selected Text"
+                            isOpen={
+                                accordionStates["properties/selection/text"]
+                            }
+                            onToggle={() =>
+                                handleAccordionToggle(
+                                    "properties/selection/text"
+                                )
+                            }
+                        >
+                            <p> {selectedText} </p>
+                        </Accordion>
+                    )} */}
                 </div>
             )}
         </div>

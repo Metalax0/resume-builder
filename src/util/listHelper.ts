@@ -11,13 +11,15 @@ export const addListItem = (selected: HTMLElement) => {
     newItem.appendChild(bullet);
 
     // Create the textarea
-    const textarea = document.createElement("textarea");
-    textarea.rows = 1;
-    textarea.className =
+    const div = document.createElement("div");
+    div.contentEditable = "true";
+    div.className =
         "w-full max-w-full max-h-full p-1 text-inherit bg-gray-50 focus:outline-0";
-    textarea.placeholder = `Item ${selected.children.length + 1}`;
-    textarea.style.textAlign = "inherit";
-    newItem.appendChild(textarea);
+    div.style.textAlign = "inherit";
+    div.textContent = `Item ${selected.children.length + 1}`;
+    newItem.appendChild(div);
+
+    newItem.appendChild(div);
 
     // Append the new list item to the selected list
     selected.appendChild(newItem);
