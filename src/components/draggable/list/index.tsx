@@ -17,7 +17,7 @@ export const List = () => {
             data-category="list"
             className="draggable-element text-left flex flex-col w-full h-full px-3 space-y-1 bg-gray-50 list-inside list-disc text-gray-900"
         >
-            {["Item 1", "Item 2", "Item 3"].map((item, index) => (
+            {["Item 1", "Item 2", "Item 3"].map((_, index) => (
                 <li key={index} className="flex flex-1 w-full items-center">
                     <span className="mr-2">•</span>
                     <div

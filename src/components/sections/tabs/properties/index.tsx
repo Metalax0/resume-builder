@@ -44,8 +44,6 @@ export const PropertiesTab = () => {
 
     useEffect(() => {
         const updateSelectedText = () => {
-            console.log("woo");
-
             const newSelectedTextContainer = getSelectedTextContainer();
             setSelectedTextContainer(newSelectedTextContainer);
         };
