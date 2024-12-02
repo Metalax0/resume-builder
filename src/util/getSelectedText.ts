@@ -84,7 +84,7 @@ export const getSelectedTextContainer = () => {
 
     // Create the new span to wrap the word
     const newSpan = document.createElement("span");
-    newSpan.style.border = "2px solid red"; // Or any style you want to apply
+    newSpan.className = "section-grid";
 
     try {
         // Surround the selected word with a span only if it's not inside an existing span
