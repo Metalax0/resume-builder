@@ -10,12 +10,18 @@ import { ListExclusive } from "./list-exclusive";
 import { LinkExclusive } from "./link-exclusive";
 import { ImgExclusive } from "./img-exclusive";
 import { useAccordion } from "../../../context/accordianContext";
+import { getSelectedTextContainer } from "../../../../util/getSelectedText";
+import { useState, useEffect } from "react";
 
 export const PropertiesTab = () => {
     const { rowRef, colRef, selectedRef } = useStageContext();
     const { settingsState } = useSettingsContext();
     const { propertiesState, propertiesDispatch } = usePropertiesContext();
     const { accordionStates, setAccordionState } = useAccordion();
+
+    // State to store the selected text container
+    const [selectedTextContainer, setSelectedTextContainer] =
+        useState<HTMLElement | null>(null);
 
     const handleAccordionToggle = (title: string) => {
         setAccordionState(title, !accordionStates[title]);
@@ -36,11 +42,20 @@ export const PropertiesTab = () => {
 
     const elementCategory = getElementCategory();
 
-    // const selectedText = window.document.getSelection()?.toString();
+    useEffect(() => {
+        const updateSelectedText = () => {
+            console.log("woo");
 
-    // console.log("hmm", selectedText);
+            const newSelectedTextContainer = getSelectedTextContainer();
+            setSelectedTextContainer(newSelectedTextContainer);
+        };
 
-    // styleSelectedText("#FF0000");
+        document.addEventListener("selectionchange", updateSelectedText);
+
+        return () => {
+            document.removeEventListener("selectionchange", updateSelectedText);
+        };
+    }, []);
 
     return (
         <div className="flex flex-col gap-3 flex-1 bg-red-500 text-left">
@@ -148,7 +163,7 @@ export const PropertiesTab = () => {
                         </Accordion>
                     )}
 
-                    {/* Link Exclusive */}
+                    {/* Image Exclusive */}
                     {elementCategory === "img" && (
                         <Accordion
                             title={"File"}
@@ -165,9 +180,8 @@ export const PropertiesTab = () => {
                         </Accordion>
                     )}
 
-                    {/*  */}
-
-                    {/* {selectedText && (
+                    {/* Text Selection */}
+                    {selectedTextContainer && (
                         <Accordion
                             title="Selected Text"
                             isOpen={
@@ -179,9 +193,13 @@ export const PropertiesTab = () => {
                                 )
                             }
                         >
-                            <p> {selectedText} </p>
+                            <FontsProperties
+                                stateData={propertiesState.selectedText}
+                                dispatch={propertiesDispatch}
+                                selected={selectedTextContainer}
+                            />
                         </Accordion>
-                    )} */}
+                    )}
                 </div>
             )}
         </div>

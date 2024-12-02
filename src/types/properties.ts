@@ -2,6 +2,7 @@ import { ReactNode } from "react";
 
 // State Types for Cell and Element
 export interface PropertiesStateCellType {
+    type: string;
     width: number | string;
     height: number | string;
     bgColor: string;
@@ -15,6 +16,7 @@ export enum FontAlignmentEnum {
 }
 
 export interface PropertiesStateElementType {
+    type: string;
     width: number | string;
     height: number | string;
     bgColor: string;
@@ -31,10 +33,19 @@ export interface PropertiesStateElementType {
     imgData: string;
 }
 
+export interface PropertiesStateSelectedTextType {
+    type: string;
+    bgColor: string;
+    fontColor: string;
+    fontFamily: string;
+    fontSize: number;
+}
+
 // Complete State Type for both cell and element
 export interface PropertiesStateType {
     cell: PropertiesStateCellType;
     element: PropertiesStateElementType;
+    selectedText: PropertiesStateSelectedTextType;
 }
 
 // Action Types for dispatch
@@ -47,6 +58,7 @@ export type PropertiesActionType = {
 export enum PropertiesStateCategoryEnum {
     cell,
     element,
+    selectedText,
 }
 
 // Provider Props Type

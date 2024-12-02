@@ -4,6 +4,7 @@ import {
     PropertiesActionType,
     PropertiesStateCategoryEnum,
     PropertiesStateElementType,
+    PropertiesStateSelectedTextType,
 } from "../../../../../types/properties";
 import { InputNumber } from "../../../../atoms/input-number";
 import { FontFamilyDropDown } from "../../../../molecules/fontFamilyDropdown";
@@ -13,7 +14,7 @@ import { FontAlignmentDropDown } from "../../../../molecules/fontAlignmentDropdo
 
 export interface FontsPropertiesPropsType {
     selected: HTMLElement | null;
-    stateData: PropertiesStateElementType;
+    stateData: PropertiesStateElementType | PropertiesStateSelectedTextType;
     dispatch: React.Dispatch<PropertiesActionType>;
 }
 
@@ -22,7 +23,14 @@ export const FontsProperties = ({
     selected,
     dispatch,
 }: FontsPropertiesPropsType) => {
-    const { fontFamily, fontAlignment, fontSize, fontColor } = stateData;
+    const { fontFamily, fontSize, fontColor } = stateData;
+    const category =
+        stateData.type === "element"
+            ? PropertiesStateCategoryEnum.element
+            : PropertiesStateCategoryEnum.selectedText;
+
+    const fontAlignment =
+        "fontAlignment" in stateData ? stateData.fontAlignment : "center";
 
     const { newFontFamily, newFontAlignment, newFontSize, newFontColor } =
         useMemo(() => {
@@ -52,7 +60,7 @@ export const FontsProperties = ({
 
     const dispatchFontFamily = (value: string) => {
         dispatch({
-            category: PropertiesStateCategoryEnum.element,
+            category: category,
             value: { fontFamily: value },
         });
         selected!.style.fontFamily = value;
@@ -60,7 +68,7 @@ export const FontsProperties = ({
 
     const dispatchFontAlignment = (value: FontAlignmentEnum) => {
         dispatch({
-            category: PropertiesStateCategoryEnum.element,
+            category: category,
             value: { fontAlignment: value },
         });
         selected!.style.textAlign = value;
@@ -68,7 +76,7 @@ export const FontsProperties = ({
 
     const dispatchFontSize = (value: number) => {
         dispatch({
-            category: PropertiesStateCategoryEnum.element,
+            category: category,
             value: { fontSize: value },
         });
         selected!.style.fontSize = value + "px";
@@ -76,7 +84,7 @@ export const FontsProperties = ({
 
     const dispatchFontColor = (value: string) => {
         dispatch({
-            category: PropertiesStateCategoryEnum.element,
+            category: category,
             value: { fontColor: value },
         });
         selected!.style.color = value;
@@ -107,10 +115,12 @@ export const FontsProperties = ({
             />
 
             {/* Text Alignment */}
-            <FontAlignmentDropDown
-                value={fontAlignment}
-                onChange={handleFontAlignmentChange}
-            />
+            {stateData.type === "element" && (
+                <FontAlignmentDropDown
+                    value={fontAlignment}
+                    onChange={handleFontAlignmentChange}
+                />
+            )}
 
             {/* Font Size */}
             <InputNumber
