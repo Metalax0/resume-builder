@@ -14,6 +14,7 @@ export const settingsInitialState: SettingsStateType = {
     isRemoveColBttnDisabled: true,
     pdfRef: createRef<HTMLElement>(),
     builderZoom: 70,
+    enableTextSelection: false,
 };
 
 // Helper to update settings category with the given updates

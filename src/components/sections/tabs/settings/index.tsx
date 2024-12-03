@@ -40,6 +40,12 @@ export const SettingsTab = () => {
         });
     };
 
+    const handleTextSelectionToggle = () => {
+        settingsDispatch({
+            value: { enableTextSelection: !settingsState.enableTextSelection },
+        });
+    };
+
     const handleSelectionPriority = () => {
         const newPriority =
             settingsState.selectionPriority === SelectionPriorityEnumType.row
@@ -52,11 +58,14 @@ export const SettingsTab = () => {
 
     return (
         <div
-            className="flex flex-col items-start flex-1 gap-6 bg-red-500 font-semibold"
+            className="flex flex-col items-start flex-1 gap-6 bg-red-500 font-semibold text-gray-800"
             onDragOver={(e) => e.preventDefault()}
         >
-            <div className="flex flex-col items-start gap-2">
-                <p className="text-gray-800 font-bold">Selection Priority</p>
+            <div className="flex flex-col items-start">
+                <p className="font-bold">Selection Priority</p>
+                <small className="mb-2 italic">
+                    whether to select row or col on click
+                </small>
                 <ToggleSwitch
                     id="selection"
                     labelOn={"Row"}
@@ -71,8 +80,9 @@ export const SettingsTab = () => {
                 />
             </div>
 
-            <div className="flex flex-col items-start gap-2">
-                <p className="text-gray-800 font-bold">Selection Highlight</p>
+            <div className="flex flex-col items-start ">
+                <p className="font-bold">Selection Highlight</p>
+                <small className="mb-2 italic">border around active item</small>
                 <ToggleSwitch
                     id="selection-highlight"
                     labelOn={"On"}
@@ -82,8 +92,23 @@ export const SettingsTab = () => {
                 />
             </div>
 
-            <div className="flex flex-col items-start gap-2">
-                <p className="text-gray-800 font-bold">Grids & Outlines</p>
+            <div className="flex flex-col items-start ">
+                <p className="font-bold">Enable Text slection</p>
+                <small className="mb-2 italic">
+                    for styling a word (properties tab)
+                </small>
+                <ToggleSwitch
+                    id="text-selection"
+                    labelOn={"On"}
+                    labelOff={"Off"}
+                    isToggled={settingsState.enableTextSelection}
+                    action={handleTextSelectionToggle}
+                />
+            </div>
+
+            <div className="flex flex-col items-start ">
+                <p className="font-bold">Grids & Outlines</p>
+                <small className="mb-2 italic">show/hide all borders</small>
                 <ToggleSwitch
                     id="outlines"
                     labelOn={"On"}
@@ -96,7 +121,7 @@ export const SettingsTab = () => {
             <hr className="w-full border-gray-800 border-px" />
 
             <div className="flex flex-col items-start gap-2">
-                <p className="text-gray-800 font-bold">Row Controls</p>
+                <p className="font-bold">Row Controls</p>
                 <div className="flex gap-2">
                     <Button
                         bttnName={"+"}
@@ -115,7 +140,7 @@ export const SettingsTab = () => {
             </div>
 
             <div className="flex flex-col items-start gap-2">
-                <p className="text-gray-800 font-bold">Col Controls</p>
+                <p className="font-bold">Col Controls</p>
                 <div className="flex gap-2">
                     <Button
                         bttnName={"+"}
@@ -134,7 +159,7 @@ export const SettingsTab = () => {
             </div>
 
             <div className="flex flex-col items-start gap-2">
-                <p className="text-gray-800 font-bold">Export</p>
+                <p className="font-bold">Export</p>
                 <Button
                     bttnName={"PDF"}
                     bttnType={BttnTypeEnum.primary}

@@ -44,8 +44,10 @@ export const PropertiesTab = () => {
 
     useEffect(() => {
         const updateSelectedText = () => {
-            const newSelectedTextContainer = getSelectedTextContainer();
-            setSelectedTextContainer(newSelectedTextContainer);
+            if (settingsState.enableTextSelection) {
+                const newSelectedTextContainer = getSelectedTextContainer();
+                setSelectedTextContainer(newSelectedTextContainer);
+            }
         };
 
         document.addEventListener("selectionchange", updateSelectedText);
@@ -53,7 +55,7 @@ export const PropertiesTab = () => {
         return () => {
             document.removeEventListener("selectionchange", updateSelectedText);
         };
-    }, []);
+    }, [settingsState.enableTextSelection]);
 
     return (
         <div className="flex flex-col gap-3 flex-1 bg-red-500 text-left">
@@ -179,25 +181,26 @@ export const PropertiesTab = () => {
                     )}
 
                     {/* Text Selection */}
-                    {selectedTextContainer && (
-                        <Accordion
-                            title="Selected Text"
-                            isOpen={
-                                accordionStates["properties/selection/text"]
-                            }
-                            onToggle={() =>
-                                handleAccordionToggle(
-                                    "properties/selection/text"
-                                )
-                            }
-                        >
-                            <FontsProperties
-                                stateData={propertiesState.selectedText}
-                                dispatch={propertiesDispatch}
-                                selected={selectedTextContainer}
-                            />
-                        </Accordion>
-                    )}
+                    {selectedTextContainer &&
+                        settingsState.enableTextSelection && (
+                            <Accordion
+                                title="Selected Text"
+                                isOpen={
+                                    accordionStates["properties/selection/text"]
+                                }
+                                onToggle={() =>
+                                    handleAccordionToggle(
+                                        "properties/selection/text"
+                                    )
+                                }
+                            >
+                                <FontsProperties
+                                    stateData={propertiesState.selectedText}
+                                    dispatch={propertiesDispatch}
+                                    selected={selectedTextContainer}
+                                />
+                            </Accordion>
+                        )}
                 </div>
             )}
         </div>

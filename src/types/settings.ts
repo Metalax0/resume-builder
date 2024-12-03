@@ -14,6 +14,7 @@ export interface SettingsStateType {
     isRemoveColBttnDisabled: boolean;
     pdfRef: React.RefObject<HTMLElement>;
     builderZoom: number;
+    enableTextSelection: boolean;
 }
 
 // Selection Priority Enum
