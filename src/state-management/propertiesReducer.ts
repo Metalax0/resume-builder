@@ -1,5 +1,8 @@
 import {
     FontAlignmentEnum,
+    FontDecorationEnum,
+    FontStyleEnum,
+    FontWeightEnum,
     PropertiesActionType,
     PropertiesStateCategoryEnum,
     PropertiesStateCellType,
@@ -21,10 +24,14 @@ export const propertiesInitialState: PropertiesStateType = {
         width: 0,
         height: 0,
         bgColor: "#FFFFFF",
+        // Font
         fontFamily: "Arial, sans-serif",
         fontAlignment: FontAlignmentEnum.left,
         fontSize: 14,
         fontColor: "#000000",
+        fontWeight: FontWeightEnum.normal,
+        fontStyle: FontStyleEnum.normal,
+        fontDecoration: FontDecorationEnum.none,
         // List
         listBulletVariation: "*",
         listCount: 3,
@@ -39,6 +46,9 @@ export const propertiesInitialState: PropertiesStateType = {
         fontColor: "#000000",
         fontFamily: "Arial, sans-serif",
         fontSize: 14,
+        fontWeight: FontWeightEnum.normal,
+        fontStyle: FontStyleEnum.normal,
+        fontDecoration: FontDecorationEnum.none,
     },
 };
 
