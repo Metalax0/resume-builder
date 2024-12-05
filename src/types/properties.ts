@@ -53,6 +53,7 @@ export interface PropertiesStateElementType {
     redirectURL: string;
     // Img
     imgData: string;
+    imgRounded: number;
 }
 
 export interface PropertiesStateSelectedTextType {

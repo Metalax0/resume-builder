@@ -12,6 +12,7 @@ import { ImgExclusive } from "./img-exclusive";
 import { useAccordion } from "../../../context/accordianContext";
 import { getSelectedTextContainer } from "../../../../util/getSelectedText";
 import { useState, useEffect } from "react";
+import { ImgExclusive2 } from "./img-exclusive-2";
 
 export const PropertiesTab = () => {
     const { rowRef, colRef, selectedRef } = useStageContext();
@@ -165,19 +166,45 @@ export const PropertiesTab = () => {
 
                     {/* Image Exclusive */}
                     {elementCategory === "img" && (
-                        <Accordion
-                            title={"File"}
-                            isOpen={accordionStates["properties/element/file"]}
-                            onToggle={() =>
-                                handleAccordionToggle("properties/element/file")
-                            }
-                        >
-                            <ImgExclusive
-                                stateData={propertiesState.element}
-                                dispatch={propertiesDispatch}
-                                selected={selectedElement}
-                            />
-                        </Accordion>
+                        <>
+                            <Accordion
+                                title={"File"}
+                                isOpen={
+                                    accordionStates["properties/element/file"]
+                                }
+                                onToggle={() =>
+                                    handleAccordionToggle(
+                                        "properties/element/file"
+                                    )
+                                }
+                            >
+                                <ImgExclusive
+                                    stateData={propertiesState.element}
+                                    dispatch={propertiesDispatch}
+                                    selected={selectedElement}
+                                />
+                            </Accordion>
+
+                            <Accordion
+                                title={"Structure"}
+                                isOpen={
+                                    accordionStates[
+                                        "properties/element/structure"
+                                    ]
+                                }
+                                onToggle={() =>
+                                    handleAccordionToggle(
+                                        "properties/element/structure"
+                                    )
+                                }
+                            >
+                                <ImgExclusive2
+                                    stateData={propertiesState.element}
+                                    dispatch={propertiesDispatch}
+                                    selected={selectedElement}
+                                />
+                            </Accordion>
+                        </>
                     )}
 
                     {/* Text Selection */}

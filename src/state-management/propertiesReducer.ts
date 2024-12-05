@@ -39,6 +39,7 @@ export const propertiesInitialState: PropertiesStateType = {
         redirectURL: "#",
         // Img
         imgData: "",
+        imgRounded: 0,
     },
     selectedText: {
         type: "selectedText",
