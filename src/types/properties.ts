@@ -15,6 +15,25 @@ export enum FontAlignmentEnum {
     justify = "justify",
 }
 
+export enum FontWeightEnum {
+    normal = "normal",
+    semibold = "semibold",
+    bold = "bold",
+    bolder = "bolder",
+}
+
+export enum FontStyleEnum {
+    normal = "normal",
+    italic = "italic",
+}
+
+export enum FontDecorationEnum {
+    none = "none",
+    overline = "overline",
+    lineThrough = "line-through",
+    underline = "underline",
+}
+
 export interface PropertiesStateElementType {
     type: string;
     width: number | string;
@@ -24,6 +43,9 @@ export interface PropertiesStateElementType {
     fontAlignment: FontAlignmentEnum;
     fontSize: number;
     fontColor: string;
+    fontWeight: FontWeightEnum;
+    fontStyle: FontStyleEnum;
+    fontDecoration: FontDecorationEnum;
     // List
     listBulletVariation: string;
     listCount: number;
@@ -39,6 +61,9 @@ export interface PropertiesStateSelectedTextType {
     fontColor: string;
     fontFamily: string;
     fontSize: number;
+    fontWeight: FontWeightEnum;
+    fontStyle: FontStyleEnum;
+    fontDecoration: FontDecorationEnum;
 }
 
 // Complete State Type for both cell and element

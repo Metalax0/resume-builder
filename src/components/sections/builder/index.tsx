@@ -6,11 +6,12 @@ import { useEffect } from "react";
 import { Tabs } from "../tabs";
 import { ZoomSlider } from "../../molecules/zoomSlider";
 import { AccordionProvider } from "../../context/accordianContext";
+import { executeNTimes } from "../../../util/executeNTimes";
 
 export const Builder = () => {
     const { handleAddRow } = useRowsAndColumns();
     useEffect(() => {
-        handleAddRow();
+        executeNTimes(5, handleAddRow);
     }, []);
 
     return (
