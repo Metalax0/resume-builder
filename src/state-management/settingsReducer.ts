@@ -15,6 +15,10 @@ export const settingsInitialState: SettingsStateType = {
     pdfRef: createRef<HTMLElement>(),
     builderZoom: 70,
     enableTextSelection: false,
+    template: {
+        application: [],
+        user: [],
+    },
 };
 
 // Helper to update settings category with the given updates

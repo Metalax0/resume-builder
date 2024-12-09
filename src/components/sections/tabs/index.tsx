@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { TabsEnum } from "../../../types/tabs";
 import { PickerTab } from "./picker";
 import { SettingsTab } from "./settings";
@@ -16,7 +16,7 @@ export const Tabs = () => {
     const [activeTab, setActiveTab] = useState<TabsEnum>(TabsEnum.picker);
     const { settingsState } = useSettingsContext();
     const { manageSelectionHighlight, manageGridsAndOutlines } = useSettings();
-    const { drag } = useRowsAndColumns();
+    const { drag, drop } = useRowsAndColumns();
     const { setDraggedElement, setSelectedRef } = useStageContext();
 
     // Hooks for managing behavior
@@ -26,6 +26,7 @@ export const Tabs = () => {
         settingsState.showSelections
     );
     useGridsAndOutlines(manageGridsAndOutlines, settingsState.showOutlines);
+    // re-attach event listeners on rows and columns.
 
     const renderTab = () => {
         switch (activeTab) {

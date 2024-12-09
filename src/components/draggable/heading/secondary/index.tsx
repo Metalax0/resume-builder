@@ -15,7 +15,7 @@ export const HeadingSecondary = () => {
             contentEditable
             ref={editableRef}
             data-category="heading"
-            className="draggable-element text-center w-full h-full max-w-full max-h-full resize-none text-[20px] text-gray-900 bg-gray-50  focus:outline-0"
+            className="draggable-element flex items-center justify-center text-center w-full h-full max-w-full max-h-full resize-none text-[20px] text-gray-900 bg-gray-50  focus:outline-0"
         ></div>
     );
 };

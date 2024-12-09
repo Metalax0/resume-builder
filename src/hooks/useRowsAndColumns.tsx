@@ -2,7 +2,7 @@ import { useStageContext } from "../components/context/stageContext";
 import { isTargetOccupied, isTargetValidDropZone } from "../util/dragAndDrop";
 import { useSettingsContext } from "../components/context/settingsContext";
 import { useSettings } from "./useSettings";
-import { useCallback, useEffect } from "react";
+import { useCallback, useEffect, useRef } from "react";
 import { updateMinHeightOnDrop } from "../util/interceptDropEvent";
 
 // Custom hook for managing rows and columns
@@ -19,8 +19,9 @@ export const useRowsAndColumns = () => {
         setDraggedElement,
     } = useStageContext();
 
-    const { settingsDispatch } = useSettingsContext();
+    const { settingsState, settingsDispatch } = useSettingsContext();
     const { manageSelectionHighlight, manageGridsAndOutlines } = useSettings();
+    const previousPdfRef = useRef(settingsState.pdfRef);
 
     const drag = (e: React.DragEvent<HTMLElement>) => {
         setDraggedElement(e.currentTarget);
@@ -59,11 +60,58 @@ export const useRowsAndColumns = () => {
         container.addEventListener("drop", handleDrop);
         container.addEventListener("dragover", handleDragOver);
 
+        if (settingsState.pdfRef !== previousPdfRef.current) {
+            // 1. Add event listeners to "section-col" divs
+            const sectionCols =
+                container.querySelectorAll<HTMLDivElement>(".section-col");
+            sectionCols.forEach((div) => {
+                div.onclick = () => handleCellSelection(div);
+                div.ondragover = (e) => e.preventDefault();
+                div.ondrop = (e) => {
+                    drop(e as unknown as React.DragEvent<HTMLElement>);
+                    updateMinHeightOnDrop();
+                };
+            });
+
+            // 2. Add event listeners to "section-row" divs and build the array
+            const sectionRows = Array.from(
+                container.querySelectorAll<HTMLDivElement>(".section-row")
+            );
+            sectionRows.forEach((div) => {
+                div.ondragover = (e) => e.preventDefault();
+            });
+
+            // 3. Update row-related state
+            setRowArrRef(sectionRows);
+            if (sectionRows.length > 0) {
+                setRowRef(sectionRows[sectionRows.length - 1]);
+            } else {
+                setRowRef(null);
+            }
+        }
+
+        previousPdfRef.current = settingsState.pdfRef;
+
         return () => {
             container.removeEventListener("drop", handleDrop);
             container.removeEventListener("dragover", handleDragOver);
+
+            // Clean up "section-col" and "section-row" event listeners
+            const sectionCols =
+                container.querySelectorAll<HTMLDivElement>(".section-col");
+            sectionCols.forEach((div) => {
+                div.onclick = null;
+                div.ondragover = null;
+                div.ondrop = null;
+            });
+
+            const sectionRows =
+                container.querySelectorAll<HTMLDivElement>(".section-row");
+            sectionRows.forEach((div) => {
+                div.ondragover = null;
+            });
         };
-    }, [drop]);
+    }, [settingsState.pdfRef]);
 
     // Helper function to update button states
     const bttnDisableStateHelper = (
@@ -121,7 +169,6 @@ export const useRowsAndColumns = () => {
                 newRow,
                 ...rowArrRef.current!.slice(currentIndex + 1),
             ];
-
             setRowArrRef(updatedRowArr);
         } else {
             document.getElementById("cv-main")!.appendChild(newRow);
@@ -157,7 +204,7 @@ export const useRowsAndColumns = () => {
             rowArrRef.current &&
             rowArrRef.current.length !== 1
         ) {
-            document.getElementById("cv-main")?.removeChild(rowRef.current);
+            settingsState.pdfRef.current?.removeChild(rowRef.current);
             setRowArrRef(
                 rowArrRef.current.filter((row) => row !== rowRef.current)
             );

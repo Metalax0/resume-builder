@@ -15,6 +15,20 @@ export interface SettingsStateType {
     pdfRef: React.RefObject<HTMLElement>;
     builderZoom: number;
     enableTextSelection: boolean;
+    template: {
+        application: TemplateType[] | [];
+        user: TemplateType[] | [];
+    };
+}
+
+export interface TemplateType {
+    attributes: {
+        class: string;
+        id: string;
+        style: string;
+    };
+    children: TemplateType[] | [];
+    tag: string;
 }
 
 // Selection Priority Enum
