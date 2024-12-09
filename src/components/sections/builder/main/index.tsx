@@ -9,15 +9,16 @@ export const Main = () => {
         settingsDispatch({
             value: { pdfRef: contentRef },
         });
-    }, [settingsDispatch, settingsState.pdfRef]);
+    }, [settingsDispatch, contentRef.current]);
 
     useEffect(() => {
         const zoomValue = settingsState.builderZoom / 100;
-        if (contentRef.current) {
-            contentRef.current.style.transform = `scale(${zoomValue})`;
-            contentRef.current.style.transformOrigin = "top center";
+        const mainRef = settingsState.pdfRef.current;
+        if (mainRef) {
+            mainRef.style.transform = `scale(${zoomValue})`;
+            mainRef.style.transformOrigin = "top center";
         }
-    }, [settingsState.builderZoom]);
+    }, [settingsState.builderZoom, settingsState.pdfRef]);
 
     return <div ref={contentRef} className="" id="cv-main" />;
 };

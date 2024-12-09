@@ -57,20 +57,30 @@ export const useRowsAndColumns = () => {
             e.preventDefault();
         };
 
-        container.addEventListener("drop", handleDrop);
-        container.addEventListener("dragover", handleDragOver);
+        // Add global event listeners only once
+        if (!container.dataset.eventsInitialized) {
+            container.addEventListener("drop", handleDrop);
+            container.addEventListener("dragover", handleDragOver);
+            container.dataset.eventsInitialized = "true"; // Mark as initialized
+        }
 
-        if (settingsState.pdfRef !== previousPdfRef.current) {
+        if (
+            settingsState.pdfRef.current &&
+            settingsState.pdfRef !== previousPdfRef.current
+        ) {
             // 1. Add event listeners to "section-col" divs
             const sectionCols =
                 container.querySelectorAll<HTMLDivElement>(".section-col");
             sectionCols.forEach((div) => {
-                div.onclick = () => handleCellSelection(div);
-                div.ondragover = (e) => e.preventDefault();
-                div.ondrop = (e) => {
-                    drop(e as unknown as React.DragEvent<HTMLElement>);
-                    updateMinHeightOnDrop();
-                };
+                if (!div.dataset.eventsInitialized) {
+                    div.onclick = () => handleCellSelection(div);
+                    div.ondragover = (e) => e.preventDefault();
+                    div.ondrop = (e) => {
+                        drop(e as unknown as React.DragEvent<HTMLElement>);
+                        updateMinHeightOnDrop();
+                    };
+                    div.dataset.eventsInitialized = "true"; // Mark as initialized
+                }
             });
 
             // 2. Add event listeners to "section-row" divs and build the array
@@ -78,7 +88,10 @@ export const useRowsAndColumns = () => {
                 container.querySelectorAll<HTMLDivElement>(".section-row")
             );
             sectionRows.forEach((div) => {
-                div.ondragover = (e) => e.preventDefault();
+                if (!div.dataset.eventsInitialized) {
+                    div.ondragover = (e) => e.preventDefault();
+                    div.dataset.eventsInitialized = "true"; // Mark as initialized
+                }
             });
 
             // 3. Update row-related state
@@ -91,27 +104,7 @@ export const useRowsAndColumns = () => {
         }
 
         previousPdfRef.current = settingsState.pdfRef;
-
-        return () => {
-            container.removeEventListener("drop", handleDrop);
-            container.removeEventListener("dragover", handleDragOver);
-
-            // Clean up "section-col" and "section-row" event listeners
-            const sectionCols =
-                container.querySelectorAll<HTMLDivElement>(".section-col");
-            sectionCols.forEach((div) => {
-                div.onclick = null;
-                div.ondragover = null;
-                div.ondrop = null;
-            });
-
-            const sectionRows =
-                container.querySelectorAll<HTMLDivElement>(".section-row");
-            sectionRows.forEach((div) => {
-                div.ondragover = null;
-            });
-        };
-    }, [settingsState.pdfRef]);
+    }, [drop, setRowArrRef, setRowRef, settingsState.pdfRef]);
 
     // Helper function to update button states
     const bttnDisableStateHelper = (

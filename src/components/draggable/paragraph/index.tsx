@@ -15,7 +15,7 @@ export const Paragraph = () => {
             contentEditable
             ref={editableRef}
             data-category="paragraph"
-            className="draggable-element flex items-center justify-center w-full h-full max-w-full max-h-full min-h-[37px] resize block p-2 text-[14px] text-gray-900 bg-gray-50 focus:outline-0"
+            className="draggable-element flex items-center justify-center w-full h-full max-w-full max-h-full min-h-[37px] resize p-2 text-[14px] text-gray-900 bg-gray-50 focus:outline-0"
         ></div>
     );
 };
