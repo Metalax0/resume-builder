@@ -2,6 +2,7 @@ export enum TabsEnum {
     settings,
     picker,
     properties,
+    templates,
 }
 
 export interface PickerTabType {

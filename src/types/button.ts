@@ -1,6 +1,7 @@
 export enum BttnTypeEnum {
     primary,
     secondary,
+    tersary,
 }
 
 export interface ButtonPropsType {

@@ -9,11 +9,6 @@ import {
     handleTasksAfterExport,
     handleTasksBeforeExport,
 } from "../../../../util/PDFExportHelper";
-import {
-    recreateDOM,
-    serializeDOM,
-} from "../../../../util/JsonAndDomConversion";
-import { templateData } from "../../../../data/templateData";
 
 export const SettingsTab = () => {
     const {
@@ -54,26 +49,6 @@ export const SettingsTab = () => {
         settingsDispatch({
             value: { selectionPriority: newPriority },
         });
-    };
-
-    const handleTemplateSave = () => {
-        const toJson = serializeDOM(
-            settingsState.pdfRef.current as HTMLElement
-        );
-        console.log("dom as json is : ", toJson);
-    };
-
-    const handleTemplateLoad = () => {
-        // const fromJson = settingsState.
-        // save and load only new template. (this will persist)
-        // two categories of template, app template and user template
-        const currentStage = settingsState.pdfRef.current as HTMLElement;
-        const newStage = recreateDOM(templateData) as HTMLElement;
-        const newPdfRef = { current: newStage } as React.RefObject<HTMLElement>;
-        settingsDispatch({
-            value: { pdfRef: newPdfRef },
-        });
-        currentStage.replaceWith(newStage);
     };
 
     const handleExportPDF = () => {
@@ -180,22 +155,6 @@ export const SettingsTab = () => {
                         bttnAction={handleRemoveColumn}
                         isDisabled={settingsState.isRemoveColBttnDisabled}
                         isCircular
-                    />
-                </div>
-            </div>
-
-            <div className="flex flex-col items-start gap-2">
-                <p className="font-bold">Template</p>
-                <div className="flex gap-2">
-                    <Button
-                        bttnName={"Save"}
-                        bttnType={BttnTypeEnum.primary}
-                        bttnAction={handleTemplateSave}
-                    />
-                    <Button
-                        bttnName={"Load"}
-                        bttnType={BttnTypeEnum.primary}
-                        bttnAction={handleTemplateLoad}
                     />
                 </div>
             </div>

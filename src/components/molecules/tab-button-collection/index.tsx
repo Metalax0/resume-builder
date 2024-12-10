@@ -23,6 +23,11 @@ export const TabButtonCollection = ({
                 tabName={"Settings"}
                 onClick={() => setActiveTab(TabsEnum.settings)}
             />
+            <TabButton
+                isActive={activeTab === TabsEnum.templates}
+                tabName={"Templates"}
+                onClick={() => setActiveTab(TabsEnum.templates)}
+            />
         </div>
     );
 };

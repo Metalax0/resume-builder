@@ -11,6 +11,7 @@ import { useStageContext } from "../../context/stageContext";
 import { useDraggableElements } from "../../../hooks/useDraggableElements";
 import { useSelectionHighlight } from "../../../hooks/useSelectionHighlight";
 import { useGridsAndOutlines } from "../../../hooks/useGridsAndOutlines";
+import { TemplatesTab } from "./templates";
 
 export const Tabs = () => {
     const [activeTab, setActiveTab] = useState<TabsEnum>(TabsEnum.picker);
@@ -35,6 +36,8 @@ export const Tabs = () => {
                 return <PickerTab />;
             case TabsEnum.properties:
                 return <PropertiesTab />;
+            case TabsEnum.templates:
+                return <TemplatesTab />;
             default:
                 return (
                     <strong className="text-blue-600">Invalid Tab Type</strong>

@@ -22,6 +22,11 @@ export const Button = ({
             bttnClassName = "bg-red-800 hover:bg-red-600 disabled:bg-gray-500";
             break;
 
+        case BttnTypeEnum.tersary:
+            bttnClassName =
+                "text-gray-300 rounded-lg text-sm bg-gray-800 hover:bg-gray-700 border-gray-700";
+            break;
+
         default:
             break;
     }
