@@ -1,10 +1,15 @@
 import { ReactNode } from "react";
 
-export interface TemplateType {
+export interface TemplateRefinedType {
+    id: number;
+    data: TemplateRawType | null;
+}
+
+export interface TemplateRawType {
     attributes: {
         [key: string]: string;
     };
-    children: Array<TemplateType | { text: string } | []>;
+    children: Array<TemplateRawType | { text: string } | []>;
     tag: string;
 }
 
@@ -17,7 +22,7 @@ export interface TemplatesStateType {
     activeAppTemplateIndex: number;
     activeUserTemplateIndex: number;
     showAppTemplate: boolean;
-    arr: TemplateType[];
+    arr: TemplateRawType[];
 }
 
 export type TemplatesActionType = {

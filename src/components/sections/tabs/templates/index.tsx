@@ -1,9 +1,10 @@
+import { MouseEvent, useEffect, useState } from "react";
 import {
     applicationTemplateArr,
     defaultInitialTemplate,
 } from "../../../../data/templateData";
 import { BttnTypeEnum } from "../../../../types/button";
-import { TemplateType } from "../../../../types/templates";
+import { TemplateRefinedType } from "../../../../types/templates";
 import {
     recreateDOM,
     serializeDOM,
@@ -12,11 +13,30 @@ import { Button } from "../../../atoms/button";
 import { ToggleSwitch } from "../../../atoms/toggle-switch";
 import { useSettingsContext } from "../../../context/settingsContext";
 import { useTemplatesContext } from "../../../context/templatesContext";
+import {
+    deleteTemplateFromIndexDB,
+    fetchAllTemplatesFromIndexDB,
+    fetchTemplateFromIndexDB,
+    saveTemplatetoIndexDB,
+} from "../../../../index-db/db";
 
 export const TemplatesTab = () => {
     const { templatesState, templatesDispatch } = useTemplatesContext();
     const { settingsState, settingsDispatch } = useSettingsContext();
+    const [indexDBTemplatesArr, setIndexDBTemplatesArr] = useState<
+        TemplateRefinedType[]
+    >([{ id: -1, data: null }]);
+
+    useEffect(() => {
+        handleFetchAllTemplates();
+    }, [settingsState.pdfRef, templatesState.showAppTemplate]);
+
     const currentStage = settingsState.pdfRef.current as HTMLElement;
+
+    const handleFetchAllTemplates = async () => {
+        const templateArr = await fetchAllTemplatesFromIndexDB();
+        setIndexDBTemplatesArr(templateArr as TemplateRefinedType[]);
+    };
 
     const updatePdfRef = (newStage: HTMLElement) => {
         const newPdfRef = { current: newStage } as React.RefObject<HTMLElement>;
@@ -31,26 +51,32 @@ export const TemplatesTab = () => {
     };
 
     const handleTemplateReset = () => {
-        const newStage = recreateDOM(defaultInitialTemplate) as HTMLElement;
+        const newStage = recreateDOM(
+            defaultInitialTemplate.data
+        ) as HTMLElement;
         updatePdfRef(newStage);
     };
 
     const handleTemplateSave = () => {
         const serializedDOM = serializeDOM(currentStage);
-        console.log("DOM as JSON is: ", serializedDOM);
-        // Save to IndexedDB or another storage mechanism
+        saveTemplatetoIndexDB(serializedDOM);
+        handleFetchAllTemplates();
     };
 
-    const handleTemplateLoad = (index: number, isTemplateApp: boolean) => {
+    const handleTemplateLoad = async (id: number, isTemplateApp: boolean) => {
         let newStage = currentStage;
 
         if (isTemplateApp) {
-            newStage = recreateDOM(
-                applicationTemplateArr[index]
-            ) as HTMLElement;
+            // app template arr ko map garera id match
+            const templateJSON = applicationTemplateArr.filter(
+                (item) => item.id === id
+            );
+            newStage = recreateDOM(templateJSON[0].data) as HTMLElement;
         } else {
-            // const templateFromIndexDB = "fetch from indexDB";
-            // newStage = recreateDOM(templateFromIndexDB) as HTMLElement;
+            const templateFromIndexDB = await fetchTemplateFromIndexDB(id);
+
+            if (templateFromIndexDB)
+                newStage = recreateDOM(templateFromIndexDB) as HTMLElement;
         }
 
         if (currentStage !== newStage) {
@@ -58,7 +84,7 @@ export const TemplatesTab = () => {
         }
     };
 
-    const handleTemplateClick = (index: number) => {
+    const handleTemplateClick = (id: number) => {
         const isAppTemplate = templatesState.showAppTemplate;
         const activeProperty = isAppTemplate
             ? "activeAppTemplateIndex"
@@ -67,39 +93,70 @@ export const TemplatesTab = () => {
             ? "activeUserTemplateIndex"
             : "activeAppTemplateIndex";
 
-        if (templatesState[activeProperty] !== index) {
+        if (templatesState[activeProperty] !== id) {
             templatesDispatch({
                 value: {
-                    [activeProperty]: index,
+                    [activeProperty]: id,
                     [inactiveProperty]: -1,
                 },
             });
         }
 
-        handleTemplateLoad(index, isAppTemplate);
+        handleTemplateLoad(id, isAppTemplate);
+    };
+
+    const handleTemplateDelete = (
+        e: MouseEvent<HTMLButtonElement>,
+        id: number
+    ) => {
+        e.stopPropagation();
+        deleteTemplateFromIndexDB(id);
+        handleFetchAllTemplates();
     };
 
     const renderTemplates = (
-        templates: TemplateType[],
+        target: string,
+        templates: TemplateRefinedType[],
         activeIndex: number
     ) => {
-        return (
-            <div className="flex gap-2 flex-wrap">
-                {templates.map((_, index: number) => (
-                    <div
-                        key={`template-${index}`}
-                        className={`${
-                            activeIndex === index
-                                ? "bg-green-500 hover:bg-green-600"
-                                : "bg-yellow-300 hover:bg-yellow-400"
-                        } p-5 border-2 border-blue-800 hover:cursor-pointer rounded-lg`}
-                        onClick={() => handleTemplateClick(index)}
-                    >
-                        Template {index}
-                    </div>
-                ))}
-            </div>
-        );
+        if (templates.length === 0)
+            return (
+                <p className="text-gray-800 rounded-sm italic font-bold">
+                    Empty : No templates saved
+                </p>
+            );
+        else
+            return (
+                <div className="flex gap-2 flex-wrap">
+                    {templates.map((item) => (
+                        <div
+                            key={`template-${item.id}`}
+                            className={`${
+                                activeIndex === item.id
+                                    ? "bg-green-500 hover:bg-green-600"
+                                    : "bg-yellow-300 hover:bg-yellow-400"
+                            } relative p-5 border-2 border-blue-800 hover:cursor-pointer rounded-lg`}
+                            onClick={() => handleTemplateClick(item.id)}
+                        >
+                            {target === "User" && (
+                                <button
+                                    className="absolute top-0 right-0 w-5 h-5 text-white bg-red-500 rounded-md flex items-center justify-center hover:bg-red-600 focus:outline-none"
+                                    onClick={(e) =>
+                                        handleTemplateDelete(e, item.id)
+                                    }
+                                    aria-label="Close"
+                                >
+                                    ✕
+                                </button>
+                            )}
+
+                            <span>
+                                {target} Template {item.id + 1}
+                            </span>
+                        </div>
+                    ))}
+                </div>
+            );
     };
 
     return (
@@ -147,11 +204,13 @@ export const TemplatesTab = () => {
                 </small>
                 {templatesState.showAppTemplate
                     ? renderTemplates(
+                          "Application",
                           applicationTemplateArr,
                           templatesState.activeAppTemplateIndex
                       )
                     : renderTemplates(
-                          [],
+                          "User",
+                          indexDBTemplatesArr,
                           templatesState.activeUserTemplateIndex
                       )}
             </div>
