@@ -61,7 +61,6 @@ export const useRowsAndColumns = () => {
         if (!container.dataset.eventsInitialized) {
             container.addEventListener("drop", handleDrop);
             container.addEventListener("dragover", handleDragOver);
-            container.dataset.eventsInitialized = "true"; // Mark as initialized
         }
 
         if (
@@ -72,15 +71,13 @@ export const useRowsAndColumns = () => {
             const sectionCols =
                 container.querySelectorAll<HTMLDivElement>(".section-col");
             sectionCols.forEach((div) => {
-                if (!div.dataset.eventsInitialized) {
-                    div.onclick = () => handleCellSelection(div);
-                    div.ondragover = (e) => e.preventDefault();
-                    div.ondrop = (e) => {
-                        drop(e as unknown as React.DragEvent<HTMLElement>);
-                        updateMinHeightOnDrop();
-                    };
-                    div.dataset.eventsInitialized = "true"; // Mark as initialized
-                }
+                div.onclick = () => handleCellSelection(div);
+                div.ondragover = (e) => e.preventDefault();
+                div.ondrop = (e) => {
+                    drop(e as unknown as React.DragEvent<HTMLElement>);
+                    updateMinHeightOnDrop();
+                };
+                div.dataset.eventsInitialized = "true";
             });
 
             // 2. Add event listeners to "section-row" divs and build the array
@@ -88,10 +85,8 @@ export const useRowsAndColumns = () => {
                 container.querySelectorAll<HTMLDivElement>(".section-row")
             );
             sectionRows.forEach((div) => {
-                if (!div.dataset.eventsInitialized) {
-                    div.ondragover = (e) => e.preventDefault();
-                    div.dataset.eventsInitialized = "true"; // Mark as initialized
-                }
+                div.ondragover = (e) => e.preventDefault();
+                div.dataset.eventsInitialized = "true";
             });
 
             // 3. Update row-related state
@@ -243,6 +238,7 @@ export const useRowsAndColumns = () => {
     };
 
     const handleCellSelection = (elem: HTMLElement) => {
+        console.log("handleCellSelection");
         setColRef(elem);
         const parent = elem.parentElement;
         setRowRef(parent);
