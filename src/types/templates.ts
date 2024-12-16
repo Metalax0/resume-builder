@@ -25,6 +25,17 @@ export interface TemplatesStateType {
     arr: TemplateRawType[];
 }
 
+export interface TemplateListProps {
+    target: string;
+    templates: TemplateRefinedType[];
+    activeIndex: number;
+    onClickTemplate: (id: number) => void;
+    onDeleteTemplate: (
+        e: React.MouseEvent<HTMLButtonElement>,
+        id: number
+    ) => void;
+}
+
 export type TemplatesActionType = {
     value: Partial<TemplatesStateType>;
 };

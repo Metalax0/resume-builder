@@ -1,4 +1,4 @@
-import { MouseEvent, useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import {
     applicationTemplateArr,
     defaultInitialTemplate,
@@ -19,144 +19,115 @@ import {
     fetchTemplateFromIndexDB,
     saveTemplatetoIndexDB,
 } from "../../../../index-db/db";
+import { TemplateList } from "../../../molecules/templateList";
 
 export const TemplatesTab = () => {
     const { templatesState, templatesDispatch } = useTemplatesContext();
     const { settingsState, settingsDispatch } = useSettingsContext();
-    const [indexDBTemplatesArr, setIndexDBTemplatesArr] = useState<
-        TemplateRefinedType[]
-    >([{ id: -1, data: null }]);
-
-    useEffect(() => {
-        handleFetchAllTemplates();
-    }, [settingsState.pdfRef, templatesState.showAppTemplate]);
+    const [userTemplates, setUserTemplates] = useState<TemplateRefinedType[]>(
+        []
+    );
 
     const currentStage = settingsState.pdfRef.current as HTMLElement;
 
-    const handleFetchAllTemplates = async () => {
-        const templateArr = await fetchAllTemplatesFromIndexDB();
-        setIndexDBTemplatesArr(templateArr as TemplateRefinedType[]);
-    };
+    // Fetch all user templates from IndexedDB
+    const fetchUserTemplates = useCallback(async () => {
+        try {
+            const templates = await fetchAllTemplatesFromIndexDB();
+            setUserTemplates(templates as TemplateRefinedType[]);
+        } catch (error) {
+            console.error("Error fetching templates:", error);
+        }
+    }, []);
+
+    useEffect(() => {
+        fetchUserTemplates();
+    }, [
+        fetchUserTemplates,
+        settingsState.pdfRef,
+        templatesState.showAppTemplate,
+    ]);
 
     const updatePdfRef = (newStage: HTMLElement) => {
-        const newPdfRef = { current: newStage } as React.RefObject<HTMLElement>;
-        settingsDispatch({ value: { pdfRef: newPdfRef } });
+        settingsDispatch({
+            value: {
+                pdfRef: { current: newStage } as React.RefObject<HTMLElement>,
+            },
+        });
         currentStage.replaceWith(newStage);
     };
 
-    const handleTemplateTypeToggle = () => {
+    const handleToggleTemplateType = () => {
         templatesDispatch({
             value: { showAppTemplate: !templatesState.showAppTemplate },
         });
     };
 
-    const handleTemplateReset = () => {
+    const handleResetTemplate = () => {
         const newStage = recreateDOM(
             defaultInitialTemplate.data
         ) as HTMLElement;
         updatePdfRef(newStage);
     };
 
-    const handleTemplateSave = () => {
-        const serializedDOM = serializeDOM(currentStage);
-        saveTemplatetoIndexDB(serializedDOM);
-        handleFetchAllTemplates();
+    const handleSaveTemplate = async () => {
+        try {
+            const serializedDOM = serializeDOM(currentStage);
+            await saveTemplatetoIndexDB(serializedDOM);
+            fetchUserTemplates();
+        } catch (error) {
+            console.error("Error saving template:", error);
+        }
     };
 
-    const handleTemplateLoad = async (id: number, isTemplateApp: boolean) => {
-        let newStage = currentStage;
+    const handleLoadTemplate = async (id: number, isAppTemplate: boolean) => {
+        let newStage: HTMLElement | null = null;
 
-        if (isTemplateApp) {
-            // app template arr ko map garera id match
-            const templateJSON = applicationTemplateArr.filter(
+        if (isAppTemplate) {
+            const template = applicationTemplateArr.find(
                 (item) => item.id === id
             );
-            newStage = recreateDOM(templateJSON[0].data) as HTMLElement;
+            if (template) newStage = recreateDOM(template.data) as HTMLElement;
         } else {
             const templateFromIndexDB = await fetchTemplateFromIndexDB(id);
-
             if (templateFromIndexDB)
                 newStage = recreateDOM(templateFromIndexDB) as HTMLElement;
         }
 
-        if (currentStage !== newStage) {
+        if (newStage && newStage !== currentStage) {
             updatePdfRef(newStage);
         }
     };
 
-    const handleTemplateClick = (id: number) => {
+    const handleClickTemplate = (id: number) => {
         const isAppTemplate = templatesState.showAppTemplate;
-        const activeProperty = isAppTemplate
+        const activeIndexKey = isAppTemplate
             ? "activeAppTemplateIndex"
             : "activeUserTemplateIndex";
-        const inactiveProperty = isAppTemplate
+        const inactiveIndexKey = isAppTemplate
             ? "activeUserTemplateIndex"
             : "activeAppTemplateIndex";
 
-        if (templatesState[activeProperty] !== id) {
-            templatesDispatch({
-                value: {
-                    [activeProperty]: id,
-                    [inactiveProperty]: -1,
-                },
-            });
-        }
-
-        handleTemplateLoad(id, isAppTemplate);
+        templatesDispatch({
+            value: {
+                [activeIndexKey]: id,
+                [inactiveIndexKey]: -1,
+            },
+        });
+        handleLoadTemplate(id, isAppTemplate);
     };
 
-    const handleTemplateDelete = (
-        e: MouseEvent<HTMLButtonElement>,
+    const handleDeleteTemplate = async (
+        e: React.MouseEvent<HTMLButtonElement>,
         id: number
     ) => {
         e.stopPropagation();
-        deleteTemplateFromIndexDB(id);
-        handleFetchAllTemplates();
-    };
-
-    const renderTemplates = (
-        target: string,
-        templates: TemplateRefinedType[],
-        activeIndex: number
-    ) => {
-        if (templates.length === 0)
-            return (
-                <p className="text-gray-800 rounded-sm italic font-bold">
-                    Empty : No templates saved
-                </p>
-            );
-        else
-            return (
-                <div className="flex gap-2 flex-wrap">
-                    {templates.map((item) => (
-                        <div
-                            key={`template-${item.id}`}
-                            className={`${
-                                activeIndex === item.id
-                                    ? "bg-green-500 hover:bg-green-600"
-                                    : "bg-yellow-300 hover:bg-yellow-400"
-                            } relative p-5 border-2 border-blue-800 hover:cursor-pointer rounded-lg`}
-                            onClick={() => handleTemplateClick(item.id)}
-                        >
-                            {target === "User" && (
-                                <button
-                                    className="absolute top-0 right-0 w-5 h-5 text-white bg-red-500 rounded-md flex items-center justify-center hover:bg-red-600 focus:outline-none"
-                                    onClick={(e) =>
-                                        handleTemplateDelete(e, item.id)
-                                    }
-                                    aria-label="Close"
-                                >
-                                    ✕
-                                </button>
-                            )}
-
-                            <span>
-                                {target} Template {item.id + 1}
-                            </span>
-                        </div>
-                    ))}
-                </div>
-            );
+        try {
+            await deleteTemplateFromIndexDB(id);
+            fetchUserTemplates();
+        } catch (error) {
+            console.error("Error deleting template:", error);
+        }
     };
 
     return (
@@ -174,7 +145,7 @@ export const TemplatesTab = () => {
                     labelOn="Application"
                     labelOff="User"
                     isToggled={templatesState.showAppTemplate}
-                    action={handleTemplateTypeToggle}
+                    action={handleToggleTemplateType}
                 />
             </div>
 
@@ -187,12 +158,12 @@ export const TemplatesTab = () => {
                     <Button
                         bttnName="Save"
                         bttnType={BttnTypeEnum.primary}
-                        bttnAction={handleTemplateSave}
+                        bttnAction={handleSaveTemplate}
                     />
                     <Button
                         bttnName="Reset"
                         bttnType={BttnTypeEnum.tersary}
-                        bttnAction={handleTemplateReset}
+                        bttnAction={handleResetTemplate}
                     />
                 </div>
             </div>
@@ -202,17 +173,23 @@ export const TemplatesTab = () => {
                 <small className="mb-2 italic">
                     Click the cards below to load template
                 </small>
-                {templatesState.showAppTemplate
-                    ? renderTemplates(
-                          "Application",
-                          applicationTemplateArr,
-                          templatesState.activeAppTemplateIndex
-                      )
-                    : renderTemplates(
-                          "User",
-                          indexDBTemplatesArr,
-                          templatesState.activeUserTemplateIndex
-                      )}
+                <TemplateList
+                    target={
+                        templatesState.showAppTemplate ? "Application" : "User"
+                    }
+                    templates={
+                        templatesState.showAppTemplate
+                            ? applicationTemplateArr
+                            : userTemplates
+                    }
+                    activeIndex={
+                        templatesState.showAppTemplate
+                            ? templatesState.activeAppTemplateIndex
+                            : templatesState.activeUserTemplateIndex
+                    }
+                    onClickTemplate={handleClickTemplate}
+                    onDeleteTemplate={handleDeleteTemplate}
+                />
             </div>
         </div>
     );

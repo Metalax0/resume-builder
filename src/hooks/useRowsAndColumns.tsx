@@ -238,7 +238,6 @@ export const useRowsAndColumns = () => {
     };
 
     const handleCellSelection = (elem: HTMLElement) => {
-        console.log("handleCellSelection");
         setColRef(elem);
         const parent = elem.parentElement;
         setRowRef(parent);
