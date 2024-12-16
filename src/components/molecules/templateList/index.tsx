@@ -13,7 +13,7 @@ export const TemplateList: React.FC<TemplateListProps> = memo(
 
         useEffect(() => {
             getTemplatesThumbArr();
-        }, [target]);
+        }, [templates]);
 
         const getTemplatesThumbArr = async () => {
             const dataUrlArr: string[] = [];

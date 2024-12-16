@@ -20,6 +20,7 @@ import {
     saveTemplatetoIndexDB,
 } from "../../../../index-db/db";
 import { TemplateList } from "../../../molecules/templateList";
+import { useNotification } from "../../../context/notificationContext";
 
 export const TemplatesTab = () => {
     const { templatesState, templatesDispatch } = useTemplatesContext();
@@ -27,6 +28,7 @@ export const TemplatesTab = () => {
     const [userTemplates, setUserTemplates] = useState<TemplateRefinedType[]>(
         []
     );
+    const { addNotification } = useNotification();
 
     const currentStage = settingsState.pdfRef.current as HTMLElement;
 
@@ -64,19 +66,27 @@ export const TemplatesTab = () => {
     };
 
     const handleResetTemplate = () => {
-        const newStage = recreateDOM(
-            defaultInitialTemplate.data
-        ) as HTMLElement;
-        updatePdfRef(newStage);
+        try {
+            const newStage = recreateDOM(
+                defaultInitialTemplate.data
+            ) as HTMLElement;
+            updatePdfRef(newStage);
+            addNotification("success", "Template Reset Successful!");
+        } catch (error) {
+            console.error("Error reseting template", error);
+            addNotification("error", "Error Reseting Template!");
+        }
     };
 
     const handleSaveTemplate = async () => {
         try {
             const serializedDOM = serializeDOM(currentStage);
             await saveTemplatetoIndexDB(serializedDOM);
+            addNotification("success", "User Template Saved!");
             fetchUserTemplates();
         } catch (error) {
             console.error("Error saving template:", error);
+            addNotification("error", "Error Saving User Template!");
         }
     };
 
@@ -124,9 +134,11 @@ export const TemplatesTab = () => {
         e.stopPropagation();
         try {
             await deleteTemplateFromIndexDB(id);
+            addNotification("success", "User Template Deleted!");
             fetchUserTemplates();
         } catch (error) {
             console.error("Error deleting template:", error);
+            addNotification("error", "Error Deleting User Template!");
         }
     };
 
