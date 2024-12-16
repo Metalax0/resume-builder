@@ -74,6 +74,10 @@
     outline: 2px dashed #4caf50;
 }
 
+#hidden-container .active-cell {
+    border: 0 !important;
+}
+
 @media print {
     #cv-main {
         background-color: rgb(249, 250, 251);

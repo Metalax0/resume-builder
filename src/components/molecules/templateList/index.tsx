@@ -5,6 +5,7 @@ import {
 } from "../../../types/templates";
 import imgPlaceholder from "../../../assets/image-placeholder.jpg";
 import { processTemplates } from "../../../util/templatesHelper";
+import html2canvas from "html2canvas";
 
 export const TemplateList: React.FC<TemplateListProps> = memo(
     ({ target, templates, activeIndex, onClickTemplate, onDeleteTemplate }) => {
@@ -15,7 +16,43 @@ export const TemplateList: React.FC<TemplateListProps> = memo(
         }, []);
 
         const getTemplatesThumbArr = async () => {
+            const dataUrlArr: string[] = [];
             const templatesArr = await processTemplates(templates);
+
+            // Create hidden container for rendering (used to generate template thumbnails)
+            const hiddenContainer = document.createElement("div");
+            hiddenContainer.id = "hidden-container";
+            hiddenContainer.style.position = "absolute";
+            hiddenContainer.style.top = "-9999px";
+            hiddenContainer.style.left = "-9999px";
+            hiddenContainer.style.opacity = "0";
+            document.body.appendChild(hiddenContainer);
+
+            try {
+                for (const element of templatesArr) {
+                    const clonedTemplate = element.cloneNode(
+                        true
+                    ) as HTMLElement;
+                    clonedTemplate.style.height = "100%";
+                    hiddenContainer.appendChild(clonedTemplate);
+                    const canvas = await html2canvas(clonedTemplate, {
+                        scale: 2,
+                    });
+                    const dataURL = canvas.toDataURL();
+                    dataUrlArr.push(dataURL);
+                    hiddenContainer.removeChild(clonedTemplate);
+                }
+
+                setimgDataArr(dataUrlArr);
+            } catch (error) {
+                console.error(
+                    "Error converting element to an image [components/molecules/templateList]",
+                    error
+                );
+            } finally {
+                // Cleanup hidden container
+                document.body.removeChild(hiddenContainer);
+            }
         };
 
         if (templates.length === 0) {
@@ -26,8 +63,6 @@ export const TemplateList: React.FC<TemplateListProps> = memo(
             );
         }
 
-        console.log(imgDataArr);
-
         return (
             <div className="flex gap-2 flex-wrap">
                 {templates.map((item: TemplateRefinedType, index: number) => (
@@ -35,9 +70,9 @@ export const TemplateList: React.FC<TemplateListProps> = memo(
                         key={`template-${item.id}`}
                         className={`${
                             activeIndex === item.id
-                                ? "bg-green-500 hover:bg-green-600"
-                                : "bg-yellow-300 hover:bg-yellow-400"
-                        } template-preview relative p-5 border-2 border-blue-800 hover:cursor-pointer rounded-lg`}
+                                ? "border-green-500 hover:border-green-600"
+                                : "border-blue-600 hover:border-blue-700"
+                        } template-preview relative p-0 border-4 hover:cursor-pointer rounded-xl`}
                         onClick={() => onClickTemplate(item.id)}
                     >
                         {target === "User" && (
@@ -51,12 +86,9 @@ export const TemplateList: React.FC<TemplateListProps> = memo(
                         )}
                         <img
                             src={imgDataArr[index] ?? imgPlaceholder}
-                            className="h-full w-full rounded-lg"
-                            alt={"template-thumbail-" + { target } + item.id}
+                            className="h-auto w-auto rounded-lg"
+                            alt={"template-thumbnail-" + { target } + item.id}
                         ></img>
-                        <span>
-                            {target} Template {item.id + 1}
-                        </span>
                     </div>
                 ))}
             </div>

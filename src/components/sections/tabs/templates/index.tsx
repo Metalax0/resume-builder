@@ -168,7 +168,7 @@ export const TemplatesTab = () => {
                 </div>
             </div>
 
-            <div className="flex flex-col items-start gap-2">
+            <div className="flex flex-col items-start gap-2 pb-5">
                 <p className="font-bold">Available Templates</p>
                 <small className="mb-2 italic">
                     Click the cards below to load template
