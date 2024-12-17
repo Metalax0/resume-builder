@@ -27,9 +27,12 @@ export const TemplatesTab = () => {
     });
 
     return (
-        <div className="flex flex-col gap-6">
-            <div>
+        <div className="flex flex-col items-start flex-1 gap-6 bg-red-500 font-semibold text-gray-800">
+            <div className="flex flex-col items-start">
                 <p className="font-bold">Template Type</p>
+                <small className="mb-2 italic">
+                    App provided or user's saved templates
+                </small>
                 <ToggleSwitch
                     id="template-toggle"
                     labelOn="Application"
@@ -46,37 +49,51 @@ export const TemplatesTab = () => {
                 />
             </div>
 
-            <div className="flex gap-2">
-                <Button
-                    bttnName="Save"
-                    bttnType={BttnTypeEnum.primary}
-                    bttnAction={saveTemplate}
-                />
-                <Button
-                    bttnName="Reset"
-                    bttnType={BttnTypeEnum.tersary}
-                    bttnAction={resetTemplate}
-                />
+            <div className="flex flex-col items-start">
+                <p className="font-bold">Actions</p>
+                <small className="mb-2 italic">
+                    Save as new template or reset to initial
+                </small>
+                <div className="flex gap-2">
+                    <Button
+                        bttnName="Save"
+                        bttnType={BttnTypeEnum.primary}
+                        bttnAction={saveTemplate}
+                    />
+                    <Button
+                        bttnName="Reset"
+                        bttnType={BttnTypeEnum.tersary}
+                        bttnAction={resetTemplate}
+                    />
+                </div>
             </div>
 
-            <TemplateList
-                target={templatesState.showAppTemplate ? "Application" : "User"}
-                templates={
-                    templatesState.showAppTemplate
-                        ? applicationTemplateArr
-                        : userTemplates
-                }
-                activeIndex={
-                    templatesState.showAppTemplate
-                        ? templatesState.activeAppTemplateIndex
-                        : templatesState.activeUserTemplateIndex
-                }
-                onClickTemplate={handleClickTemplate}
-                onDeleteTemplate={(e, id) => {
-                    e.stopPropagation();
-                    deleteTemplate(id);
-                }}
-            />
+            <div className="flex flex-col items-start">
+                <p className="font-bold">Available Templates</p>
+                <small className="mb-2 italic">
+                    Click the cards below to load template
+                </small>
+                <TemplateList
+                    target={
+                        templatesState.showAppTemplate ? "Application" : "User"
+                    }
+                    templates={
+                        templatesState.showAppTemplate
+                            ? applicationTemplateArr
+                            : userTemplates
+                    }
+                    activeIndex={
+                        templatesState.showAppTemplate
+                            ? templatesState.activeAppTemplateIndex
+                            : templatesState.activeUserTemplateIndex
+                    }
+                    onClickTemplate={handleClickTemplate}
+                    onDeleteTemplate={(e, id) => {
+                        e.stopPropagation();
+                        deleteTemplate(id);
+                    }}
+                />
+            </div>
         </div>
     );
 };

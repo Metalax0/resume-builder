@@ -15,9 +15,9 @@ export const Builder = () => {
     }, []);
 
     return (
-        <div className="flex flex-col justify-center items-center gap-10 px-5 w-full h-full">
+        <div className="w-full h-full flex flex-col justify-center items-center gap-10 px-5">
             <Header />
-            <div className="flex relative gap-2 w-full h-[70%] ">
+            <div className="flex relative gap-2 w-full h-[650px] max-w-7xl">
                 <Main />
                 <ZoomSlider />
                 <AccordionProvider>

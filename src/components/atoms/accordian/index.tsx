@@ -15,7 +15,7 @@ export const Accordion = ({
 }: AccordionProps) => {
     return (
         <div className="border-2 border-gray-600 bg-orange-300 rounded-sm shadow-xl">
-            <h2>
+            <h5>
                 <button
                     type="button"
                     className="flex items-center justify-between w-full px-3 py-2 font-semibold bg-gray-800 text-gray-300 hover:bg-gray-700 transition-colors gap-3"
@@ -40,7 +40,7 @@ export const Accordion = ({
                         />
                     </svg>
                 </button>
-            </h2>
+            </h5>
             {children && (
                 <div
                     className={`flex flex-col gap-3 p-3 bg-transparent text-gray-300 transition-all duration-300 ${
