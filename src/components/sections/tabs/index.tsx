@@ -20,7 +20,6 @@ export const Tabs = () => {
     const { drag } = useRowsAndColumns();
     const { setDraggedElement, setSelectedRef } = useStageContext();
 
-    // Hooks for managing behavior
     useDraggableElements(drag, setDraggedElement, setSelectedRef);
     useSelectionHighlight(
         manageSelectionHighlight,
