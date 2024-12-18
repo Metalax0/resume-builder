@@ -6,8 +6,8 @@ export const Hero = () => {
     const handleBttnClick = () => {};
 
     return (
-        <div className="flex justify-center w-full h-auto bg-[url('/images/hero-bg.jpg')] font-semibold bg-contain">
-            <div className="grid grid-cols-1 gap-10 my-10 px-10 w-full h-auto max-w-7xl lg:gap-x-12 lg:gap-0  lg:my-20 lg:px-10 lg:grid-cols-4 lg:grid-rows-4 lg:h-full 2xl:px-0">
+        <div className="flex justify-center w-full h-auto bg-[url('/images/hero-bg.jpg')] font-semibold bg-cover lg:bg-contain overflow-hidden">
+            <div className="grid grid-cols-1 gap-5 my-10 px-10 w-full h-auto max-w-7xl lg:gap-x-12 lg:gap-0  lg:my-20 lg:px-10 lg:grid-cols-4 lg:grid-rows-4 lg:h-full 2xl:px-0">
                 {/* Text */}
                 <div className="flex flex-col justify-center items-center gap-5 text-center text-white-800 lg:self-start lg:items-start lg:text-left lg:col-span-2 lg:row-span-3">
                     <p className="text-gray-100">
@@ -34,19 +34,19 @@ export const Hero = () => {
                     />
                 </div>
                 {/* Img */}
-                <div className="relative flex justify-center items-center lg:col-span-2 lg:row-span-4">
+                <div className="relative flex justify-center items-center lg:col-span-2 lg:row-span-4 h-[400px] lg:h-auto lg:w-auto">
                     <img
-                        className="absolute -rotate-[20deg] -left-28 rounded-xl w-[616px] aspect-[616/413] object-contain scale-105 drop-shadow-2xl"
+                        className="absolute rounded-xl w-[616px] aspect-[616/413] object-contain drop-shadow-2xl scale-90 -rotate-[10deg] -left-32 md:-left-10 lg:-left-28 lg:scale-105 lg:-rotate-[18deg]"
                         src="/images/hero-resume-1.png"
                     ></img>
 
                     <img
-                        className="absolute rotate-[0deg] rounded-xl w-[616px] aspect-[616/413] object-contain scale-110 drop-shadow-2xl"
+                        className="absolute rounded-xl w-[616px] aspect-[616/413] object-contain drop-shadow-2xl scale-[.965] lg:scale-[1.15] lg:rotate-[5deg] "
                         src="/images/hero-resume-2.png"
                     ></img>
 
                     <img
-                        className="absolute rotate-[20deg] -right-28 rounded-xl w-[616px] aspect-[616/413] object-contain scale-105 drop-shadow-2xl"
+                        className="absolute  rounded-xl w-[616px] aspect-[616/413] object-contain drop-shadow-2xl rotate-[10deg] scale-90 -right-32 md:-right-10 lg:-right-28 lg:scale-105 lg:rotate-[20deg]"
                         src="/images/hero-resume-3.png"
                     ></img>
                 </div>
