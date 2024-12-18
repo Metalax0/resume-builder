@@ -25,7 +25,7 @@ export const Hero = () => {
                         Only
                         <span className="text-green-400 font-bold"> 2%</span> of
                         resumes win. Yours will be one of them. Let's build you
-                        a resume that works
+                        a resume that works.
                     </p>
                     <Button
                         bttnName={"Create My Resume"}
