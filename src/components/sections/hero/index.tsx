@@ -34,10 +34,20 @@ export const Hero = () => {
                     />
                 </div>
                 {/* Img */}
-                <div className="flex justify-center items-center lg:col-span-2 lg:row-span-4">
+                <div className="relative flex justify-center items-center lg:col-span-2 lg:row-span-4">
                     <img
-                        className="rounded-xl border-2 border-gray-600 shadow-2xl w-[616px] aspect-[616/413] object-cover"
-                        src="/images/hero-img-1.jpg"
+                        className="absolute -rotate-[20deg] -left-28 rounded-xl w-[616px] aspect-[616/413] object-contain scale-105 drop-shadow-2xl"
+                        src="/images/hero-resume-1.png"
+                    ></img>
+
+                    <img
+                        className="absolute rotate-[0deg] rounded-xl w-[616px] aspect-[616/413] object-contain scale-110 drop-shadow-2xl"
+                        src="/images/hero-resume-2.png"
+                    ></img>
+
+                    <img
+                        className="absolute rotate-[20deg] -right-28 rounded-xl w-[616px] aspect-[616/413] object-contain scale-105 drop-shadow-2xl"
+                        src="/images/hero-resume-3.png"
                     ></img>
                 </div>
                 {/* Stats */}
