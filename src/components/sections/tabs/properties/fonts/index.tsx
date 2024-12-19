@@ -10,13 +10,13 @@ import {
     PropertiesStateSelectedTextType,
 } from "../../../../../types/properties";
 import { InputNumber } from "../../../../atoms/input-number";
-import { FontFamilyDropDown } from "../../../../molecules/fontFamilyDropdown";
+import { FontFamilyDropDown } from "../../../../molecules/font-family-dropdown";
 import { ColorPicker } from "../../../../atoms/color-picker";
 import { rgbToHex } from "../../../../../util/rgbToHex";
-import { FontAlignmentDropDown } from "../../../../molecules/fontAlignmentDropdown";
-import { FontWeightDropDown } from "../../../../molecules/fontWeightDropdown";
-import { FontStyleDropDown } from "../../../../molecules/fontStyleDropdown";
-import { FontDecorationDropDown } from "../../../../molecules/fontDecorationDropdown";
+import { FontAlignmentDropDown } from "../../../../molecules/font-alignment-dropdown";
+import { FontWeightDropDown } from "../../../../molecules/font-weight-dropdown";
+import { FontStyleDropDown } from "../../../../molecules/font-style-dropdown";
+import { FontDecorationDropDown } from "../../../../molecules/font-decoration-dropdown";
 import { fontWeightHelper } from "../../../../../util/fontWeightHelper";
 
 export interface FontsPropertiesPropsType {

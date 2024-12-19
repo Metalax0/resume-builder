@@ -2,7 +2,7 @@ import { useSettingsContext } from "../../../context/settingsContext";
 import { useTemplatesContext } from "../../../context/templatesContext";
 import { Button } from "../../../atoms/button";
 import { ToggleSwitch } from "../../../atoms/toggle-switch";
-import { TemplateList } from "../../../molecules/templateList";
+import { TemplateList } from "../../../molecules/template-list";
 import { BttnTypeEnum } from "../../../../types/button";
 import { applicationTemplateArr } from "../../../../data/templateData";
 import { useTemplateManager } from "../../../../hooks/useTemplateManager";

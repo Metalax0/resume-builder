@@ -2,6 +2,7 @@ import { Hero } from "./components/sections/hero";
 import { Builder } from "./components/sections/builder";
 import { AppProviders } from "./components/context/appProviders";
 import { HiredAt } from "./components/sections/hired-at";
+import { UserReviews } from "./components/molecules/user-reveiws";
 
 function App() {
     return (
@@ -9,6 +10,7 @@ function App() {
             <AppProviders>
                 <Hero />
                 <HiredAt />
+                <UserReviews />
                 <Builder />
             </AppProviders>
         </div>

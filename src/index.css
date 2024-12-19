@@ -87,3 +87,13 @@ h4 {
         background-color: #ffffff;
     }
 }
+
+@layer base {
+    :root {
+        --radius: 0.5rem;
+    }
+}
+
+* {
+    /* border: 1px solid red; */
+}

@@ -4,7 +4,7 @@ import { Header } from "./header";
 import { useRowsAndColumns } from "../../../hooks/useRowsAndColumns";
 import { useEffect } from "react";
 import { Tabs } from "../tabs";
-import { ZoomSlider } from "../../molecules/zoomSlider";
+import { ZoomSlider } from "../../molecules/zoom-slider";
 import { AccordionProvider } from "../../context/accordianContext";
 import { executeNTimes } from "../../../util/executeNTimes";
 

@@ -1,5 +1,5 @@
 import { createContext, useContext, useState } from "react";
-import { NotificationItem } from "../molecules/notificationItem";
+import { NotificationItem } from "../molecules/notification-item";
 import {
     NotificationCategoryType,
     NotificationContextType,
