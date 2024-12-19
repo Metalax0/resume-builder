@@ -58,8 +58,28 @@ export const UserReviews = () => {
     ));
 
     return (
-        <div className="w-full h-auto py-5 px-20 md:px-28 lg:px-40 bg-[#242424]">
-            <CardCarousel cards={reviewCards} />
+        <div className="flex flex-col items-center gap-10 w-full h-auto py-10 px-20 md:px-28 lg:px-40 bg-[#242424]">
+            <h2 className="max-w-2xl">
+                Review by the community. Trusted by professionals
+            </h2>
+            <div className="flex gap-16 w-full">
+                <div className="flex flex-col justify-center items-center gap-5 flex-[1] px-5 rounded-xl">
+                    <div className="flex flex-col">
+                        <h4>4 out of 5</h4>
+                        <Stars total={5} filled={4} size={"lg"} />
+                    </div>
+                    <div className="flex flex-col justify-center items-center">
+                        <p className="flex gap-1">
+                            <Stars total={1} filled={1} size={"sm"} />
+                            <span> Source : Trust me bro </span>
+                        </p>
+                        <p>based on 40,000 reviews</p>
+                    </div>
+                </div>
+                <div className="flex-[5] w-0.5">
+                    <CardCarousel cards={reviewCards} />
+                </div>
+            </div>
         </div>
     );
 };

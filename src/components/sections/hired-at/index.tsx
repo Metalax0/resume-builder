@@ -1,7 +1,7 @@
 export const HiredAt = () => {
     return (
         <div className="flex flex-col gap-2 bg-gray-800 py-10 px-10">
-            <p className="text-gray-100 text-xl">
+            <p className="text-gray-100 font-semibold text-xl">
                 Our customers have been hired at
             </p>
             <div className="flex justify-center items-center flex-wrap">
