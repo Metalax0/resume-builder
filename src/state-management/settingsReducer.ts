@@ -13,7 +13,7 @@ export const settingsInitialState: SettingsStateType = {
     isRemoveRowBttnDisabled: true,
     isRemoveColBttnDisabled: true,
     pdfRef: createRef<HTMLElement>(),
-    builderZoom: 70,
+    builderZoom: 60,
     enableTextSelection: false,
 };
 

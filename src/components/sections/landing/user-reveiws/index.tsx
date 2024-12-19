@@ -60,7 +60,7 @@ export const UserReviews = () => {
     return (
         <div className="flex flex-col items-center gap-10 w-full h-auto py-20 px-20 lg:px-32 bg-[#242424]">
             <h2 className="max-w-2xl">
-                Reviewd by the community.{" "}
+                Reviewed by the community.{" "}
                 <span className="text-green-400">Trusted</span> by professionals
             </h2>
             <div className="w-full flex gap-10 flex-col md:flex-row md:gap-16">

@@ -1,13 +1,11 @@
-import { Builder } from "./components/sections/builder";
 import { AppProviders } from "./components/context/appProviders";
-import { Landing } from "./components/sections/landing";
+import { Routing } from "./routing";
 
 function App() {
     return (
         <div className="w-full h-full">
             <AppProviders>
-                <Landing />
-                {/* <Builder /> */}
+                <Routing />
             </AppProviders>
         </div>
     );
