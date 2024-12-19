@@ -4,19 +4,32 @@ export interface StarsPropsType {
     total: number;
     filled: number;
     size: "sm" | "md" | "lg";
+    align?: "left" | "center" | "right";
 }
 
-export const Stars: React.FC<StarsPropsType> = ({ total, filled, size }) => {
+export const Stars: React.FC<StarsPropsType> = ({
+    total,
+    filled,
+    size,
+    align = "left",
+}) => {
     const sizeClasses = {
         sm: "w-4 h-4",
         md: "w-6 h-6",
         lg: "w-8 h-8",
     };
 
+    const alignClasses = {
+        left: "justify-start",
+        center: "justify-center",
+        right: "justify-end",
+    };
+
     const starSizeClass = sizeClasses[size];
+    const alignStarsClass = alignClasses[align];
 
     return (
-        <div className="flex items-center">
+        <div className={`flex items-center ${alignStarsClass}`}>
             {Array.from({ length: total }, (_, index) => (
                 <svg
                     key={index}

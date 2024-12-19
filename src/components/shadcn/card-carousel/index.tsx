@@ -18,7 +18,7 @@ export const CardCarousel = ({ cards }: CardCarouselPropsType) => {
                 {cards.map((card, index) => (
                     <CarouselItem
                         key={index}
-                        className="basis-1/1 md:basis-1/2 xl:basis-1/3"
+                        className="basis-1/1 sm:basis-1/3 md:basis-1/2 xl:basis-1/3"
                     >
                         {card}
                     </CarouselItem>

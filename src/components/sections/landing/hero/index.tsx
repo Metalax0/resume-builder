@@ -1,5 +1,5 @@
-import { BttnTypeEnum } from "../../../types/button";
-import { Button } from "../../atoms/button";
+import { BttnTypeEnum } from "../../../../types/button";
+import { Button } from "../../../atoms/button";
 import "./style.css";
 
 export const Hero = () => {
