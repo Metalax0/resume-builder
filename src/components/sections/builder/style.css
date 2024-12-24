@@ -9,6 +9,10 @@
     font-family: "Arial, sans-serif";
 }
 
+* {
+    /* outline: 1px solid red; */
+}
+
 #cv-main * {
     overflow: hidden;
 }

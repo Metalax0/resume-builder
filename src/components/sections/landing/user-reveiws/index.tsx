@@ -75,10 +75,10 @@ export const UserReviews = () => {
                         />
                     </div>
                     <div className="flex flex-col justify-center items-center">
-                        <p className="flex gap-1">
+                        <div className="flex gap-1">
                             <Stars total={1} filled={1} size={"sm"} />
                             <span> Trust me bro </span>
-                        </p>
+                        </div>
                         <p className="font-light">based on 40,000 reviews</p>
                     </div>
                 </div>
