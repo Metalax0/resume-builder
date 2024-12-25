@@ -149,12 +149,13 @@ const Sidebar = React.forwardRef<
 
         // Add a conditional class to show or hide the sidebar based on openState
         const sidebarClass = openState ? "w-[--sidebar-width]" : "w-0"; // Adjust width when collapsed
+        const floatingClass = variant === "floating" ? "p-2" : "";
 
         if (collapsible === "none") {
             return (
                 <div
                     className={cn(
-                        "flex h-full w-[--sidebar-width] flex-col bg-sidebar text-sidebar-foreground",
+                        "flex h-full w-[--sidebar-width] flex-col bg-sidebar text-sidebar-foreground border-8 border-red-400",
                         className
                     )}
                     ref={ref}
@@ -202,13 +203,14 @@ const Sidebar = React.forwardRef<
                         : "group-data-[collapsible=icon]:w-[--sidebar-width-icon]",
                     "transition-all duration-300 ease-in-out", // Add transition effect
                     sidebarClass, // Apply width based on open state
+                    floatingClass,
                     className
                 )}
                 {...props}
             >
                 <div
                     data-sidebar="sidebar"
-                    className="flex h-full w-full flex-col bg-sidebar"
+                    className="flex h-full w-full flex-col bg-sidebar rounded-lg"
                 >
                     {children}
                 </div>
