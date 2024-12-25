@@ -175,7 +175,7 @@ const Sidebar = React.forwardRef<
                     <SheetContent
                         data-sidebar="sidebar"
                         data-mobile="true"
-                        className="bg-sidebar p-0 text-sidebar-foreground [&>button]:hidden"
+                        className="w-[--sidebar-width] bg-sidebar p-0 text-sidebar-foreground [&>button]:hidden"
                         style={
                             {
                                 "--sidebar-width": SIDEBAR_WIDTH_MOBILE,
@@ -200,6 +200,7 @@ const Sidebar = React.forwardRef<
                     variant === "floating" || variant === "inset"
                         ? "group-data-[collapsible=icon]:w-[calc(var(--sidebar-width-icon)_+_theme(spacing.4))]"
                         : "group-data-[collapsible=icon]:w-[--sidebar-width-icon]",
+                    "transition-all duration-300 ease-in-out", // Add transition effect
                     sidebarClass, // Apply width based on open state
                     className
                 )}
