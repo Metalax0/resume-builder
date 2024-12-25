@@ -2,7 +2,9 @@ import {
     SidebarProvider,
     SidebarTrigger,
 } from "@/components/shadcn/ui/sidebar";
-import { LeftSidebar } from "../sidebar";
+
+import { BuilderSidebarLeft } from "../sidebar/left";
+import { BuilderSidebarRight } from "../sidebar/right";
 
 export default function BuilderLayout({
     children,
@@ -10,10 +12,14 @@ export default function BuilderLayout({
     children: React.ReactNode;
 }) {
     return (
-        <SidebarProvider>
-            <LeftSidebar />
-            <SidebarTrigger />
-            <main className="flex-1">{children}</main>
-        </SidebarProvider>
+        <div className="flex">
+            <SidebarProvider>
+                <BuilderSidebarLeft />
+                <SidebarTrigger side="left" />
+                <main className="flex-1">{children}</main>
+                <SidebarTrigger side="right" />
+                <BuilderSidebarRight />
+            </SidebarProvider>
+        </div>
     );
 }

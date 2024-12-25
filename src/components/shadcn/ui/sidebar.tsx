@@ -1,7 +1,7 @@
 import * as React from "react";
 import { Slot } from "@radix-ui/react-slot";
 import { VariantProps, cva } from "class-variance-authority";
-import { PanelLeft } from "lucide-react";
+import { PanelLeft, PanelRight } from "lucide-react";
 
 import { useIsMobile } from "@/hooks/use-mobile";
 import { cn } from "@/lib/utils";
@@ -22,16 +22,14 @@ const SIDEBAR_COOKIE_MAX_AGE = 60 * 60 * 24 * 7;
 const SIDEBAR_WIDTH = "16rem";
 const SIDEBAR_WIDTH_MOBILE = "18rem";
 const SIDEBAR_WIDTH_ICON = "3rem";
-const SIDEBAR_KEYBOARD_SHORTCUT = "b";
+// const SIDEBAR_KEYBOARD_SHORTCUT = "b";
 
 type SidebarContext = {
     state: "expanded" | "collapsed";
-    open: boolean;
-    setOpen: (open: boolean) => void;
-    openMobile: boolean;
-    setOpenMobile: (open: boolean) => void;
+    open: { left: boolean; right: boolean };
+    setOpen: (side: "left" | "right", open: boolean) => void;
     isMobile: boolean;
-    toggleSidebar: () => void;
+    toggleSidebar: (side: "left" | "right") => void;
 };
 
 const SidebarContext = React.createContext<SidebarContext | null>(null);
@@ -41,23 +39,18 @@ function useSidebar() {
     if (!context) {
         throw new Error("useSidebar must be used within a SidebarProvider.");
     }
-
     return context;
 }
 
 const SidebarProvider = React.forwardRef<
     HTMLDivElement,
     React.ComponentProps<"div"> & {
-        defaultOpen?: boolean;
-        open?: boolean;
-        onOpenChange?: (open: boolean) => void;
+        defaultOpen?: { left: boolean; right: boolean };
     }
 >(
     (
         {
-            defaultOpen = true,
-            open: openProp,
-            onOpenChange: setOpenProp,
+            defaultOpen = { left: true, right: true },
             className,
             style,
             children,
@@ -66,74 +59,43 @@ const SidebarProvider = React.forwardRef<
         ref
     ) => {
         const isMobile = useIsMobile();
-        const [openMobile, setOpenMobile] = React.useState(false);
 
-        // This is the internal state of the sidebar.
-        // We use openProp and setOpenProp for control from outside the component.
-        const [_open, _setOpen] = React.useState(defaultOpen);
-        const open = openProp ?? _open;
+        // State for managing open/close status of both sidebars
+        const [open, setOpenState] = React.useState(defaultOpen);
+
+        // Function to set the open state for a specific side
         const setOpen = React.useCallback(
-            (value: boolean | ((value: boolean) => boolean)) => {
-                const openState =
-                    typeof value === "function" ? value(open) : value;
-                if (setOpenProp) {
-                    setOpenProp(openState);
-                } else {
-                    _setOpen(openState);
+            (side: "left" | "right", value: boolean) => {
+                setOpenState((prev) => ({ ...prev, [side]: value }));
+                if (!isMobile) {
+                    document.cookie = `${SIDEBAR_COOKIE_NAME}-${side}=${value}; path=/; max-age=${SIDEBAR_COOKIE_MAX_AGE}`;
                 }
-
-                // This sets the cookie to keep the sidebar state.
-                document.cookie = `${SIDEBAR_COOKIE_NAME}=${openState}; path=/; max-age=${SIDEBAR_COOKIE_MAX_AGE}`;
             },
-            [setOpenProp, open]
+            [isMobile]
         );
 
-        // Helper to toggle the sidebar.
-        const toggleSidebar = React.useCallback(() => {
-            return isMobile
-                ? setOpenMobile((open) => !open)
-                : setOpen((open) => !open);
-        }, [isMobile, setOpen, setOpenMobile]);
+        // Function to toggle the open state for a specific side
+        const toggleSidebar = React.useCallback(
+            (side: "left" | "right") => {
+                setOpen(side, !open[side]);
+            },
+            [setOpen, open]
+        );
 
-        // Adds a keyboard shortcut to toggle the sidebar.
-        React.useEffect(() => {
-            const handleKeyDown = (event: KeyboardEvent) => {
-                if (
-                    event.key === SIDEBAR_KEYBOARD_SHORTCUT &&
-                    (event.metaKey || event.ctrlKey)
-                ) {
-                    event.preventDefault();
-                    toggleSidebar();
-                }
-            };
+        // Compute the state (expanded or collapsed) based on open states
+        const state: "expanded" | "collapsed" =
+            open.left || open.right ? "expanded" : "collapsed";
 
-            window.addEventListener("keydown", handleKeyDown);
-            return () => window.removeEventListener("keydown", handleKeyDown);
-        }, [toggleSidebar]);
-
-        // We add a state so that we can do data-state="expanded" or "collapsed".
-        // This makes it easier to style the sidebar with Tailwind classes.
-        const state = open ? "expanded" : "collapsed";
-
-        const contextValue = React.useMemo<SidebarContext>(
+        // Memoized context value
+        const contextValue = React.useMemo(
             () => ({
                 state,
                 open,
                 setOpen,
                 isMobile,
-                openMobile,
-                setOpenMobile,
                 toggleSidebar,
             }),
-            [
-                state,
-                open,
-                setOpen,
-                isMobile,
-                openMobile,
-                setOpenMobile,
-                toggleSidebar,
-            ]
+            [state, open, setOpen, isMobile, toggleSidebar]
         );
 
         return (
@@ -182,7 +144,11 @@ const Sidebar = React.forwardRef<
         },
         ref
     ) => {
-        const { isMobile, state, openMobile, setOpenMobile } = useSidebar();
+        const { isMobile, open, toggleSidebar } = useSidebar();
+        const openState = open[side]; // Get the open state for this side
+
+        // Add a conditional class to show or hide the sidebar based on openState
+        const sidebarClass = openState ? "w-[--sidebar-width]" : "w-0"; // Adjust width when collapsed
 
         if (collapsible === "none") {
             return (
@@ -202,14 +168,14 @@ const Sidebar = React.forwardRef<
         if (isMobile) {
             return (
                 <Sheet
-                    open={openMobile}
-                    onOpenChange={setOpenMobile}
+                    open={openState}
+                    onOpenChange={() => toggleSidebar(side)}
                     {...props}
                 >
                     <SheetContent
                         data-sidebar="sidebar"
                         data-mobile="true"
-                        className="w-[--sidebar-width] bg-sidebar p-0 text-sidebar-foreground [&>button]:hidden"
+                        className="bg-sidebar p-0 text-sidebar-foreground [&>button]:hidden"
                         style={
                             {
                                 "--sidebar-width": SIDEBAR_WIDTH_MOBILE,
@@ -228,71 +194,51 @@ const Sidebar = React.forwardRef<
         return (
             <div
                 ref={ref}
-                className="group peer hidden md:block text-sidebar-foreground"
-                data-state={state}
-                data-collapsible={state === "collapsed" ? collapsible : ""}
-                data-variant={variant}
-                data-side={side}
+                className={cn(
+                    "group peer hidden md:block text-sidebar-foreground",
+                    openState ? "data-state=expanded" : "data-state=collapsed", // Set the state as expanded/collapsed
+                    variant === "floating" || variant === "inset"
+                        ? "group-data-[collapsible=icon]:w-[calc(var(--sidebar-width-icon)_+_theme(spacing.4))]"
+                        : "group-data-[collapsible=icon]:w-[--sidebar-width-icon]",
+                    sidebarClass, // Apply width based on open state
+                    className
+                )}
+                {...props}
             >
-                {/* This is what handles the sidebar gap on desktop */}
                 <div
-                    className={cn(
-                        "duration-200 relative h-svh w-[--sidebar-width] bg-transparent transition-[width] ease-linear",
-                        "group-data-[collapsible=offcanvas]:w-0",
-                        "group-data-[side=right]:rotate-180",
-                        variant === "floating" || variant === "inset"
-                            ? "group-data-[collapsible=icon]:w-[calc(var(--sidebar-width-icon)_+_theme(spacing.4))]"
-                            : "group-data-[collapsible=icon]:w-[--sidebar-width-icon]"
-                    )}
-                />
-                <div
-                    className={cn(
-                        "duration-200 fixed inset-y-0 z-10 hidden h-svh w-[--sidebar-width] transition-[left,right,width] ease-linear md:flex",
-                        side === "left"
-                            ? "left-0 group-data-[collapsible=offcanvas]:left-[calc(var(--sidebar-width)*-1)]"
-                            : "right-0 group-data-[collapsible=offcanvas]:right-[calc(var(--sidebar-width)*-1)]",
-                        // Adjust the padding for floating and inset variants.
-                        variant === "floating" || variant === "inset"
-                            ? "p-2 group-data-[collapsible=icon]:w-[calc(var(--sidebar-width-icon)_+_theme(spacing.4)_+2px)]"
-                            : "group-data-[collapsible=icon]:w-[--sidebar-width-icon] group-data-[side=left]:border-r group-data-[side=right]:border-l",
-                        className
-                    )}
-                    {...props}
+                    data-sidebar="sidebar"
+                    className="flex h-full w-full flex-col bg-sidebar"
                 >
-                    <div
-                        data-sidebar="sidebar"
-                        className="flex h-full w-full flex-col bg-sidebar group-data-[variant=floating]:rounded-lg group-data-[variant=floating]:border group-data-[variant=floating]:border-sidebar-border group-data-[variant=floating]:shadow"
-                    >
-                        {children}
-                    </div>
+                    {children}
                 </div>
             </div>
         );
     }
 );
+
 Sidebar.displayName = "Sidebar";
 
 const SidebarTrigger = React.forwardRef<
     React.ElementRef<typeof Button>,
-    React.ComponentProps<typeof Button>
->(({ className, onClick, ...props }, ref) => {
+    React.ComponentProps<typeof Button> & { side: "left" | "right" }
+>(({ className, onClick, side, ...props }, ref) => {
     const { toggleSidebar } = useSidebar();
 
     return (
         <Button
             ref={ref}
-            data-sidebar="trigger"
+            data-sidebar={`trigger-${side}`}
             variant="ghost"
             size="icon"
             className={cn("h-7 w-7", className)}
             onClick={(event) => {
                 onClick?.(event);
-                toggleSidebar();
+                toggleSidebar(side);
             }}
             {...props}
         >
-            <PanelLeft />
-            <span className="sr-only">Toggle Sidebar</span>
+            {side === "left" ? <PanelLeft /> : <PanelRight />}
+            <span className="sr-only">Toggle {side} Sidebar</span>
         </Button>
     );
 });
@@ -300,18 +246,18 @@ SidebarTrigger.displayName = "SidebarTrigger";
 
 const SidebarRail = React.forwardRef<
     HTMLButtonElement,
-    React.ComponentProps<"button">
->(({ className, ...props }, ref) => {
+    React.ComponentProps<"button"> & { side: "left" | "right" }
+>(({ className, side, ...props }, ref) => {
     const { toggleSidebar } = useSidebar();
 
     return (
         <button
             ref={ref}
             data-sidebar="rail"
-            aria-label="Toggle Sidebar"
+            aria-label={`Toggle ${side} Sidebar`}
             tabIndex={-1}
-            onClick={toggleSidebar}
-            title="Toggle Sidebar"
+            onClick={() => toggleSidebar(side)}
+            title={`Toggle ${side} Sidebar`}
             className={cn(
                 "absolute inset-y-0 z-20 hidden w-4 -translate-x-1/2 transition-all ease-linear after:absolute after:inset-y-0 after:left-1/2 after:w-[2px] hover:after:bg-sidebar-border group-data-[side=left]:-right-4 group-data-[side=right]:left-0 sm:flex",
                 "[[data-side=left]_&]:cursor-w-resize [[data-side=right]_&]:cursor-e-resize",

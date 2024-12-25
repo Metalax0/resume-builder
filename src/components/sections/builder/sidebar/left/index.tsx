@@ -1,4 +1,4 @@
-import { Calendar, Home, Inbox, Search, Settings } from "lucide-react";
+import { Calendar, Home, Inbox } from "lucide-react";
 
 import {
     Sidebar,
@@ -11,28 +11,16 @@ import {
     SidebarMenuItem,
 } from "@/components/shadcn/ui/sidebar";
 
-// Menu items.
+// Menu items
 const items = [
-    {
-        title: "Home",
-        url: "#",
-        icon: Home,
-    },
-    {
-        title: "Inbox",
-        url: "#",
-        icon: Inbox,
-    },
-    {
-        title: "Calendar",
-        url: "#",
-        icon: Calendar,
-    },
+    { title: "Home", url: "#", icon: Home },
+    { title: "Inbox", url: "#", icon: Inbox },
+    { title: "Calendar", url: "#", icon: Calendar },
 ];
 
-export const LeftSidebar = () => {
+export const BuilderSidebarLeft = () => {
     return (
-        <Sidebar side="right" variant="floating" collapsible="icon">
+        <Sidebar side="left" variant="floating" collapsible="icon">
             <SidebarContent>
                 <SidebarGroup>
                     <SidebarGroupLabel>Application</SidebarGroupLabel>

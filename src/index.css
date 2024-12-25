@@ -33,6 +33,11 @@
     }
 }
 
+.sidebar.collapsed {
+    width: 0; /* Ensure no width is consumed */
+    visibility: hidden;
+}
+
 :root {
     font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
     color-scheme: light dark;
