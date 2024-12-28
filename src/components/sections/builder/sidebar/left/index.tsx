@@ -1,4 +1,4 @@
-import { Calendar, Home, Inbox } from "lucide-react";
+import { MousePointer2, TextCursor } from "lucide-react";
 
 import {
     Sidebar,
@@ -8,33 +8,57 @@ import {
     SidebarGroupLabel,
     SidebarMenu,
     SidebarMenuButton,
-    SidebarMenuItem,
 } from "@/components/shadcn/ui/sidebar";
 
-// Menu items
-const items = [
-    { title: "Home", url: "#", icon: Home },
-    { title: "Inbox", url: "#", icon: Inbox },
-    { title: "Calendar", url: "#", icon: Calendar },
-];
-
 export const BuilderSidebarLeft = () => {
+    const activeTool = "text";
+
+    const handleToolSelect = (selected: "select" | "text") => {
+        switch (selected) {
+            case "select":
+                //
+                break;
+
+            case "text":
+                //
+                break;
+
+            default:
+                console.error("Invalid tool selected (sections/builder/left");
+                break;
+        }
+    };
+
+    const items = [
+        {
+            label: "select",
+            element: (
+                <MousePointer2 onClick={() => handleToolSelect("select")} />
+            ),
+        },
+        {
+            label: "text",
+            element: <TextCursor onClick={() => handleToolSelect("text")} />,
+        },
+    ];
+
     return (
         <Sidebar side="left" variant="floating" collapsible="icon">
             <SidebarContent>
                 <SidebarGroup>
-                    <SidebarGroupLabel>Application</SidebarGroupLabel>
+                    <SidebarGroupLabel className="flex justify-center">
+                        Tools
+                    </SidebarGroupLabel>
                     <SidebarGroupContent>
                         <SidebarMenu>
                             {items.map((item) => (
-                                <SidebarMenuItem key={item.title}>
-                                    <SidebarMenuButton asChild>
-                                        <a href={item.url}>
-                                            <item.icon />
-                                            <span>{item.title}</span>
-                                        </a>
-                                    </SidebarMenuButton>
-                                </SidebarMenuItem>
+                                <SidebarMenuButton
+                                    className="hover:cursor-pointer"
+                                    isActive={item.label === activeTool}
+                                    asChild
+                                >
+                                    {item.element}
+                                </SidebarMenuButton>
                             ))}
                         </SidebarMenu>
                     </SidebarGroupContent>

@@ -19,10 +19,8 @@ import {
 
 const SIDEBAR_COOKIE_NAME = "sidebar:state";
 const SIDEBAR_COOKIE_MAX_AGE = 60 * 60 * 24 * 7;
-const SIDEBAR_WIDTH = "16rem";
-const SIDEBAR_WIDTH_MOBILE = "18rem";
+const SIDEBAR_WIDTH_MOBILE = "15rem";
 const SIDEBAR_WIDTH_ICON = "3rem";
-// const SIDEBAR_KEYBOARD_SHORTCUT = "b";
 
 type SidebarContext = {
     state: "expanded" | "collapsed";
@@ -104,13 +102,12 @@ const SidebarProvider = React.forwardRef<
                     <div
                         style={
                             {
-                                "--sidebar-width": SIDEBAR_WIDTH,
                                 "--sidebar-width-icon": SIDEBAR_WIDTH_ICON,
                                 ...style,
                             } as React.CSSProperties
                         }
                         className={cn(
-                            "group/sidebar-wrapper flex min-h-svh w-full has-[[data-variant=inset]]:bg-sidebar",
+                            "group/sidebar-wrapper flex h-full w-full has-[[data-variant=inset]]:bg-sidebar",
                             className
                         )}
                         ref={ref}
@@ -134,37 +131,18 @@ const Sidebar = React.forwardRef<
     }
 >(
     (
-        {
-            side = "left",
-            variant = "sidebar",
-            collapsible = "offcanvas",
-            className,
-            children,
-            ...props
-        },
+        { side = "left", variant = "sidebar", className, children, ...props },
         ref
     ) => {
         const { isMobile, open, toggleSidebar } = useSidebar();
         const openState = open[side]; // Get the open state for this side
+        const SIDEBAR_WIDTH_OPEN = side === "left" ? "w-[7rem]" : "w-[15rem]";
+        const SIDEBAR_WIDTH_CLOSED = side === "left" ? "w-[0rem]" : "w-[0rem]";
 
-        // Add a conditional class to show or hide the sidebar based on openState
-        const sidebarClass = openState ? "w-[--sidebar-width]" : "w-0"; // Adjust width when collapsed
+        const sidebarClass = openState
+            ? `${SIDEBAR_WIDTH_OPEN}`
+            : `${SIDEBAR_WIDTH_CLOSED}`;
         const floatingClass = variant === "floating" ? "p-2" : "";
-
-        if (collapsible === "none") {
-            return (
-                <div
-                    className={cn(
-                        "flex h-full w-[--sidebar-width] flex-col bg-sidebar text-sidebar-foreground border-8 border-red-400",
-                        className
-                    )}
-                    ref={ref}
-                    {...props}
-                >
-                    {children}
-                </div>
-            );
-        }
 
         if (isMobile) {
             return (
@@ -196,13 +174,13 @@ const Sidebar = React.forwardRef<
             <div
                 ref={ref}
                 className={cn(
+                    sidebarClass,
                     "group peer hidden md:block text-sidebar-foreground",
-                    openState ? "data-state=expanded" : "data-state=collapsed", // Set the state as expanded/collapsed
+                    openState ? "data-state=expanded" : "data-state=collapsed",
                     variant === "floating" || variant === "inset"
                         ? "group-data-[collapsible=icon]:w-[calc(var(--sidebar-width-icon)_+_theme(spacing.4))]"
                         : "group-data-[collapsible=icon]:w-[--sidebar-width-icon]",
-                    "transition-all duration-300 ease-in-out", // Add transition effect
-                    sidebarClass, // Apply width based on open state
+                    "transition-all duration-300 ease-in-out",
                     floatingClass,
                     className
                 )}

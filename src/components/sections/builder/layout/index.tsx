@@ -12,7 +12,7 @@ export default function BuilderLayout({
     children: React.ReactNode;
 }) {
     return (
-        <div className="flex">
+        <div className="flex flex-1 h-full">
             <SidebarProvider>
                 <BuilderSidebarLeft />
                 <SidebarTrigger side="left" />
