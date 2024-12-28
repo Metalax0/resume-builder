@@ -1,16 +1,17 @@
 #cv-main {
-    width: 216mm;
-    height: 279.3mm;
+    /* width: 216mm;
+    height: 279.3mm; */
+
+    width: 108mm;
+    height: 145mm;
+
     padding: 10mm;
+
     display: flex;
     gap: 5px;
     flex-direction: column;
     background-color: rgb(243, 208, 142);
     font-family: "Arial, sans-serif";
-}
-
-* {
-    /* outline: 1px solid red; */
 }
 
 #cv-main * {

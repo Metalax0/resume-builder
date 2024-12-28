@@ -4,19 +4,22 @@ import { SettingsProvider } from "./settingsContext";
 import { StageProvider } from "./stageContext";
 import { TemplatesProvider } from "./templatesContext";
 import { NotificationProvider } from "./notificationContext";
+import { ThemeProvider } from "./themeContext";
 
 interface AppProvidersPropsType {
     children: ReactNode;
 }
 
 export const AppProviders = ({ children }: AppProvidersPropsType) => (
-    <StageProvider>
-        <PropertiesProvider>
-            <SettingsProvider>
-                <TemplatesProvider>
-                    <NotificationProvider>{children}</NotificationProvider>
-                </TemplatesProvider>
-            </SettingsProvider>
-        </PropertiesProvider>
-    </StageProvider>
+    <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
+        <StageProvider>
+            <PropertiesProvider>
+                <SettingsProvider>
+                    <TemplatesProvider>
+                        <NotificationProvider>{children}</NotificationProvider>
+                    </TemplatesProvider>
+                </SettingsProvider>
+            </PropertiesProvider>
+        </StageProvider>
+    </ThemeProvider>
 );

@@ -135,7 +135,7 @@ const Sidebar = React.forwardRef<
         ref
     ) => {
         const { isMobile, open, toggleSidebar } = useSidebar();
-        const openState = open[side]; // Get the open state for this side
+        const openState = open[side];
         const SIDEBAR_WIDTH_OPEN = side === "left" ? "w-[7rem]" : "w-[15rem]";
         const SIDEBAR_WIDTH_CLOSED = side === "left" ? "w-[0rem]" : "w-[0rem]";
 

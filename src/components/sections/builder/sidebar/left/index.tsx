@@ -51,11 +51,12 @@ export const BuilderSidebarLeft = () => {
                     </SidebarGroupLabel>
                     <SidebarGroupContent>
                         <SidebarMenu>
-                            {items.map((item) => (
+                            {items.map((item, index) => (
                                 <SidebarMenuButton
                                     className="hover:cursor-pointer"
                                     isActive={item.label === activeTool}
                                     asChild
+                                    key={index}
                                 >
                                     {item.element}
                                 </SidebarMenuButton>

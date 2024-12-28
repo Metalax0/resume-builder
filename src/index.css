@@ -126,7 +126,7 @@ h5 {
 @layer base {
     :root {
         --radius: 0.5rem;
-        --sidebar-background: 390 70% 90%;
+        --sidebar-background: 0, 0%, 100%;
         --sidebar-foreground: 500 10% 5%;
         --sidebar-primary: 240 5.9% 10%;
         --sidebar-primary-foreground: 0 0% 98%;

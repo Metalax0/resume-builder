@@ -1,109 +1,98 @@
+import { useTheme } from "@/components/context/themeContext";
+import { ThemeToggle } from "@/components/molecules/theme-toggle";
 import {
     Menubar,
     MenubarCheckboxItem,
     MenubarContent,
     MenubarItem,
     MenubarMenu,
-    MenubarRadioGroup,
-    MenubarRadioItem,
     MenubarSeparator,
     MenubarShortcut,
-    MenubarSub,
-    MenubarSubContent,
-    MenubarSubTrigger,
     MenubarTrigger,
 } from "@/components/shadcn/ui/menubar";
+import { Monitor, Moon, Sun } from "lucide-react";
 
 export const MenuBar = () => {
+    const { theme } = useTheme();
+
     return (
         <Menubar>
             <MenubarMenu>
                 <MenubarTrigger>File</MenubarTrigger>
                 <MenubarContent>
                     <MenubarItem>
-                        New Tab <MenubarShortcut>⌘T</MenubarShortcut>
+                        New <MenubarShortcut>Ctrl + N</MenubarShortcut>
                     </MenubarItem>
                     <MenubarItem>
-                        New Window <MenubarShortcut>⌘N</MenubarShortcut>
+                        Open <MenubarShortcut>Ctrl + O</MenubarShortcut>
                     </MenubarItem>
-                    <MenubarItem disabled>New Incognito Window</MenubarItem>
-                    <MenubarSeparator />
-                    <MenubarSub>
-                        <MenubarSubTrigger>Share</MenubarSubTrigger>
-                        <MenubarSubContent>
-                            <MenubarItem>Email link</MenubarItem>
-                            <MenubarItem>Messages</MenubarItem>
-                            <MenubarItem>Notes</MenubarItem>
-                        </MenubarSubContent>
-                    </MenubarSub>
-                    <MenubarSeparator />
                     <MenubarItem>
-                        Print... <MenubarShortcut>⌘P</MenubarShortcut>
+                        Export PDF <MenubarShortcut>Ctrl + E</MenubarShortcut>
                     </MenubarItem>
                 </MenubarContent>
             </MenubarMenu>
+
             <MenubarMenu>
                 <MenubarTrigger>Edit</MenubarTrigger>
                 <MenubarContent>
                     <MenubarItem>
-                        Undo <MenubarShortcut>⌘Z</MenubarShortcut>
+                        Undo <MenubarShortcut>Ctrl + Z</MenubarShortcut>
                     </MenubarItem>
                     <MenubarItem>
-                        Redo <MenubarShortcut>⇧⌘Z</MenubarShortcut>
+                        Redo <MenubarShortcut>Ctrl + Y</MenubarShortcut>
                     </MenubarItem>
                     <MenubarSeparator />
-                    <MenubarSub>
-                        <MenubarSubTrigger>Find</MenubarSubTrigger>
-                        <MenubarSubContent>
-                            <MenubarItem>Search the web</MenubarItem>
-                            <MenubarSeparator />
-                            <MenubarItem>Find...</MenubarItem>
-                            <MenubarItem>Find Next</MenubarItem>
-                            <MenubarItem>Find Previous</MenubarItem>
-                        </MenubarSubContent>
-                    </MenubarSub>
-                    <MenubarSeparator />
-                    <MenubarItem>Cut</MenubarItem>
-                    <MenubarItem>Copy</MenubarItem>
-                    <MenubarItem>Paste</MenubarItem>
+                    <MenubarItem>
+                        Cut <MenubarShortcut>Ctrl + X</MenubarShortcut>
+                    </MenubarItem>
+                    <MenubarItem>
+                        Copy <MenubarShortcut>Ctrl + C</MenubarShortcut>
+                    </MenubarItem>
+                    <MenubarItem>
+                        Paste <MenubarShortcut>Ctrl + V</MenubarShortcut>
+                    </MenubarItem>
                 </MenubarContent>
             </MenubarMenu>
+
             <MenubarMenu>
                 <MenubarTrigger>View</MenubarTrigger>
                 <MenubarContent>
-                    <MenubarCheckboxItem>
-                        Always Show Bookmarks Bar
+                    <MenubarCheckboxItem>Enable Wireframe</MenubarCheckboxItem>
+                    <MenubarCheckboxItem checked>
+                        Show Selections
                     </MenubarCheckboxItem>
                     <MenubarCheckboxItem checked>
-                        Always Show Full URLs
+                        Show Sidebars
                     </MenubarCheckboxItem>
                     <MenubarSeparator />
-                    <MenubarItem inset>
-                        Reload <MenubarShortcut>⌘R</MenubarShortcut>
+                    <MenubarItem>
+                        Zoom In <MenubarShortcut>Ctrl + +</MenubarShortcut>
                     </MenubarItem>
-                    <MenubarItem disabled inset>
-                        Force Reload <MenubarShortcut>⇧⌘R</MenubarShortcut>
+                    <MenubarItem>
+                        Zoom Out <MenubarShortcut>Ctrl + -</MenubarShortcut>
+                    </MenubarItem>
+                    <MenubarItem>
+                        Reset Zoom <MenubarShortcut>Ctrl + 0</MenubarShortcut>
                     </MenubarItem>
                     <MenubarSeparator />
-                    <MenubarItem inset>Toggle Fullscreen</MenubarItem>
-                    <MenubarSeparator />
-                    <MenubarItem inset>Hide Sidebar</MenubarItem>
+                    <MenubarItem>
+                        Toggle Fullscreen <MenubarShortcut>F11</MenubarShortcut>
+                    </MenubarItem>
                 </MenubarContent>
             </MenubarMenu>
+
             <MenubarMenu>
-                <MenubarTrigger>Profiles</MenubarTrigger>
+                <MenubarTrigger>
+                    {theme === "dark" ? (
+                        <Moon className="h-[1.2rem] w-[1.2rem]" />
+                    ) : theme === "light" ? (
+                        <Sun className="h-[1.2rem] w-[1.2rem]" />
+                    ) : (
+                        <Monitor className="h-[1.2rem] w-[1.2rem]" />
+                    )}
+                </MenubarTrigger>
                 <MenubarContent>
-                    <MenubarRadioGroup value="benoit">
-                        <MenubarRadioItem value="andy">Andy</MenubarRadioItem>
-                        <MenubarRadioItem value="benoit">
-                            Benoit
-                        </MenubarRadioItem>
-                        <MenubarRadioItem value="Luis">Luis</MenubarRadioItem>
-                    </MenubarRadioGroup>
-                    <MenubarSeparator />
-                    <MenubarItem inset>Edit...</MenubarItem>
-                    <MenubarSeparator />
-                    <MenubarItem inset>Add Profile...</MenubarItem>
+                    <ThemeToggle />
                 </MenubarContent>
             </MenubarMenu>
         </Menubar>

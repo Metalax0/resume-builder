@@ -18,7 +18,7 @@ export const Slider = ({
     const className =
         orientation === "horizontal"
             ? "w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700"
-            : "h-full";
+            : "";
 
     return (
         <div className={`${orientation}`}>
