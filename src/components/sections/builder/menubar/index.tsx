@@ -82,6 +82,13 @@ export const MenuBar = () => {
             </MenubarMenu>
 
             <MenubarMenu>
+                <MenubarTrigger>Navigate</MenubarTrigger>
+                <MenubarContent>
+                    <MenubarItem>Home Page</MenubarItem>
+                </MenubarContent>
+            </MenubarMenu>
+
+            <MenubarMenu>
                 <MenubarTrigger>
                     {theme === "dark" ? (
                         <Moon className="h-[1.2rem] w-[1.2rem]" />

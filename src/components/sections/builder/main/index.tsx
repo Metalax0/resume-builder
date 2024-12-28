@@ -14,11 +14,12 @@ export const Main = () => {
     useEffect(() => {
         const zoomValue = settingsState.builderZoom / 100;
         const mainRef = settingsState.pdfRef.current;
+
         if (mainRef) {
             mainRef.style.transform = `scale(${zoomValue})`;
             mainRef.style.transformOrigin = "top center";
         }
     }, [settingsState.builderZoom, settingsState.pdfRef]);
 
-    return <div ref={contentRef} className="" id="cv-main" />;
+    return <div ref={contentRef} id="cv-main" />;
 };
