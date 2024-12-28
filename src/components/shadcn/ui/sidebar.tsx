@@ -107,7 +107,7 @@ const SidebarProvider = React.forwardRef<
                             } as React.CSSProperties
                         }
                         className={cn(
-                            "group/sidebar-wrapper flex h-full w-full has-[[data-variant=inset]]:bg-sidebar",
+                            "group/sidebar-wrapper flex h-full w-full has-[[data-variant=inset]]:bg-sidebar ",
                             className
                         )}
                         ref={ref}
@@ -181,6 +181,7 @@ const Sidebar = React.forwardRef<
                         ? "group-data-[collapsible=icon]:w-[calc(var(--sidebar-width-icon)_+_theme(spacing.4))]"
                         : "group-data-[collapsible=icon]:w-[--sidebar-width-icon]",
                     "transition-all duration-300 ease-in-out",
+
                     floatingClass,
                     className
                 )}
@@ -188,7 +189,7 @@ const Sidebar = React.forwardRef<
             >
                 <div
                     data-sidebar="sidebar"
-                    className="flex h-full w-full flex-col bg-sidebar rounded-lg"
+                    className="flex h-full w-full flex-col bg-sidebar rounded-lg first-line:shadow-sm shadow-lg"
                 >
                     {children}
                 </div>
@@ -218,7 +219,11 @@ const SidebarTrigger = React.forwardRef<
             }}
             {...props}
         >
-            {side === "left" ? <PanelLeft /> : <PanelRight />}
+            {side === "left" ? (
+                <PanelLeft className="text-zinc-900 dark:bg-zinc-900 dark:text-white" />
+            ) : (
+                <PanelRight className="text-zinc-900 dark:bg-zinc-900 dark:text-white" />
+            )}
             <span className="sr-only">Toggle {side} Sidebar</span>
         </Button>
     );

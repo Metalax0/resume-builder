@@ -21,7 +21,7 @@ const Menubar = React.forwardRef<
     <MenubarPrimitive.Root
         ref={ref}
         className={cn(
-            "flex mt-2 mx-2 h-9 items-center space-x-1 rounded-md border text-zinc-800 border-zinc-200 bg-white p-3 shadow-sm dark:border-zinc-800 dark:bg-zinc-950 dark:text-zinc-200",
+            "flex mt-2 mx-2 h-9 items-center space-x-1 rounded-md border text-zinc-700 border-zinc-200 bg-orange-100 p-3 shadow-sm dark:border-zinc-800 dark:bg-zinc-950 dark:text-zinc-200",
             className
         )}
         {...props}
@@ -36,7 +36,7 @@ const MenubarTrigger = React.forwardRef<
     <MenubarPrimitive.Trigger
         ref={ref}
         className={cn(
-            "flex cursor-default select-none items-center rounded-sm px-3 py-1 text-sm font-medium outline-none focus:bg-zinc-100 focus:text-zinc-900 data-[state=open]:bg-zinc-100 data-[state=open]:text-zinc-900 dark:focus:bg-zinc-800 dark:focus:text-zinc-50 dark:data-[state=open]:bg-zinc-800 dark:data-[state=open]:text-zinc-50",
+            "flex cursor-pointer select-none items-center rounded-sm px-3 py-1 text-sm font-medium outline-none hover:bg-zinc-100 hover:text-zinc-900 data-[state=open]:bg-zinc-100 data-[state=open]:text-zinc-900 dark:hover:bg-zinc-800 dark:hover:text-zinc-50 dark:data-[state=open]:bg-zinc-800 dark:data-[state=open]:text-zinc-50",
             className
         )}
         {...props}
@@ -120,7 +120,7 @@ const MenubarItem = React.forwardRef<
     <MenubarPrimitive.Item
         ref={ref}
         className={cn(
-            "relative flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none focus:bg-zinc-100 focus:text-zinc-900 data-[disabled]:pointer-events-none data-[disabled]:opacity-50 dark:focus:bg-zinc-800 dark:focus:text-zinc-50",
+            "relative flex cursor-pointer select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none focus:bg-zinc-100 focus:text-zinc-900 data-[disabled]:pointer-events-none data-[disabled]:opacity-50 dark:focus:bg-zinc-800 dark:focus:text-zinc-50",
             inset && "pl-8",
             className
         )}
