@@ -12,7 +12,7 @@ export const Main = () => {
     }, [settingsDispatch, contentRef.current]);
 
     useEffect(() => {
-        const zoomValue = settingsState.builderZoom / 100;
+        const zoomValue = 0.5;
         const mainRef = settingsState.pdfRef.current;
 
         if (mainRef) {
